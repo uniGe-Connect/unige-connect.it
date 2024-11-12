@@ -6,7 +6,7 @@
 
 :root {
   --blue: #002677;
-  --lgiht-blue: #199bfc;
+  --light-blue: #199bfc;
   --yellow: #f4da40;
   --red: #c8102e;
   --black: #25282a;
@@ -14,7 +14,12 @@
 }
 
 * {
+  font-family: 'Fira Sans';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(--gray) !important;
 }
