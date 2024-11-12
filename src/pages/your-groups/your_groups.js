@@ -23,12 +23,13 @@ const GroupsPage = () => {
 
   // Send POST request to backend
 
-  const createGroup = () => {
+  const createGroup = (group) => {
     getApiClient()
-      .TestAPI({ name: "X", email: "Y" })
+      .CreateGroup({name: group.name, topic: group.topic, description: group.description, type: group.type, created_by: group.created_by})
       .then((response) => {
         if (response.data.success) {
-          // setGroups([...groups, response.data]);
+          group.id = response.data.id
+          setGroups([...groups, group]);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)))
@@ -43,6 +44,7 @@ const GroupsPage = () => {
     }
     setErrorMessage('');
     const newGroup = {
+      id: -1,
       name: newGroupName,
       topic: newGroupTopic,
       description: newGroupDescription,
@@ -52,9 +54,14 @@ const GroupsPage = () => {
 
     try {
 
-      createGroup();
-      setGroups([...groups, newGroup]);
-
+      createGroup(newGroup, 1);
+      if (newGroup.id < 0){ // checks after db call
+       alert('error while creating group') 
+      }
+      else{
+        setGroups([...groups, newGroup]);
+      }
+      
       // Close the modal and reset the form
       setIsCreateModalOpen(false);
       resetForm();

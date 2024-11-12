@@ -24,15 +24,17 @@ const post = (endpoint, data) => {
 };
 
 class WebApiClient {
-  //Api goes here
-  TestAPI(props) {
+  
+  CreateGroup(props) {
     const data = new FormData();
     
-    // Example
     data.append("name", props.name)
-    data.append("email", props.email)
+    data.append("topic", props.topic)
+    data.append("description", props.description)
+    data.append("type", props.type)
+    data.append("created_by", props.created_by)
 
-    return post("/api/login", data)
+    return post("/api/create-group", data)
   }
 }
 
