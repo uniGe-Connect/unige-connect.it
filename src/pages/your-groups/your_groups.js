@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Button, Card, Modal, Form, Header, Icon, Input, TextArea, Checkbox } from 'semantic-ui-react';
-import './your_groups.css'
+import { Button, Modal, Form, Header, Icon, Input, TextArea, Checkbox } from 'semantic-ui-react';
+import styled from 'styled-components';
+import { getApiClient, makeStandardApiErrorHandler } from "../../server/get_api_client"
+import WrapperCard from './wrapper_card';
+import Nav from '../../common/nav';
+import Heading from '../../common/heading';
 
 const initialGroups = [
   { id: 1, name: 'React Developers', topic: 'React', description: 'A group for React enthusiasts', type: 'public_open' },
@@ -17,6 +20,20 @@ const GroupsPage = () => {
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [newGroupType, setNewGroupType] = useState('public_open')
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Send POST request to backend
+
+  const createGroup = () => {
+    getApiClient()
+      .TestAPI({ name: "X", email: "Y" })
+      .then((response) => {
+        if (response.data.success) {
+          // setGroups([...groups, response.data]);
+        }
+      })
+      .catch(makeStandardApiErrorHandler((err) => console.log(err)))
+
+  }
 
   const handleCreateGroup = async () => {
 
@@ -34,11 +51,8 @@ const GroupsPage = () => {
     };
 
     try {
-      // Send POST request to backend
-      // const response = await axios.post('http://localhost:5000/api/groups', newGroup);
 
-      // Add the new group to the state
-      // setGroups([...groups, response.data]);
+      createGroup();
       setGroups([...groups, newGroup]);
 
       // Close the modal and reset the form
@@ -63,50 +77,27 @@ const GroupsPage = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <Header as="h1">Groups</Header>
+    <GroupPage>
+      <Heading />
+      <Nav />
+      <Title>Your groups</Title>
 
       {/* Button to open the Create Group Modal */}
-      <Button style={{ margin: '20px' }}
-        primary
-        icon
-        labelPosition="left"
-        floated="right"
-        onClick={() => setIsCreateModalOpen(true)}
-      >
+      <IconButton primary icon="add" onClick={() => setIsCreateModalOpen(true)} floated="right">
         <Icon name="add" />
         Create Group
-      </Button>
+      </IconButton>
 
       {/* Display groups */}
-      <div style={{ marginTop: '20px' }}>
+      <GroupContainer>
         {groups.length === 0 ? (
           <p>No groups available</p>
         ) : (
           groups.map((group) => (
-            <Card key={group.id} fluid style={{ marginBottom: '20px' }}>
-              <Card.Content>
-                <a href={'#'} style={{ fontSize: '20px' }}>
-                  <Card.Header><strong>{group.name}</strong>{group.type === 'private' && <Icon name='lock' style={{ padding: '10px' }} />}</Card.Header>
-                </a>
-              
-              {/* This button is not visible if I am the owner of the group */}
-              {/* <Button style={{ margin: '10px' }}
-                primary
-                floated="right"
-                onClick={() => alert("Join me!")}
-              >Join group</Button> */}
-                <Card.Meta>
-                  <span>{group.topic}</span>
-                </Card.Meta>
-                <Card.Description style={{ wordWrap: 'break-word', }}>
-                  {group.description.slice(0, 300)}{group.description.length > 300 ? '...' : ''}
-                </Card.Description>
-              </Card.Content>
-            </Card>
+            <WrapperCard group={group} />
           ))
         )}
-      </div>
+      </GroupContainer>
 
       {/* Modal for creating a new group */}
       <Modal
@@ -118,7 +109,7 @@ const GroupsPage = () => {
         <Modal.Content>
           <Form onSubmit={(e) => e.preventDefault()}>
             <Form.Field>
-              <label style={{ fontSize: '16px' }}>Group Name</label>
+              <FormLabel>Group Name</FormLabel>
               <Input
                 placeholder="Enter group name"
                 value={newGroupName}
@@ -128,7 +119,7 @@ const GroupsPage = () => {
             </Form.Field>
 
             <Form.Field>
-              <label style={{ fontSize: '16px' }}>Group Topic</label>
+              <FormLabel>Group Topic</FormLabel>
               <Input
                 placeholder="Enter group topic"
                 value={newGroupTopic}
@@ -138,21 +129,21 @@ const GroupsPage = () => {
             </Form.Field>
 
             <Form.Field>
-              <label style={{ fontSize: '16px' }}>Group Description</label>
+              <FormLabel>Group Description</FormLabel>
               <TextArea
                 placeholder="Enter group description"
                 value={newGroupDescription}
                 onChange={(e) => setNewGroupDescription(e.target.value)}
-                maxLength={400}
+                maxLength={300}
                 required
               />
               <div style={{ fontSize: '12px', color: 'gray' }}>
-                {newGroupDescription.length}/200 characters
+                {newGroupDescription.length}/300 characters
               </div>
             </Form.Field>
             {errorMessage && <p style={{ color: 'red', fontSize: '16px' }}><strong>{errorMessage}</strong></p>}
             <Form.Field>
-              <label style={{ fontSize: '16px' }}>Group type</label>
+              <FormLabel>Group Type</FormLabel>
             </Form.Field>
             <Form.Field>
               <Checkbox
@@ -187,23 +178,66 @@ const GroupsPage = () => {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button
+          <DangerButton
             negative
-            onClick={handleModalCancel}
+            onClick={() => handleModalCancel()}
           >
             Cancel
-          </Button>
-          <Button
+          </DangerButton>
+          <MainButton
             positive
-            icon="checkmark"
-            labelPosition="right"
-            content="Create Group"
-            onClick={handleCreateGroup}
-          />
+            onClick={() => handleCreateGroup()}
+          >Create Group
+          </MainButton>
         </Modal.Actions>
       </Modal>
-    </div >
+    </GroupPage >
   );
 };
+
+const GroupPage = styled.div`
+  margin: 20px;
+`;
+
+const GroupContainer = styled.div`
+  padding: 0px;
+`;
+
+const Title = styled(Header).attrs({
+  as: 'h1', // Ensures the Header renders as an <h1> tag
+})`
+  font-family: "Roboto Slab";
+  margin-top: 40px;
+`;
+
+const MainButton = styled(Button).attrs(props => ({
+  primary: props.primary,
+  floated: "right",
+}))`
+  margin: 20px !important;
+  background-color: var(--blue) !important;
+`;
+
+const IconButton = styled(Button).attrs(props => ({
+  positive: props.positive,
+  icon: props.icon,
+  labelPosition: "left",
+  content: props.content,
+}))`
+  margin: 20px !important;
+  background-color: var(--blue) !important;
+`;
+
+const DangerButton = styled(Button).attrs(props => ({
+  negative: props.negative,
+}))`
+margin: 20px !important;
+background-color: var(--red) !important;
+`;
+
+const FormLabel = styled.label`
+font-size: 16px !important;
+
+`;
 
 export default GroupsPage;

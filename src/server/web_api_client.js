@@ -25,6 +25,15 @@ const post = (endpoint, data) => {
 
 class WebApiClient {
   //Api goes here
+  TestAPI(props) {
+    const data = new FormData();
+    
+    // Example
+    data.append("name", props.name)
+    data.append("email", props.email)
+
+    return post("/api/login", data)
+  }
 }
 
 export default WebApiClient;
