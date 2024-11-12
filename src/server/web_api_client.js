@@ -25,16 +25,20 @@ const post = (endpoint, data) => {
 
 class WebApiClient {
   
-  CreateGroup(props) {
-    const data = new FormData();
-    
-    data.append("name", props.name)
-    data.append("topic", props.topic)
-    data.append("description", props.description)
-    data.append("type", props.type)
-    data.append("created_by", props.created_by)
+  // Make the method async so we can use await
+  async CreateGroup() {
+    try {
+      // Make the GET request using the get function
+      const response = await get("/test");
 
-    return post("/api/create-group", data)
+      // `response` is the result of the axios request, which contains `data`
+      alert(response.data.number);  // Access the response data here
+      return response;
+    } catch (error) {
+      // Handle any errors that occur during the API request
+      console.error("Error fetching data:", error);
+      alert("Error fetching data");
+    }
   }
 }
 

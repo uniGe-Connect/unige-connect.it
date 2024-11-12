@@ -24,52 +24,54 @@ const GroupsPage = () => {
   // Send POST request to backend
 
   const createGroup = (group) => {
-    getApiClient()
-      .CreateGroup({name: group.name, topic: group.topic, description: group.description, type: group.type, created_by: group.created_by})
-      .then((response) => {
-        if (response.data.success) {
-          group.id = response.data.id
-          setGroups([...groups, group]);
-        }
-      })
-      .catch(makeStandardApiErrorHandler((err) => console.log(err)))
+  return getApiClient()
+    .CreateGroup()
+    .then((response) => {
+      if (response.data.success) {
+        alert("SUCCESS");
+        alert(response.data.number);
+        group.id = response.data.number;
+      }
+      return group;  // Return the updated group to pass it back to handleCreateGroup
+    })
+    .catch(makeStandardApiErrorHandler((err) => console.log(err)));
+};
 
+const handleCreateGroup = async () => {
+  if (!newGroupName || !newGroupTopic || !newGroupDescription) {
+    setErrorMessage('All fields are required!');
+    return; // Prevent form submission
   }
-
-  const handleCreateGroup = async () => {
-
-    if (!newGroupName || !newGroupTopic || !newGroupDescription) {
-      setErrorMessage('All fields are required!');
-      return; // Prevent form submission
-    }
-    setErrorMessage('');
-    const newGroup = {
-      id: -1,
-      name: newGroupName,
-      topic: newGroupTopic,
-      description: newGroupDescription,
-      type: newGroupType,
-      created_by: 1, // Assuming the logged-in user has ID 1
-    };
-
-    try {
-
-      createGroup(newGroup, 1);
-      if (newGroup.id < 0){ // checks after db call
-       alert('error while creating group') 
-      }
-      else{
-        setGroups([...groups, newGroup]);
-      }
-      
-      // Close the modal and reset the form
-      setIsCreateModalOpen(false);
-      resetForm();
-    } catch (error) {
-      console.error('Error creating group:', error);
-      alert('Error creating group');
-    }
+  setErrorMessage('');
+  
+  const newGroup = {
+    id: -1,
+    name: newGroupName,
+    topic: newGroupTopic,
+    description: newGroupDescription,
+    type: newGroupType,
+    created_by: 1, // Assuming the logged-in user has ID 1
   };
+
+  try {
+    // Ensure that createGroup resolves before continuing with the logic
+    const updatedGroup = await createGroup(newGroup); 
+
+    // Now that we have the updated group, we can safely check its ID
+    if (updatedGroup.id < 0) { // checks after db call
+      alert('Error while creating group');
+    } else {
+      setGroups([...groups, updatedGroup]);
+    }
+
+    // Close the modal and reset the form
+    setIsCreateModalOpen(false);
+    resetForm();
+  } catch (error) {
+    console.error('Error creating group:', error);
+    alert('Error creating group');
+  }
+};
 
   const resetForm = () => {
     setNewGroupName('');
