@@ -25,16 +25,22 @@ const GroupsPage = () => {
   // Send POST request to backend
   const createGroup = (group) => {
     return getApiClient()
-      .CreateGroup()
+      .CreateGroup({
+        name: group.name,
+        topic: group.topic,
+        description: group.description,
+        type: group.type,
+        owner_id: group.owner_id
+      })
       .then((response) => {
-        if (response.data.number) {
-          group.id = response.data.number;
+        if (response.data.id) {
+          alert(response.data.id);
+          group.id = response.data.id;
         }
         return group;
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)));
   };
-  
 
   const handleCreateGroup = async () => {
     if (!newGroupName || !newGroupTopic || !newGroupDescription) {
@@ -42,18 +48,18 @@ const GroupsPage = () => {
       return; // Prevent form submission
     }
     setErrorMessage('');
-    
+
     const newGroup = {
       id: -1,
       name: newGroupName,
       topic: newGroupTopic,
       description: newGroupDescription,
       type: newGroupType,
-      created_by: 1, // Assuming the logged-in user has ID 1
+      owner_id: 1, // Assuming the logged-in user has ID 1
     };
 
-    const updatedGroup = createGroup(newGroup); 
-    
+    const updatedGroup = createGroup(newGroup);
+
     if (updatedGroup.id < 0) {
       alert('Error while creating group');
     } else {
@@ -101,8 +107,7 @@ const GroupsPage = () => {
       </GroupContainer>
 
       {/* Create Group Modal */}
-      <CreateGroupModal
-        isOpen={isCreateModalOpen}
+      <CreateGroupModal isOpen={isCreateModalOpen}
         onClose={handleModalCancel}
         newGroupName={newGroupName}
         setNewGroupName={setNewGroupName}
@@ -113,8 +118,7 @@ const GroupsPage = () => {
         newGroupType={newGroupType}
         setNewGroupType={setNewGroupType}
         errorMessage={errorMessage}
-        onCreate={handleCreateGroup}
-      />
+        onCreate={handleCreateGroup} />
     </GroupPage>
   );
 };

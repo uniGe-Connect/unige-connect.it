@@ -25,10 +25,15 @@ const post = (endpoint, data) => {
 };
 
 class WebApiClient {
-  // Make the method async so we can use await
-  CreateGroup() {
-      // Make the GET request using the get function
-      return get('/test');
+  CreateGroup(props) {
+    const data = new FormData();
+    data.append('name', props.name);
+    data.append('topic', props.topic);
+    data.append('description', props.description);
+    data.append('type', props.type);
+    data.append('owner_id', props.owner_id);
+
+    return post('/groups/create-group', data);
   }
 }
 

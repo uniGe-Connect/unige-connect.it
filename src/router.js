@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 // Pages
-import Home from "./pages/home/home";
-import PageNotFound from "./pages/page-not-found/page_not_found";
-import YourGroups from "./pages/your-groups/your_groups";
+import Home from './pages/home/home';
+import PageNotFound from './pages/page-not-found/page_not_found';
+import YourGroups from './pages/your-groups/your_groups';
 
 export const router = createBrowserRouter(
   [
@@ -13,7 +13,7 @@ export const router = createBrowserRouter(
       errorElement: <PageNotFound />,
     },
     {
-      path: "/your-groups",
+      path: '/groups',
       element: <YourGroups />,
       errorElement: <PageNotFound />,
     },
