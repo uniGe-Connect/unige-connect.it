@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useReducer } from "react";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./router";
-import { getApiClient } from "./server/get_api_client";
-import { UserContext } from "./contexts/user_context";
+import React, { useCallback, useEffect, useReducer } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
+import { getApiClient } from './server/get_api_client';
+import { UserContext } from './contexts/user_context';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "set-user":
+    case 'set-user':
       return { ...state, user: action.me };
     default:
       return state;
@@ -20,17 +20,17 @@ const App = () => {
   const { user } = state;
 
   useEffect(() => {
-    if (localStorage.getItem("unige-connect_token")) {
+    if (localStorage.getItem('unige-connect_token')) {
       getApiClient()
         .me()
         .then((response) =>
-          dispatch({ type: "set-user", me: response.data.me })
+          dispatch({ type: 'set-user', me: response.data.me })
         );
     }
   }, []);
 
   const setUser = useCallback((me) => {
-    dispatch({ type: "set-user", me: me });
+    dispatch({ type: 'set-user', me: me });
   }, []);
 
   return (
