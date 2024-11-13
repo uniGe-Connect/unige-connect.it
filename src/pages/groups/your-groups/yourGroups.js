@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Icon, Header, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
-import WrapperCard from './wrapper_card';
-import Nav from '../../common/nav';
-import Heading from '../../common/heading';
-import CreateGroupModal from './create_group_modal'; // Import the new modal component
+import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
+import WrapperCard from './wrapperCard';
+import Nav from '../../../common/nav';
+import Heading from '../../../common/heading';
+import CreateGroupModal from './createGroupModal'; // Import the new modal component
 
 const initialGroups = [
   { id: 1, name: 'React Developers', topic: 'React', description: 'A group for React enthusiasts', type: 'public_open' },
@@ -23,7 +23,7 @@ const GroupsPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   // Send POST request to backend
-  const createGroup = (group) => {
+  const createGroup = async (group) => {
     return getApiClient()
       .CreateGroup({
         name: group.name,
@@ -34,7 +34,6 @@ const GroupsPage = () => {
       })
       .then((response) => {
         if (response.data.id) {
-          alert(response.data.id);
           group.id = response.data.id;
         }
         return group;
@@ -57,8 +56,7 @@ const GroupsPage = () => {
       type: newGroupType,
       owner_id: 1, // Assuming the logged-in user has ID 1
     };
-
-    const updatedGroup = createGroup(newGroup);
+    const updatedGroup = await createGroup(newGroup);
 
     if (updatedGroup.id < 0) {
       alert('Error while creating group');
