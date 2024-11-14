@@ -30,6 +30,17 @@ const Container = styled.div`
     align-content: center;
     width: 100vw;
     min-height: 90vh;
+
+    @media screen and (max-width: 566px){
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    }
+    @media screen and (max-width: 480px){
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    }
+    @media screen and (max-width: 375px){
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    }
+
 `;
 const LeftSection = styled.div`
     display: flex;
@@ -37,8 +48,8 @@ const LeftSection = styled.div`
     flex-direction: column;
     gap: 20px;
 
-    @media screen and (max-width: 1178px){
-        padding: 10vh 10vw;
+  @media screen and (max-width: 1178px){
+    padding: 10vh 10vw;
   }
 `;
 
@@ -56,12 +67,11 @@ const RightSection = styled.img`
   }
 
   &:hover {
-    transform: scale(1.05);   // Slight zoom on hover
+    transform: scale(1.05);
   }
 `;
 
 const Header = styled.div`  
-    width: 100%;
     color: var(--blue);
     text-align: left;
     font-family: "Roboto Slab";
@@ -86,6 +96,10 @@ const CustomButton = styled(Button)`
     color: white !important;
     width: 225px;
     min-height: 50px !important;
+
+    @media screen and (max-width: 1178px){
+      width: 100%;
+    }
 `;
 
 export default Body;

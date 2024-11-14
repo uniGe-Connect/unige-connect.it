@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Xarrow, { Xwrapper } from 'react-xarrows';
+import GroupCircle from '../../svgs/NumberOfGroup.svg';
 import { Icon } from 'semantic-ui-react';
 
 export const Card = (props) => {
@@ -8,6 +9,10 @@ export const Card = (props) => {
         <CardContainer id={props.id} alignRight={props.alignRight}>
             <Header>{props.title} <Icon name={props.icon} /></Header>
             <Text>{props.text}</Text>
+            {props.title === 'Find Your Group' &&
+            <CircleContainer Image={GroupCircle}>
+                1500+ <br /> Study
+            </CircleContainer>}
         </CardContainer>
     );
 };
@@ -32,9 +37,9 @@ function BottomPart() {
                         <Card title={data.title} text={data.text} key={data.title}
                          id={ID} alignRight={index === 1 && true} icon={data.icon} />
                     );
-                })};
-                <Xarrow color="#D9D9D6" dashness={true} endAnchor="top" start='elem1' end="elem2" />
-                <Xarrow color="#D9D9D6" startAnchor="bottom" dashness={true} start='elem2' end="elem3" />
+                })}
+                <Xarrow color="#A3B1CE" dashness={true} endAnchor="top" start='elem1' end="elem2" />
+                <Xarrow color="#A3B1CE" startAnchor="bottom" dashness={true} start='elem2' end="elem3" />
             </Xwrapper>
         </SubContainer>
     </Container>
@@ -61,6 +66,7 @@ const BigHeader = styled.div`
 const Header = styled.div`
     color: var(--blue);
     text-align: center;
+    z-index: 5;
     font-family: 'Roboto Slab';
     font-size: 36px;
     font-style: normal;
@@ -78,6 +84,7 @@ const Text = styled.div`
 `;
 
 const CardContainer = styled.div`
+    position: relative;
     display: flex;
     align-self: ${props => props.alignRight ? 'flex-end' : ''};
     align-items: flex-start;
@@ -85,6 +92,13 @@ const CardContainer = styled.div`
     padding: 20px 0px;
     flex-direction: column;
     gap: 10px;
+
+    @media screen and (max-width: 569px){
+        width: 300px;
+    }
+    @media screen and (max-width: 427px){
+        width: 250px;
+    }
 `;
 
 const SubContainer = styled.div`
@@ -92,6 +106,37 @@ const SubContainer = styled.div`
     padding: 0px 15vw;
     flex-direction: column;
     gap: 150px;
+`;
+
+const CircleContainer = styled.div`
+    display: flex;
+    z-index: 0;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -45%;
+    right: 0px;
+    width: 200px;
+    height: 165px;
+
+    ${'' /* Background */}
+    background-image: url(${props => props.Image});
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    ${'' /* Font */}
+    color: var(--blue);
+    text-align: center;
+    font-family: "Roboto Slab";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    @media screen and (max-width: 427px){
+        right: -25px;
+    }
 `;
 
 export default BottomPart;

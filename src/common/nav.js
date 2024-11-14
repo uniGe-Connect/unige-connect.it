@@ -67,6 +67,14 @@ const NavContainer = styled.div`
 `;
 
 const Logo = styled.img`
+    @media screen and (max-width: 545px){
+      width: 200px;
+      height: auto;
+    }
+    @media screen and (max-width: 403pc){
+      width: 160px;
+      height: auto;
+    }
 `;
 
 const Section = styled.div`
