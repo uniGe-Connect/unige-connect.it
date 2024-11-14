@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon, Header, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
@@ -22,10 +22,9 @@ const GroupsPage = () => {
   const [newGroupType, setNewGroupType] = useState('public_open');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Send POST request to backend
   const createGroup = async (group) => {
     return getApiClient()
-      .CreateGroup({
+      .createGroup({
         name: group.name,
         topic: group.topic,
         description: group.description,
@@ -37,6 +36,17 @@ const GroupsPage = () => {
           group.id = response.data.id;
         }
         return group;
+      })
+      .catch(makeStandardApiErrorHandler((err) => console.log(err)));
+  };
+
+  const getOwnedGroups = () => {
+    return getApiClient()
+      .getOwnedGroups()
+      .then((response) => {
+        if (response) {
+          setGroups((prevGroups) => [...prevGroups, ...response.data]); // Using the updater form of setState
+        }
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)));
   };
@@ -61,7 +71,7 @@ const GroupsPage = () => {
     if (updatedGroup.id < 0) {
       alert('Error while creating group');
     } else {
-      setGroups([...groups, updatedGroup]);
+      setGroups((prevGroups) => [...prevGroups, updatedGroup]); // Using the updater form of setState
     }
 
     // Close the modal and reset the form
@@ -80,6 +90,10 @@ const GroupsPage = () => {
     setIsCreateModalOpen(false);
     resetForm();
   };
+
+  useEffect(() => {
+    getOwnedGroups();
+  }, []);
 
   return (
     <GroupPage>

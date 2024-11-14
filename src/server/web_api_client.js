@@ -28,7 +28,7 @@ const post = (endpoint, data) => {
 };
 
 class WebApiClient {
-  CreateGroup(props) {
+  createGroup(props) {
     const data = {
       name: props.name,
       topic: props.topic,
@@ -38,6 +38,10 @@ class WebApiClient {
     };
 
     return post('/groups/create-group', data);
+  }
+
+  getOwnedGroups() {
+    return get('/groups/get-your-groups');
   }
 }
 
