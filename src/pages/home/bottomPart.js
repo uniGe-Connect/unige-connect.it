@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Xarrow, { Xwrapper } from 'react-xarrows';
 import GroupCircle from '../../svgs/NumberOfGroup.svg';
-// import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
+import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 import { Icon } from 'semantic-ui-react';
 
 export const Card = (props) => {
@@ -12,7 +12,7 @@ export const Card = (props) => {
             <Text>{props.text}</Text>
             {props.title === 'Find Your Group' &&
             <CircleContainer Image={GroupCircle}>
-                {props.count ? `${props.count}+` : 1500}+ <br /> Study
+                {props.count ? `${props.count}` : 50}+ <br /> Study
             </CircleContainer>}
         </CardContainer>
     );
@@ -25,12 +25,12 @@ const Cards = [
 ];
 
 function BottomPart() {
-    // const [count, setCount] = useState(null);
-    // useEffect(() => {
-    //     getApiClient().fetchCount().then(res => {
-    //         setCount(res.data);
-    //     }).catch(makeStandardApiErrorHandler(error => console.log(error)));
-    // }, []);
+    const [count, setCount] = useState(null);
+    useEffect(() => {
+        getApiClient().getGroupCount().then(res => {
+            setCount(res.data);
+        }).catch(makeStandardApiErrorHandler(error => console.log(error)));
+    }, []);
 
   return (
     <Container>
@@ -42,7 +42,7 @@ function BottomPart() {
                 {Cards.map((data, index) => {
                     const ID = `elem${index + 1}`;
                     return (
-                        <Card count={null} title={data.title} text={data.text} key={data.title}
+                        <Card count={count} title={data.title} text={data.text} key={data.title}
                          id={ID} alignRight={index === 1 && true} icon={data.icon} />
                     );
                 })}
