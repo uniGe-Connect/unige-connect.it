@@ -28,6 +28,11 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "testMatch": [
+      "**/tests/*.test.js"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
