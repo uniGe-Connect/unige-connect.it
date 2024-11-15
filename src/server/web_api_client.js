@@ -25,7 +25,9 @@ const post = (endpoint, data) => {
 };
 
 class WebApiClient {
-  // Api goes here
+  getGroupCount() {
+    return get('/groups/get-groups-num');
+  };
 }
 
 export default WebApiClient;
