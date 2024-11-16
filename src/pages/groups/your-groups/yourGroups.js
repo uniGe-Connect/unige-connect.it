@@ -102,7 +102,7 @@ const GroupsPage = () => {
       <Title>Your groups</Title>
 
       {/* Button to open the Create Group Modal */}
-      <IconButton primary icon='add' onClick={() => setIsCreateModalOpen(true)} floated='right'>
+      <IconButton primary icon='add' onClick={() => setIsCreateModalOpen(true)} floated='right' aria-label="create-group-button">
         <Icon name='add' />
         Create Group
       </IconButton>
