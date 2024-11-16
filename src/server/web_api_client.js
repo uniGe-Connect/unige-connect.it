@@ -43,6 +43,11 @@ class WebApiClient {
   getOwnedGroups() {
     return get('/groups/get-your-groups');
   }
+
+  getGroupCount() {
+    return get('/groups/get-groups-num');
+  };
+
 }
 
 export default WebApiClient;
