@@ -85,11 +85,13 @@ const CreateGroupModal = ({
       </Modal.Content>
       <Modal.Actions>
         <DangerButton negative
-          onClick={onClose}>
+          onClick={onClose}
+          aria-label='cancel-group-button-modal'>
           Cancel
         </DangerButton>
         <MainButton positive
-          onClick={onCreate}>
+          onClick={onCreate}
+          aria-label='create-group-button-modal'>
           Create Group
         </MainButton>
       </Modal.Actions>
