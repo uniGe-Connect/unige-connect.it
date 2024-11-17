@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'semantic-ui-react';
 import People from '../../svgs/people.svg';
 
 function Body() {
@@ -91,11 +90,20 @@ const Text = styled.div`
     line-height: 32px;
 `;
 
-const CustomButton = styled(Button)`
-    background: var(--blue) !important;
-    color: white !important;
+const CustomButton = styled.button`
+    background: var(--blue);
+    color: white;
     width: 225px;
-    min-height: 50px !important;
+    min-height: 50px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 1.5em;
+
+    &:hover {
+        opacity: 0.9;
+    }
 
     @media screen and (max-width: 1178px){
       width: 100%;
