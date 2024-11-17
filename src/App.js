@@ -4,6 +4,9 @@ import { router } from './router';
 import { getApiClient } from './server/get_api_client';
 import { UserContext } from './contexts/user_context';
 
+import Nav from './common/nav';
+import Footer from './common/footer';
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'set-user':
@@ -35,7 +38,9 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
+      <Nav />
       <RouterProvider future={{ v7_startTransition: true }}router={router} />
+      <Footer />
     </UserContext.Provider>
   );
 };

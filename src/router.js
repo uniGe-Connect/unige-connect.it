@@ -3,12 +3,18 @@ import { createBrowserRouter } from 'react-router-dom';
 // Pages
 import Home from './pages/home/home';
 import PageNotFound from './pages/page-not-found/page_not_found';
+import MessageBoard from './pages/gorup-overview/messageBoard';
 
 export const router = createBrowserRouter(
   [
     {
       path: '/',
       element: <Home />,
+      errorElement: <PageNotFound />,
+    },
+    {
+      path: '/group-overview',
+      element: <MessageBoard />,
       errorElement: <PageNotFound />,
     },
   ],
