@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
 import WrapperCard from './wrapperCard';
 import Nav from '../../../common/nav';
-import Heading from '../../../common/heading';
 import CreateGroupModal from './createGroupModal'; // Import the new modal component
 
 const initialGroups = [
@@ -96,9 +95,9 @@ const GroupsPage = () => {
   }, []);
 
   return (
+    <Container>
+    <Nav />
     <GroupPage>
-      <Heading />
-      <Nav />
       <Title>Your groups</Title>
 
       {/* Button to open the Create Group Modal */}
@@ -132,8 +131,12 @@ const GroupsPage = () => {
         errorMessage={errorMessage}
         onCreate={handleCreateGroup} />
     </GroupPage>
+    </Container>
   );
 };
+
+const Container = styled.div`
+`;
 
 const GroupPage = styled.div`
   margin: 20px;

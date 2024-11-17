@@ -47,7 +47,6 @@ class WebApiClient {
   getGroupCount() {
     return get('/groups/get-groups-num');
   };
-
 }
 
 export default WebApiClient;
