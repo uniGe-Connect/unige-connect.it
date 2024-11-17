@@ -14,7 +14,12 @@
 }
 
 * {
+  font-family: 'Fira Sans';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(--gray) !important;
 }
