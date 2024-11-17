@@ -26,4 +26,4 @@ jobs:
       run: |
         cd /home/hamid/alpha.unige-connect.it/_work/unige-connect.it/unige-connect.it
         cat /home/hamid/env/alpha.unige-connect.it > .env
-        pm2 restart alpha
+        npm run build
