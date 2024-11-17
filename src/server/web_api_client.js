@@ -29,14 +29,12 @@ const post = (endpoint, data) => {
 
 class WebApiClient {
   createGroup(props) {
-    const data = {
-      name: props.name,
-      topic: props.topic,
-      description: props.description,
-      type: props.type,
-      owner_id: props.owner_id,
-    };
-
+    const data = new FormData();
+    data.append('name', props.name);
+    data.append('topic', props.topic);
+    data.append('description', props.description);
+    data.append('type', props.type);
+    data.append('owner_id', props.owner_id);
     return post('/groups/create-group', data);
   }
 
