@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <RouterProvider router={router} />
+      <RouterProvider future={{ v7_startTransition: true }}router={router} />
     </UserContext.Provider>
   );
 };
