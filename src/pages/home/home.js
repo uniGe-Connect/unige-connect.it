@@ -7,8 +7,7 @@ function Home() {
   <Container>
     <Body />
     <BottomPart />
-  </Container>)
-  ;
+  </Container>);
 }
 
 const Container = styled.div`
