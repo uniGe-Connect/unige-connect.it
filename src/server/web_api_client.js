@@ -4,7 +4,10 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const _getHeaders = () => {
   const token = localStorage.getItem('unige-connect_token');
-  return { Authorization: `Bearer ${token}` };
+  return {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -25,6 +28,20 @@ const post = (endpoint, data) => {
 };
 
 class WebApiClient {
+  createGroup(props) {
+    const data = new FormData();
+    data.append('name', props.name);
+    data.append('topic', props.topic);
+    data.append('description', props.description);
+    data.append('type', props.type);
+    data.append('owner_id', props.owner_id);
+    return post('/groups/create-group', data);
+  }
+
+  getOwnedGroups() {
+    return get('/groups/get-your-groups');
+  }
+
   getGroupCount() {
     return get('/groups/get-groups-num');
   };
