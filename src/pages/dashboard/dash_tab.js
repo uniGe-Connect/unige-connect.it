@@ -77,6 +77,11 @@ const Text = styled.div`
     font-family: 'Fira Sans';
     margin-bottom: 40px;
     font-size: 28px;
+    text-align: center;
+    
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
 `;
 const CustomButton = styled(Button)`
     background-color: var(--blue) !important;
@@ -87,6 +92,11 @@ const CustomButton = styled(Button)`
     border-radius: 5px  !important;
     min-height: 50px  !important;
     width: 250px !important;
+    
+    @media (max-width: 768px) {
+        width: 50% !important;
+        font-size: 14px !important;
+    }
     `;
 
 export default DashTab;

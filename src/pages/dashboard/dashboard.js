@@ -10,7 +10,7 @@ function Dashboard() {
     const [activeTab, setActiveTab] = useState('Dashboard');
 
     const navLinks = [
-        { path: 'dashboard', name: 'Dashboard' },
+        { path: 'dashtab', name: 'Dashboard' },
         { path: 'my', name: 'My Groups' },
         { path: 'notifications', name: 'Notifications' },
     ];

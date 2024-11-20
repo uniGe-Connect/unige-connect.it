@@ -11,8 +11,8 @@ function UserNav() {
     };
     return (
         <Container>
-            <Logo src={UnigeLogo} />
             <NavContainer Active={click}>
+                <Logo src={UnigeLogo} />
                 <DropdownContainer>
                     <DropdownHeader onClick={toggleDropdown}>
                         <HeaderText>Guest</HeaderText>
@@ -42,44 +42,41 @@ const Container = styled.div`
   height: 10vh;
   gap: 5vw;
   background-color: var(--blue);
+    
 `;
 
 const NavContainer = styled.div`
   display: flex;
-  align-items: center;
   gap: 5vw;
   min-width: 0px;
   transition: transform 0.5s ease;
-  
-  //Should be changed  
-  @media screen and (max-width: 670px){
-    z-index: 100;
-    position: absolute;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 50vh;
-    right: 0;
-    min-width: 100vw;
-    top: 9vh;
-    transform:  ${props => props.Active ? 'translateX(100%)' : 'translateX(0%)'};
-    background: var(--blue);
-  }
+  margin-right: 5vw;  
+    
 `;
 
 const Logo = styled.img`
     @media screen and (max-width: 545px){
       width: 200px;
       height: auto;
+      align-content: flex-start;  
     }
     @media screen and (max-width: 403pc){
       width: 160px;
-      height: auto;
+      height: auto;  
+      align-content: flex-start;
     }
 `;
 
 const DropdownContainer = styled.div`
-    position: relative;
-    display: inline-block;
+    position: absolute;
+    display: flex;
+    font-family: 'Fira Sans';
+    right: 15%;
+    @media screen and (max-width: 500px){
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    
 `;
 
 const DropdownHeader = styled.div`
@@ -92,6 +89,7 @@ const HeaderText = styled.div`
     font-family: 'Fira Sans';
     font-size: 18px;
     color: #FFF;
+  
 `;
 
 const Arrow = styled.img`
@@ -99,6 +97,7 @@ const Arrow = styled.img`
     height: 25px;
     transition: transform 0.3s ease;
     transform: ${props => (props.isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+    
 `;
 
 const DropdownMenu = styled.div`
@@ -121,6 +120,10 @@ const MenuItem = styled.div`
 
     &:hover {
         background-color: var(--light-gray);
+    }
+    
+    @media screen and (max-width: 500px){
+        font-size: 14px;
     }
 `;
 export default UserNav;
