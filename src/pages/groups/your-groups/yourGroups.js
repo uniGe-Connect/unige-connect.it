@@ -3,7 +3,6 @@ import { Icon, Header, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
 import WrapperCard from './wrapperCard';
-import Nav from '../../../common/nav';
 import CreateGroupModal from './createGroupModal'; // Import the new modal component
 
 const initialGroups = [
@@ -96,7 +95,6 @@ const GroupsPage = () => {
 
   return (
     <Container>
-    <Nav />
     <GroupPage>
       <Title>Your groups</Title>
 
@@ -136,10 +134,11 @@ const GroupsPage = () => {
 };
 
 const Container = styled.div`
+  min-height: 90vh;
+  padding: 5vh 15vw;
 `;
 
 const GroupPage = styled.div`
-  margin: 20px;
 `;
 
 const GroupContainer = styled.div`
