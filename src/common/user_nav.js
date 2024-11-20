@@ -50,7 +50,8 @@ const NavContainer = styled.div`
   gap: 5vw;
   min-width: 0px;
   transition: transform 0.5s ease;
-
+  
+  //Should be changed  
   @media screen and (max-width: 670px){
     z-index: 100;
     position: absolute;
