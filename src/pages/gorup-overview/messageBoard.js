@@ -23,9 +23,8 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 90vh;
-    padding: 5vh 15vw;
-
     gap: 20px;
+    width: 70vw;
 `;
 
 const TopSection = styled.div`

@@ -4,7 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/home/home';
 import PageNotFound from './pages/page-not-found/page_not_found';
 import YourGroups from './pages/groups/your-groups/yourGroups';
-import MessageBoard from './pages/gorup-overview/messageBoard';
+import GroupOverview from './pages/gorup-overview/groupOverview';
 
 export const router = createBrowserRouter(
   [
@@ -15,7 +15,7 @@ export const router = createBrowserRouter(
     },
     {
       path: '/group-overview',
-      element: <MessageBoard />,
+      element: <GroupOverview />,
       errorElement: <PageNotFound />,
     },
     {
