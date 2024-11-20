@@ -9,17 +9,17 @@ import DashTab from './pages/dashboard/dash_tab';
 export const router = createBrowserRouter(
   [
     {
-      path: '/home',
+      path: '/',
       element: <Home />,
       errorElement: <PageNotFound />,
     },
       {
-          path: '/',
+          path: '/user',
           element: <Dashboard />,
           errorElement: <PageNotFound />,
           children: [
               {
-                  path: '/dashboard',
+                  path: 'dashboard',
                   element: <DashTab />,
                   errorElement: <PageNotFound />,
               },
