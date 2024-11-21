@@ -4,34 +4,34 @@ import Filter from '../../svgs/filter.svg';
 import { Button } from 'semantic-ui-react';
 
 function DashTab() {
-  return (
-    <Container>
-        <SearchBox>
+    return (
+        <Container>
+            <SearchBox>
                 <SearchIcon src={Search} />
                 <SearchInput placeholder="Search..." />
                 <FilterIcon src={Filter} />
-        </SearchBox>
-        <ContentContainer>
-            <ActionContainer>
-                <Text> Search groups or create yours </Text>
-                <CustomButton> Create Group </CustomButton>
-            </ActionContainer>
-        </ContentContainer>
-    </Container>
-  );
+            </SearchBox>
+            <ContentContainer>
+                <ActionContainer>
+                    <Text> Search groups or create yours </Text>
+                    <CustomButton> Create Group </CustomButton>
+                </ActionContainer>
+            </ContentContainer>
+        </Container>
+    );
 }
 
 const Container = styled.div`
     margin: auto;
     width: 70%;
     padding: 10px 0px;
-    `;
+`;
 
 const SearchBox = styled.div`
     position: relative;
-    display: inline-block; 
+    display: inline-block;
     width: 100%;
-    `;
+`;
 
 const Icon = styled.img`
     position: absolute;
@@ -43,7 +43,7 @@ const Icon = styled.img`
 
 const SearchIcon = styled(Icon)`
     left: 10px;
-    `;
+`;
 
 const SearchInput = styled.input`
     padding: 10px 40px;
@@ -55,7 +55,7 @@ const SearchInput = styled.input`
 
 const FilterIcon = styled(Icon)`
     right: 10px;
-    `;
+`;
 
 const ContentContainer = styled.div`
     margin-top: 31px;
@@ -70,6 +70,7 @@ const ActionContainer = styled.div`
     width: 100%;
     border: 2px dashed var(--blue);
     background-color: var(--light-gray);
+    padding: 0px 20px;
 `;
 
 const Text = styled.div`
@@ -78,7 +79,7 @@ const Text = styled.div`
     margin-bottom: 40px;
     font-size: 28px;
     text-align: center;
-    
+
     @media (max-width: 768px) {
         font-size: 20px;
     }
@@ -92,11 +93,11 @@ const CustomButton = styled(Button)`
     border-radius: 5px  !important;
     min-height: 50px  !important;
     width: 250px !important;
-    
+
     @media (max-width: 768px) {
-        width: 50% !important;
         font-size: 14px !important;
+        width: 150px !important;
     }
-    `;
+`;
 
 export default DashTab;
