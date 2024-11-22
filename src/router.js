@@ -14,7 +14,7 @@ export const router = createBrowserRouter(
       errorElement: <PageNotFound />,
     },
     {
-      path: '/group-overview',
+      path: '/group-overview/:groupId',
       element: <GroupOverview />,
       errorElement: <PageNotFound />,
     },

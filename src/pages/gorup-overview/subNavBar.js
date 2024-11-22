@@ -1,49 +1,74 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-function SubNavBar() {
-    const [sliderPosition, setSliderPosition] = useState();
-    const [sliderWidth, setSliderWidth] = useState();
+function SubNavBar({ setStep, step }) {
+    const [sliderPosition, setSliderPosition] = useState(0);
+    const [sliderWidth, setSliderWidth] = useState(0);
     const elementRef = useRef(null);
     const firstElementRef = useRef(null);
+    const secondElementRef = useRef(null);
+    const thirdElementRef = useRef(null);
 
-    const handleCheckPosition = (event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        const wholeElement = elementRef.current.getBoundingClientRect();
-        setSliderWidth(rect.width);
-        setSliderPosition(rect.left - wholeElement.left);
-      };
+    const updateSliderPosition = (element) => {
+            const rect = element.getBoundingClientRect();
+            const wholeElement = elementRef.current.getBoundingClientRect();
+            setSliderWidth(rect.width);
+            setSliderPosition(rect.left - wholeElement.left);
+    };
 
     useEffect(() => {
-        const rect = firstElementRef.current.getBoundingClientRect();
-        const wholeElement = elementRef.current.getBoundingClientRect();
-        setSliderWidth(rect.width);
-        setSliderPosition(rect.left - wholeElement.left);
-    }, []);
+        const handleResize = () => {
+            if (elementRef.current) {
+                if (step === 0 && firstElementRef.current) {
+                    updateSliderPosition(firstElementRef.current);
+                } else if (step === 1 && secondElementRef.current) {
+                    updateSliderPosition(secondElementRef.current);
+                } else if (step === 2 && thirdElementRef.current) {
+                    updateSliderPosition(thirdElementRef.current);
+                }
+            }
+        };
 
-  return (
-    <Container>
-        <ElementContainer ref={elementRef}>
-            <Element ref={firstElementRef} onClick={handleCheckPosition}>Message Board</Element>
-            <Element onClick={handleCheckPosition}>Members</Element>
-            <Element onClick={handleCheckPosition}>Settings</Element>
-        </ElementContainer>
-        <SliderContainer>
-            <Slider width={sliderWidth} position={sliderPosition} />
-        </SliderContainer>
-    </Container>
-  );
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [step]);
+
+    const handleCheckPosition = (event) => {
+        const CurrentTag = event.currentTarget.innerHTML;
+        setStep(CurrentTag === 'Message Board' ? 0 : CurrentTag === 'Members' ? 1 : 2);
+
+        if (CurrentTag === 'Message Board') {
+            updateSliderPosition(firstElementRef.current);
+        } else if (CurrentTag === 'Members') {
+            updateSliderPosition(secondElementRef.current);
+        } else if (CurrentTag === 'Settings') {
+            updateSliderPosition(thirdElementRef.current);
+        }
+    };
+
+    return (
+        <Container>
+            <ElementContainer ref={elementRef}>
+                <Element ref={firstElementRef} onClick={handleCheckPosition}>Message Board</Element>
+                <Element ref={secondElementRef} onClick={handleCheckPosition}>Members</Element>
+                <Element ref={thirdElementRef} onClick={handleCheckPosition}>Settings</Element>
+            </ElementContainer>
+            <SliderContainer>
+                <Slider width={sliderWidth} position={sliderPosition} />
+            </SliderContainer>
+        </Container>
+    );
 }
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 const Slider = styled.div`
     position: absolute;
-    left: ${props => props.position}px;
+    left: ${(props) => props.position}px;
     background-color: var(--blue);
     transition: all 0.3s ease;
-    width: ${props => props.width}px;   
+    width: ${(props) => props.width}px;
     height: 100%;
 `;
 
@@ -56,7 +81,7 @@ const ElementContainer = styled.div`
 
 const Element = styled.div`
     cursor: pointer;
-    color: #002677;
+    color: var(--blue);
     text-align: center;
     font-family: "Fira Sans";
     font-size: 16px;

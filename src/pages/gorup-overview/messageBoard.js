@@ -2,9 +2,9 @@ import React from 'react';
 import MessageCard from './messageCard';
 import styled from 'styled-components';
 
-function MessageBoard() {
+function MessageBoard(props) {
   return (
-    <Container>
+    <Container leftAmount={props.width}>
         <TopSection>
             <Header>
                 Message Board
@@ -21,8 +21,11 @@ function MessageBoard() {
 
 const Container = styled.div`
     display: flex;
+    position: absolute;
     flex-direction: column;
     min-height: 90vh;
+    left: ${props => props.leftAmount}px;
+    transition: left 0.5s ease;
     gap: 20px;
     width: 70vw;
 `;
