@@ -2,8 +2,21 @@ import styled from 'styled-components';
 import Search from '../../svgs/searchicon.svg';
 import Filter from '../../svgs/filter.svg';
 import { Button } from 'semantic-ui-react';
+import GroupCard from './group_card';
+import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
+import { useState, useEffect } from 'react';
 
 function DashTab() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        getApiClient().getGroups().then((response) => {
+            console.log(response);
+            setData(response.data);
+        }
+        )
+        .catch(makeStandardApiErrorHandler((error) => console.log(error)));
+    }, []);
     return (
         <Container>
             <SearchBox>
@@ -12,13 +25,28 @@ function DashTab() {
                 <FilterIcon src={Filter} />
             </SearchBox>
             <ContentContainer>
+            {data.length === 0 &&
                 <ActionContainer>
                     <Text> Search groups or create yours </Text>
                     <CustomButton> Create Group </CustomButton>
-                </ActionContainer>
+                </ActionContainer>}
+
+            {data.length > 0 && data.map((group) => {
+                    console.log(group);
+                    return (
+                        <GroupCard key={group.id}
+                        header={group.name}
+                        text={group.description}
+                        membersNumber={group.membersNumber}
+                        date={group.date.split('T')[0]}
+                        tags={group.tags}
+                        type={group.type} />
+                    );
+                })}
             </ContentContainer>
+
         </Container>
-    );
+  );
 }
 
 const Container = styled.div`
@@ -58,6 +86,9 @@ const FilterIcon = styled(Icon)`
 `;
 
 const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
     margin-top: 31px;
 `;
 
