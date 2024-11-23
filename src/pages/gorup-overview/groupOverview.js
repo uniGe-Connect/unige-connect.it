@@ -5,10 +5,15 @@ import CurrentPage from '../../common/currentPage';
 import SubNavBar from './subNavBar';
 import Members from './members';
 import Settings from './settings';
+import { useParams } from 'react-router-dom';
+import UserNav from '../../common/user_nav';
+import Footer from '../../common/footer';
 
 function GroupOverview() {
     const [width, setWidth] = useState();
     const [step, setStep] = useState(0);
+    const [data, setData] = useState();
+    const { groupId } = useParams();
     const widthRef = useRef(null);
 
     useEffect(() => {
@@ -21,15 +26,20 @@ function GroupOverview() {
     }, [width]);
 
   return (
+    <>
+    <UserNav />
     <Container>
-        <CurrentPage text="Dashboard > DOPE Aerospace - UniGe" />
+        <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
         <SubNavBar step={step} setStep={setStep} />
         <SubContainer ref={widthRef}>
-            <MessageBoard width={step === 0 ? 0 : step === 1 ? -width : 2 * -width} />
+            <MessageBoard data={data} setData={setData}
+            groupId={groupId} width={step === 0 ? 0 : step === 1 ? -width : 2 * -width} />
             <Members width={step === 0 ? width : step === 1 ? 0 : -width} />
-            <Settings width={step === 0 ? 2 * width : step === 1 ? width : 0} />
+            <Settings groupId={groupId} width={step === 0 ? 2 * width : step === 1 ? width : 0} />
         </SubContainer>
     </Container>
+    <Footer />
+    </>
   );
 }
 

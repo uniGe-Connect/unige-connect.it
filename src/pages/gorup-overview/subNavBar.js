@@ -88,6 +88,7 @@ const Element = styled.div`
     font-style: normal;
     font-weight: 500;
     line-height: 18px;
+    white-space: nowrap;
 `;
 
 const SliderContainer = styled.div`

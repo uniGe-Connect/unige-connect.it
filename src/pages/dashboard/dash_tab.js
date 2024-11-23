@@ -52,6 +52,7 @@ function DashTab() {
 const Container = styled.div`
     margin: auto;
     width: 70%;
+    min-height: 85vh;
     padding: 10px 0px;
 `;
 

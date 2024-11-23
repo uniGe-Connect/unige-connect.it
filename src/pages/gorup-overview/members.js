@@ -9,6 +9,7 @@ function Members(props) {
 
 const Container = styled.div`
     display: flex;
+    align-items: center;
     position: absolute;
     left: ${props => props.leftAmount}px;
     transition: left 0.5s ease;

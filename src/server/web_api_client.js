@@ -82,6 +82,10 @@ class WebApiClient {
   getGroups() {
     return get('/groups');
   }
+
+  getGroupInfo(id) {
+    return get('/groups', id);
+  }
 }
 
 export default WebApiClient;

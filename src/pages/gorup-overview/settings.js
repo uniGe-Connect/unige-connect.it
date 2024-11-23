@@ -2,14 +2,14 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import CustomButton from '../../common/customButton';
 import { Modal, Button } from 'semantic-ui-react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 
 function Settings(props) {
+  const navigation = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
-  const { groupId } = useParams();
 
   const handleOnClick = useCallback(() => {
     setIsOpen(true);
@@ -27,19 +27,13 @@ function Settings(props) {
 
   const deleteGroup = useCallback(() => {
     if (input === 'Delete') {
-      console.log('we did it for now');
-
-      getApiClient().deleteGroup(groupId).then(res => {
-        if (res.data) {
-          useNavigate('/groups/your-groups');
-        } else {
-
-        }
-      }).error(makeStandardApiErrorHandler(error => console.log(error)));
+      getApiClient().deleteGroup(props.groupId).then(res => {
+        navigation('/dashboard');
+      }).catch(makeStandardApiErrorHandler(error => console.log(error)));
     } else {
       setError(true);
     }
-  }, [input, groupId]);
+  }, [input, props.groupId, navigation]);
 
   return (
     <>

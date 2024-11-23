@@ -29,6 +29,10 @@ const Container = styled.div`
 
     background: #F4F4F4;
     padding: 1.5vh 1.3vw;
+
+    @media screen and (max-width: 583px) {
+        padding: 1.5vh 5vw;
+    }
 `;
 
 const Header = styled.div`

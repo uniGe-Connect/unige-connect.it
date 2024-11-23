@@ -3,8 +3,9 @@ import NavigationBar from '../dashboard/navigation';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import DashTab from './dash_tab';
-import MyGroups from './my_groups_tab';
 import Notifications from './notifications_tab';
+import GroupsPage from '../groups/your-groups/yourGroups';
+import Footer from '../../common/footer';
 
 function Dashboard() {
     const [activeTab, setActiveTab] = useState('Dashboard');
@@ -20,7 +21,7 @@ function Dashboard() {
             case 'Dashboard':
                 return <DashTab />;
             case 'My Groups':
-                return <MyGroups />;
+                return <GroupsPage />;
             case 'Notifications':
                 return <Notifications />;
             default:
@@ -35,6 +36,7 @@ function Dashboard() {
                 <Content>
                     {renderContent()}
                 </Content>
+                <Footer />
             </Container>)
         ;
     }
@@ -42,7 +44,7 @@ function Dashboard() {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
 `;
 
 const Content = styled.div`
