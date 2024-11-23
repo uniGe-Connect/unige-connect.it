@@ -18,12 +18,15 @@ function GroupOverview() {
 
     useEffect(() => {
         const handleWidth = () => {
-            const wholeElement = widthRef.current.getBoundingClientRect();
-            setWidth(wholeElement.width);
+            if (widthRef.current) {
+                const wholeElement = widthRef.current.getBoundingClientRect();
+                setWidth(wholeElement.width);
+            }
         };
         handleWidth();
         window.addEventListener('resize', handleWidth);
-    }, [width]);
+        return () => window.removeEventListener('resize', handleWidth);
+    }, []);
 
   return (
     <>

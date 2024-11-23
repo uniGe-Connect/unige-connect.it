@@ -11,7 +11,6 @@ function DashTab() {
 
     useEffect(() => {
         getApiClient().getGroups().then((response) => {
-            console.log(response);
             setData(response.data);
         }
         )
@@ -32,7 +31,6 @@ function DashTab() {
                 </ActionContainer>}
 
             {data.length > 0 && data.map((group) => {
-                    console.log(group);
                     return (
                         <GroupCard key={group.id}
                         header={group.name}

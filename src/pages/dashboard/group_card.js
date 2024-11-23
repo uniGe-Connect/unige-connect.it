@@ -5,10 +5,6 @@ import LockIcon from '../../svgs/lockIcon.svg';
 import { Button } from 'semantic-ui-react';
 
 function GroupCard(props) {
-   props.tags.map(
-        (tag) => console.log(tag)
-    );
-
     const button = (props) => {
         switch (props.type) {
             case 'public_closed':
