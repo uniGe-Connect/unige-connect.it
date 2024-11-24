@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Icon, Header, Button } from 'semantic-ui-react';
+import { Icon, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
 import WrapperCard from './wrapperCard';
-import Nav from '../../../common/nav';
 import CreateGroupModal from './createGroupModal'; // Import the new modal component
 
 const initialGroups = [
@@ -96,10 +95,7 @@ const GroupsPage = () => {
 
   return (
     <Container>
-    <Nav />
     <GroupPage>
-      <Title>Your groups</Title>
-
       {/* Button to open the Create Group Modal */}
       <IconButton primary icon='add' onClick={() => setIsCreateModalOpen(true)} floated='right' aria-label="create-group-button">
         <Icon name='add' />
@@ -136,21 +132,15 @@ const GroupsPage = () => {
 };
 
 const Container = styled.div`
+  min-height: 90vh;
+  padding: 0px 15vw;
 `;
 
 const GroupPage = styled.div`
-  margin: 20px;
 `;
 
 const GroupContainer = styled.div`
   padding: 0px;
-`;
-
-const Title = styled(Header).attrs({
-  as: 'h1', // Ensures the Header renders as an <h1> tag
-})`
-  font-family: 'Roboto Slab';
-  margin-top: 40px;
 `;
 
 const IconButton = styled(Button).attrs(props => ({

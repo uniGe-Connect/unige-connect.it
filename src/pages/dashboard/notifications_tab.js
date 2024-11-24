@@ -11,6 +11,7 @@ function Notifications() {
 const Container = styled.div`
     text-align: center;
     width: 100%;
+    min-height: 85vh;
 `;
 
 export default Notifications;

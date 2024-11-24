@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from '../../common/nav';
 import Body from './body';
 import BottomPart from './bottomPart';
+import Nav from '../../common/nav';
 import Footer from '../../common/footer';
 
 function Home() {
@@ -12,8 +12,7 @@ function Home() {
     <Body />
     <BottomPart />
     <Footer />
-  </Container>)
-  ;
+  </Container>);
 }
 
 const Container = styled.div`

@@ -1,9 +1,11 @@
 import { Card, Icon } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 function WrapperCard(props) {
     const group = props.group;
     return (
-        <Card key={group.id} fluid color='blue' style={{ marginBottom: '20px', backgroundColor: 'var(--gray) !important' }}>
+        <NavLink to={`/group-overview/${group.id}`}>
+        <Card key={group.id} fluid color='blue' style={{ marginBottom: '20px', background: '#F4F4F4' }}>
             <Card.Content>
                 <a href='#' style={{ fontSize: '20px' }}>
                     <Card.Header><strong>{group.name}</strong>{group.type === 'private' && <Icon name='lock' style={{ padding: '10px' }} />}</Card.Header>
@@ -22,6 +24,7 @@ function WrapperCard(props) {
                 </Card.Description>
             </Card.Content>
         </Card>
+        </NavLink>
     );
 }
 
