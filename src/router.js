@@ -5,8 +5,7 @@ import Dashboard from './pages/dashboard/dashboard';
 import MyGroups from './pages/dashboard/my_groups_tab';
 import Notifications from './pages/dashboard/notifications_tab';
 import DashTab from './pages/dashboard/dash_tab';
-import YourGroups from './pages/groups/your-groups/yourGroups';
-import GroupOverview from './pages/gorup-overview/groupOverview';
+import GroupOverview from './pages/group-overview/groupOverview';
 
 export const router = createBrowserRouter(
   [
@@ -41,11 +40,6 @@ export const router = createBrowserRouter(
                 errorElement: <PageNotFound />,
             },
         ]
-    },
-    {
-      path: '/groups/your-groups',
-      element: <YourGroups />,
-      errorElement: <PageNotFound />,
     },
   ],
   {
