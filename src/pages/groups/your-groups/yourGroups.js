@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
 import WrapperCard from './wrapperCard';
 import CreateGroupModal from './createGroupModal'; // Import the new modal component
+import RequireUserAccess from '../../../permissions/RequireUserAccess';
 
 const GroupsPage = () => {
   const [groups, setGroups] = useState([]);
@@ -35,7 +36,7 @@ const GroupsPage = () => {
     return getApiClient()
       .getOwnedGroups()
       .then((response) => {
-        if (response) {
+        if (response && response.data && response.data.data && response.data.data.length > 0) {
           setGroups((prevGroups) => [...prevGroups, ...response.data.data]); // Using the updater form of setState
         }
       })
@@ -145,4 +146,4 @@ const IconButton = styled(Button).attrs(props => ({
   background-color: var(--blue) !important;
 `;
 
-export default GroupsPage;
+export default RequireUserAccess(GroupsPage);
