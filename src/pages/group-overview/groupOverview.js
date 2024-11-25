@@ -8,6 +8,7 @@ import Settings from './settings';
 import { useParams } from 'react-router-dom';
 import UserNav from '../../common/user_nav';
 import Footer from '../../common/footer';
+import RequireUserAccess from '../../permissions/RequireUserAccess';
 
 function GroupOverview() {
     const [width, setWidth] = useState();
@@ -61,4 +62,4 @@ const SubContainer = styled.div`
     overflow: hidden;
 `;
 
-export default GroupOverview;
+export default RequireUserAccess(GroupOverview);
