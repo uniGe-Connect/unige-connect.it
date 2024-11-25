@@ -34,7 +34,6 @@ function GroupOverview() {
     <Nav />
     <Container>
         <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
-        <p>{`${data ? data.description : ''}`}</p>
         <SubNavBar step={step} setStep={setStep} />
         <SubContainer ref={widthRef}>
             <MessageBoard data={data} setData={setData}
