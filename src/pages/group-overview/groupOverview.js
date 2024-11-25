@@ -6,8 +6,8 @@ import SubNavBar from './subNavBar';
 import Members from './members';
 import Settings from './settings';
 import { useParams } from 'react-router-dom';
-import UserNav from '../../common/user_nav';
 import Footer from '../../common/footer';
+import Nav from '../../common/nav';
 
 function GroupOverview() {
     const [width, setWidth] = useState();
@@ -30,7 +30,7 @@ function GroupOverview() {
 
   return (
     <>
-    <UserNav />
+    <Nav />
     <Container>
         <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
         <SubNavBar step={step} setStep={setStep} />

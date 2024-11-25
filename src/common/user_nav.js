@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import UnigeLogo from '../svgs/UnigeConnect.svg';
 import ArrowIcon from '../svgs/arrow.svg';
+import { UserContext } from '../contexts/user_context';
+import { getApiClient, makeStandardApiErrorHandler } from '../server/get_api_client';
 
 function UserNav() {
+    const { user } = useContext(UserContext);
     const [click] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
+    const handleSignOut = useCallback(() => {
+        getApiClient().logout().then(res => {
+            window.location.href = res.data.redirect_url;
+        }).catch(makeStandardApiErrorHandler(error => console.log(error)));
+      }, []);
     return (
         <Container>
             <Logo src={UnigeLogo} />
             <NavContainer Active={click}>
                 <DropdownContainer>
                     <DropdownHeader onClick={toggleDropdown}>
-                        <HeaderText>Guest</HeaderText>
+                        <HeaderText>{(user && user.name) + ' ' + (user && user.last_name)}</HeaderText>
                         <Arrow src={ArrowIcon} isOpen={isOpen} />
                     </DropdownHeader>
                     {isOpen && (
                         <DropdownMenu>
                             <MenuItem>Profile</MenuItem>
                             <MenuItem>Support</MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={handleSignOut}>Logouts</MenuItem>
                         </DropdownMenu>
                     )}
                 </DropdownContainer>
