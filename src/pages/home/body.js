@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import People from '../../svgs/people.svg';
+import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 
 function Body() {
+  const handleSignIn = useCallback(() => {
+    getApiClient().login().then(res => {
+      window.location.href = res.data.redirect_url;
+    }).catch(makeStandardApiErrorHandler(error => console.log(error)));
+  }, []);
+
   return (
     <Container>
         <LeftSection>
@@ -14,7 +21,7 @@ function Body() {
                 academic goals. Collaborate on projects, build study groups,
                 and conquer challenges together.
             </Text>
-            <CustomButton>CONNECT NOW</CustomButton>
+            <CustomButton onClick={handleSignIn}>CONNECT NOW</CustomButton>
         </LeftSection>
         <RightSection src={People} />
     </Container>

@@ -5,14 +5,8 @@ import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_a
 import WrapperCard from './wrapperCard';
 import CreateGroupModal from './createGroupModal'; // Import the new modal component
 
-const initialGroups = [
-  { id: 1, name: 'React Developers', topic: 'React', description: 'A group for React enthusiasts', type: 'public_open' },
-  { id: 2, name: 'Node.js Experts', topic: 'Backend Development', description: 'A group for Node.js developers', type: 'public_closed' },
-  { id: 3, name: 'Web Designers', topic: 'Design', description: 'A group for creative designers', type: 'private' },
-];
-
 const GroupsPage = () => {
-  const [groups, setGroups] = useState(initialGroups);
+  const [groups, setGroups] = useState([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
   const [newGroupTopic, setNewGroupTopic] = useState('');
@@ -27,7 +21,6 @@ const GroupsPage = () => {
         topic: group.topic,
         description: group.description,
         type: group.type,
-        owner_id: group.owner_id
       })
       .then((response) => {
         if (response.data.id) {
@@ -43,7 +36,7 @@ const GroupsPage = () => {
       .getOwnedGroups()
       .then((response) => {
         if (response) {
-          setGroups((prevGroups) => [...prevGroups, ...response.data]); // Using the updater form of setState
+          setGroups((prevGroups) => [...prevGroups, ...response.data.data]); // Using the updater form of setState
         }
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)));
@@ -62,7 +55,6 @@ const GroupsPage = () => {
       topic: newGroupTopic,
       description: newGroupDescription,
       type: newGroupType,
-      owner_id: 1, // Assuming the logged-in user has ID 1
     };
     const updatedGroup = await createGroup(newGroup);
 

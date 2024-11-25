@@ -39,8 +39,8 @@ function GroupCard(props) {
 
             <RowContainer>
             <Flex>
-                <SubFlex><Icon src={UsersIcon} /><IconText>{`${props.membersNumber} Members`}</IconText></SubFlex>
-                <SubFlex><Icon src={DateIcon} /><IconText>{props.date}</IconText></SubFlex>
+                <SubFlex><Icon src={UsersIcon} /><IconText>{`${props.membersNumber ? props.membersNumber : '10'} Members`}</IconText></SubFlex>
+                <SubFlex><Icon src={DateIcon} /><IconText>{props.date.split('T')[0]}</IconText></SubFlex>
             </Flex>
             </RowContainer>
         </TopSection>
@@ -48,7 +48,7 @@ function GroupCard(props) {
             {props.text}
         </Text>
         <Flex>
-        {props.tags.map((tag) => {
+        {props.tags > 0 && props.tags.map((tag) => {
            return (
             <Tag key={tag}>
             {`#${tag}`}
