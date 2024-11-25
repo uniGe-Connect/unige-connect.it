@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/home/home';
+import Redirect from './pages/home/redirect';
 import PageNotFound from './pages/page-not-found/page_not_found';
 import Dashboard from './pages/dashboard/dashboard';
 import MyGroups from './pages/dashboard/my_groups_tab';
@@ -12,6 +13,11 @@ export const router = createBrowserRouter(
     {
       path: '/',
       element: <Home />,
+      errorElement: <PageNotFound />,
+    },
+    {
+      path: '/redirect',
+      element: <Redirect />,
       errorElement: <PageNotFound />,
     },
     {

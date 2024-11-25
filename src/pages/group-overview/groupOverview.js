@@ -6,8 +6,8 @@ import SubNavBar from './subNavBar';
 import Members from './members';
 import Settings from './settings';
 import { useParams } from 'react-router-dom';
-import UserNav from '../../common/user_nav';
 import Footer from '../../common/footer';
+import Nav from '../../common/nav';
 import RequireUserAccess from '../../permissions/RequireUserAccess';
 
 function GroupOverview() {
@@ -31,9 +31,10 @@ function GroupOverview() {
 
   return (
     <>
-    <UserNav />
+    <Nav />
     <Container>
         <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
+        <p>{`${data ? data.description : ''}`}</p>
         <SubNavBar step={step} setStep={setStep} />
         <SubContainer ref={widthRef}>
             <MessageBoard data={data} setData={setData}

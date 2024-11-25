@@ -7,11 +7,10 @@ import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_
 import { useState, useEffect } from 'react';
 
 function DashTab() {
-    const [data, setData] = useState([]);
-
+    const [data, setData] = useState();
     useEffect(() => {
         getApiClient().getGroups().then((response) => {
-            setData(response.data);
+            setData(response.data.data);
         }
         )
         .catch(makeStandardApiErrorHandler((error) => console.log(error)));
@@ -24,20 +23,18 @@ function DashTab() {
                 <FilterIcon src={Filter} />
             </SearchBox>
             <ContentContainer>
-            {data.length === 0 &&
+            {!data &&
                 <ActionContainer>
                     <Text> Search groups or create yours </Text>
                     <CustomButton> Create Group </CustomButton>
                 </ActionContainer>}
 
-            {data.length > 0 && data.map((group) => {
+            {data && data.map((group) => {
                     return (
                         <GroupCard key={group.id}
                         header={group.name}
                         text={group.description}
-                        membersNumber={group.membersNumber}
-                        date={group.date.split('T')[0]}
-                        tags={group.tags}
+                        date={group.created_at}
                         type={group.type} />
                     );
                 })}

@@ -49,22 +49,11 @@ const put = (endpoint, id, data) => {
 
 class WebApiClient {
   createGroup(props) {
-    const data = new FormData();
-    data.append('name', props.name);
-    data.append('topic', props.topic);
-    data.append('description', props.description);
-    data.append('type', props.type);
-    data.append('owner_id', props.owner_id);
-    return post('/groups/create-group', data);
+    return post('/groups', props);
   }
 
   updateGroup(groupId, props) {
-    const data = new FormData();
-    data.append('name', props.name);
-    data.append('topic', props.topic);
-    data.append('description', props.description);
-    data.append('type', props.type);
-    return put('/groups', groupId, data);
+    return put('/groups', groupId, props);
   }
 
   deleteGroup(groupId) {
@@ -72,11 +61,11 @@ class WebApiClient {
   }
 
   getOwnedGroups() {
-    return get('/groups/get-your-groups');
+    return get('/groups?owner=mine');
   }
 
   getGroupCount() {
-    return get('/groups/get-groups-num');
+    return get('/groups/count');
   };
 
   getGroups() {
@@ -85,6 +74,18 @@ class WebApiClient {
 
   getGroupInfo(id) {
     return get('/groups', id);
+  }
+
+  login() {
+    return get('/auth/login');
+  }
+
+  me() {
+    return get('/auth/me');
+  }
+
+  logout() {
+    return get('/auth/logout');
   }
 }
 

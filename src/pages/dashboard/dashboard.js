@@ -1,4 +1,4 @@
-import UserNav from '../../common/user_nav';
+import Nav from '../../common/nav';
 import NavigationBar from '../dashboard/navigation';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -31,7 +31,7 @@ function Dashboard() {
 
     return (
             <Container>
-                <UserNav />
+                <Nav />
                 <NavigationBar links={navLinks} onLinkClick={(key) => setActiveTab(key)} activeTab={activeTab} />
                 <Content>
                     {renderContent()}
