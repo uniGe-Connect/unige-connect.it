@@ -65,7 +65,7 @@ class WebApiClient {
   }
 
   getGroupCount() {
-    return get('/groups/get-groups-num');
+    return get('/groups/count');
   };
 
   getGroups() {
