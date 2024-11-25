@@ -6,6 +6,7 @@ import DashTab from './dash_tab';
 import Notifications from './notifications_tab';
 import GroupsPage from '../groups/your-groups/yourGroups';
 import Footer from '../../common/footer';
+import RequireUserAccess from '../../permissions/RequireUserAccess';
 
 function Dashboard() {
     const [activeTab, setActiveTab] = useState('Dashboard');
@@ -55,4 +56,4 @@ const Content = styled.div`
     padding-top: 25px;
 `;
 
-export default Dashboard;
+export default RequireUserAccess(Dashboard);

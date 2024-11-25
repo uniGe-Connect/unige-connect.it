@@ -8,6 +8,7 @@ import Settings from './settings';
 import { useParams } from 'react-router-dom';
 import Footer from '../../common/footer';
 import Nav from '../../common/nav';
+import RequireUserAccess from '../../permissions/RequireUserAccess';
 
 function GroupOverview() {
     const [width, setWidth] = useState();
@@ -33,7 +34,6 @@ function GroupOverview() {
     <Nav />
     <Container>
         <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
-        <p>{`${data ? data.description : ''}`}</p>
         <SubNavBar step={step} setStep={setStep} />
         <SubContainer ref={widthRef}>
             <MessageBoard data={data} setData={setData}
@@ -62,4 +62,4 @@ const SubContainer = styled.div`
     overflow: hidden;
 `;
 
-export default GroupOverview;
+export default RequireUserAccess(GroupOverview);
