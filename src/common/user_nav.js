@@ -1,11 +1,13 @@
 import React, { useState, useContext, useCallback } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import UnigeLogo from '../svgs/UnigeConnect.svg';
 import ArrowIcon from '../svgs/arrow.svg';
 import { UserContext } from '../contexts/user_context';
 import { getApiClient, makeStandardApiErrorHandler } from '../server/get_api_client';
 
 function UserNav() {
+    const navigation = useNavigate();
     const { user } = useContext(UserContext);
     const [click] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
@@ -17,9 +19,13 @@ function UserNav() {
             window.location.href = res.data.redirect_url;
         }).catch(makeStandardApiErrorHandler(error => console.log(error)));
       }, []);
+
+    const redirectHome = useCallback(() => {
+        navigation('/');
+    }, [navigation]);
     return (
         <Container>
-            <Logo src={UnigeLogo} />
+            <Logo src={UnigeLogo} onClick={redirectHome} />
             <NavContainer Active={click}>
                 <DropdownContainer>
                     <DropdownHeader onClick={toggleDropdown}>
@@ -73,6 +79,7 @@ const Logo = styled.img`
         height: auto;
         align-content: flex-start;
     }
+    cursor: pointer;
 `;
 
 const DropdownContainer = styled.div`
