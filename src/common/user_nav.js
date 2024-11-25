@@ -23,6 +23,10 @@ function UserNav() {
     const redirectHome = useCallback(() => {
         navigation('/');
     }, [navigation]);
+
+    const redirectDashboard = useCallback(() => {
+        navigation('/dashboard');
+    }, [navigation]);
     return (
         <Container>
             <Logo src={UnigeLogo} onClick={redirectHome} />
@@ -34,9 +38,10 @@ function UserNav() {
                     </DropdownHeader>
                     {isOpen && (
                         <DropdownMenu>
+                            <MenuItem onClick={redirectDashboard}>Dashboard</MenuItem>
                             <MenuItem>Profile</MenuItem>
                             <MenuItem>Support</MenuItem>
-                            <MenuItem onClick={handleSignOut}>Logouts</MenuItem>
+                            <MenuItem onClick={handleSignOut}>Logout</MenuItem>
                         </DropdownMenu>
                     )}
                 </DropdownContainer>
