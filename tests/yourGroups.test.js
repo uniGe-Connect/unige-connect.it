@@ -16,6 +16,11 @@ jest.mock('../src/permissions/RequireUserAccess', () => (Component) => (props) =
 
 describe('GroupsPage', () => {
 
+  test('if there is no groups, "No groups available" is shown', () => {
+    render(<GroupsPage />);
+    expect(screen.getByText('No groups available')).toBeInTheDocument();
+  });
+
   test('should show modal when "Create Group" button is clicked', () => {
     render(<GroupsPage />);
     const createGroupButton = screen.getByLabelText(/create-group-button/i);
