@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from '../src/contexts/user_context';
 import PageNotFound from '../src/pages/page-not-found/page_not_found';
-import { Link } from 'react-router-dom';
 
 function FixedPageNotFound() {
   return (

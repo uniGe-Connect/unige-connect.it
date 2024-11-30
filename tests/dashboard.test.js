@@ -6,7 +6,6 @@ import { UserContext } from '../src/contexts/user_context';
 import GroupCard from '../src/pages/dashboard/group_card';
 import { Container } from 'semantic-ui-react';
 
-
 // Mocking the API calls
 jest.mock('../src/server/get_api_client', () => ({
   getApiClient: () => ({

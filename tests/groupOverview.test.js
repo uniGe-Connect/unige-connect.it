@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
-import GroupOverview from '../src/pages/group-overview/groupOverview';
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from '../src/contexts/user_context';
-
+import GroupOverview from '../src/pages/group-overview/groupOverview';
 
 // Mocking the API calls
 jest.mock('../src/server/get_api_client', () => ({

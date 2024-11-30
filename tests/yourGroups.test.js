@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import GroupsPage from '../src/pages/groups/your-groups/yourGroups';
 import { BrowserRouter } from 'react-router-dom'
 import '@testing-library/jest-dom/extend-expect';
+import GroupsPage from '../src/pages/groups/your-groups/yourGroups';
 
 // Mocking the API calls
 jest.mock('../src/server/get_api_client', () => ({
