@@ -50,7 +50,7 @@ const Text = styled.div`
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
-    line-height: 27px; /* 150% */
+    line-height: 27px;
 `;
 
 const TopSection = styled.div`

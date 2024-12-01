@@ -90,6 +90,8 @@ const CreateGroupModal = ({
           Cancel
         </DangerButton>
         <MainButton positive
+          floated='right'
+          primary
           onClick={onCreate}
           aria-label='create-group-button-modal'>
           Create Group
@@ -99,17 +101,12 @@ const CreateGroupModal = ({
   );
 };
 
-const MainButton = styled(Button).attrs(props => ({
-  primary: props.primary,
-  floated: 'right',
-}))`
+const MainButton = styled(Button)`
   margin: 20px !important;
   background-color: var(--blue) !important;
 `;
 
-const DangerButton = styled(Button).attrs(props => ({
-  negative: props.negative,
-}))`
+const DangerButton = styled(Button)`
   margin: 20px !important;
   background-color: var(--red) !important;
 `;

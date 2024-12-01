@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import MessageCard from './messageCard';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
+import { LoaderContext } from '../../contexts/loader_context';
 
 function MessageBoard(props) {
+    const { setLoader } = useContext(LoaderContext);
     const navigation = useNavigate();
     useEffect(() => {
+        setLoader(true);
         getApiClient().getGroupInfo(props.groupId).then(res => {
             props.setData(res.data);
         }
         )
-        .catch(makeStandardApiErrorHandler(() => navigation('/dashboard')));
+        .catch(makeStandardApiErrorHandler(() => navigation('/dashboard')))
+        .finally(() => setLoader(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -27,7 +31,7 @@ function MessageBoard(props) {
         </TopSection>
         {props.data &&
         <>
-            <MessageCard header={`Welcome to ${props.data.name}`} text={props.data.description} user="John Doe" date={props.data.created_at.split('T')[0]} />
+            <MessageCard header="Updates on 14 May" text="DOPE Aerospace stands as a dynamic student-driven initiative propelling aerospace progress. Our core focus revolves around democratising aerospace technologies for greater accessibility, flexibility, and reliability." user="John Doe" date="12/12/2021" />
             <MessageCard header="Updates on 14 May" text="DOPE Aerospace stands as a dynamic student-driven initiative propelling aerospace progress. Our core focus revolves around democratising aerospace technologies for greater accessibility, flexibility, and reliability." user="John Doe" date="12/12/2021" />
         </>}
     </Container>

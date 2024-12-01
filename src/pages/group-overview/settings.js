@@ -1,12 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useContext } from 'react';
 import styled from 'styled-components';
 import CustomButton from '../../common/customButton';
 import { Modal, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
+import { LoaderContext } from '../../contexts/loader_context';
 
 function Settings(props) {
   const navigation = useNavigate();
+  const { setLoader } = useContext(LoaderContext);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
@@ -27,13 +29,15 @@ function Settings(props) {
 
   const deleteGroup = useCallback(() => {
     if (input === 'Delete') {
+      setLoader(true);
       getApiClient().deleteGroup(props.groupId).then(res => {
         navigation('/dashboard');
-      }).catch(makeStandardApiErrorHandler(error => console.log(error)));
+      }).catch(makeStandardApiErrorHandler(error => console.log(error)))
+      .finally(() => setLoader(false));
     } else {
       setError(true);
     }
-  }, [input, props.groupId, navigation]);
+  }, [input, props.groupId, navigation, setLoader]);
 
   return (
     <>

@@ -34,6 +34,9 @@ function GroupOverview() {
     <Nav />
     <Container>
         <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
+        <Description>
+            {data && data.description}
+        </Description>
         <SubNavBar step={step} setStep={setStep} />
         <SubContainer ref={widthRef}>
             <MessageBoard data={data} setData={setData}
@@ -50,8 +53,8 @@ function GroupOverview() {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 25px;
     padding: 5vh 15vw;
+    gap: 20px;
 `;
 
 const SubContainer = styled.div`
@@ -60,6 +63,15 @@ const SubContainer = styled.div`
     width: 70vw;
     min-height: 90vh;
     overflow: hidden;
+`;
+
+const Description = styled.div`
+    color: black;
+    font-family: "Fira Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    padding: 20px 0px;
 `;
 
 export default RequireUserAccess(GroupOverview);
