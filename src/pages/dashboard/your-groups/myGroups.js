@@ -95,12 +95,12 @@ const GroupsPage = () => {
           <p>No groups available</p>
         ) : (
           groups.map((group) => (
-            <NavLink key={group.id} to={'/group-overview/' + group.id}>
+            <CustomNavLink width='100%' key={group.id} to={'/group-overview/' + group.id}>
               <GroupCard header={group.name}
                 text={group.description}
                 date={group.created_at}
                 type={group.type} />
-            </NavLink>
+            </CustomNavLink>
           ))
         )}
       </GroupContainer>
@@ -149,6 +149,10 @@ const IconButton = styled(Button)`
   @media screen and (max-width: 583px) {
     margin: 2vh 0px !important;
   }
+`;
+
+const CustomNavLink = styled(NavLink)`
+  width: 100%;
 `;
 
 export default RequireUserAccess(GroupsPage);
