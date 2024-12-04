@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import UsersIcon from '../../svgs/UsersIcon.svg';
-import DateIcon from '../../svgs/DateIcon.svg';
-import LockIcon from '../../svgs/lockIcon.svg';
+import UsersIcon from '../svgs/UsersIcon.svg';
+import DateIcon from '../svgs/DateIcon.svg';
+import LockIcon from '../svgs/lockIcon.svg';
 import { Button } from 'semantic-ui-react';
 
 function GroupCard(props) {
@@ -40,7 +40,7 @@ function GroupCard(props) {
             <RowContainer>
             <Flex>
                 <SubFlex><Icon src={UsersIcon} /><IconText>{`${props.membersNumber ? props.membersNumber : '10'} Members`}</IconText></SubFlex>
-                <SubFlex><Icon src={DateIcon} /><IconText>{props.date.split('T')[0]}</IconText></SubFlex>
+                <SubFlex><Icon src={DateIcon} /><IconText>{props.date ? props.date.split('T')[0] : 'N/A'}</IconText></SubFlex>
             </Flex>
             </RowContainer>
         </TopSection>
@@ -67,6 +67,11 @@ const Container = styled.div`
 
     background: #F4F4F4;
     padding: 1.5vh 1.3vw;
+
+    @media screen and (max-width: 583px) {
+        padding: 1.5vh 5vw;
+    }
+
 `;
 
 const Header = styled.div`
@@ -125,16 +130,22 @@ const Tag = styled.div`
 const RowContainer = styled.div`
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
     flex-direction: horizontal;
     width: 100%;
+    gap: 10px;
+
+    @media screen and (max-width: 555px) {
+        justify-content: center;
+    }
 `;
 
 const StatusButton = styled(Button)`
     background : ${props => props.color} !important;
     color: white !important;
+    white-space: nowrap;
     @media (max-width: 600px) {
-        width: 35%;
         height: auto;
         font-size: 0.8rem;
     }

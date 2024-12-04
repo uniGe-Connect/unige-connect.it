@@ -1,51 +1,48 @@
 import Nav from '../../common/nav';
 import NavigationBar from '../dashboard/navigation';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import DashTab from './dash_tab';
+import Groups from './groups';
 import Notifications from './notifications_tab';
-import GroupsPage from '../groups/your-groups/yourGroups';
+import GroupsPage from './my-groups/myGroups';
 import Footer from '../../common/footer';
 import RequireUserAccess from '../../permissions/RequireUserAccess';
+import { useParams } from 'react-router-dom';
 
 function Dashboard() {
-    const [activeTab, setActiveTab] = useState('Dashboard');
-
-    const navLinks = [
-        { path: 'dashtab', name: 'Dashboard' },
-        { path: 'my', name: 'My Groups' },
-        { path: 'notifications', name: 'Notifications' },
-    ];
-
+    const { tab } = useParams('Groups');
     const renderContent = () => {
-        switch (activeTab) {
+        switch (tab) {
+            case 'Groups':
+                return <Groups />;
             case 'Dashboard':
-                return <DashTab />;
-            case 'My Groups':
                 return <GroupsPage />;
             case 'Notifications':
                 return <Notifications />;
             default:
-                return <DashTab />;
+                return <Groups />;
         }
     };
 
     return (
+        <>
+
+            <Nav />
             <Container>
-                <Nav />
-                <NavigationBar links={navLinks} onLinkClick={(key) => setActiveTab(key)} activeTab={activeTab} />
+                <NavigationBar activeTab={tab} />
                 <Content>
                     {renderContent()}
                 </Content>
-                <Footer />
-            </Container>)
-        ;
-    }
+            </Container>
+            <Footer />
+        </>);
+        }
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding: 50px 0px;
 `;
 
 const Content = styled.div`

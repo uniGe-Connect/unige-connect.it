@@ -7,9 +7,9 @@ function CustomButton(props) {
         <Label>
             {props.label}
         </Label>
-        <Button onClick={props.onClick} backgroundColor={props.backgroundColor}>
+        <NewButton onClick={props.onClick} backgroundColor={props.backgroundColor}>
             {props.name}
-        </Button>
+        </NewButton>
     </Container>
   );
 }
@@ -30,7 +30,7 @@ const Label = styled.label`
   line-height: normal;
 `;
 
-const Button = styled.button`
+const NewButton = styled.button`
   cursor: pointer;
   background-color: ${props => props.backgroundColor};
   color: white;

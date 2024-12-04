@@ -18,7 +18,7 @@ describe('Create new group', () => {
   it('should fill the form and click create public open group', () => {
     // Visit the page where the modal is present
     doLogin();
-    cy.contains('My Groups').click();
+    cy.contains('Dashbaord').click();
 
     cy.get('button').contains('Create Group').click();
 
@@ -34,7 +34,7 @@ describe('Create new group', () => {
   it('should fill the form and click create private group', () => {
     // Visit the page where the modal is present
     doLogin();
-    cy.contains('My Groups').click();
+    cy.contains('Dashbaord').click();
 
     cy.get('button').contains('Create Group').click();
 

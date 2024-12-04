@@ -3,8 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import Dashboard from '../src/pages/dashboard/dashboard';
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from '../src/contexts/user_context';
-import GroupCard from '../src/pages/dashboard/group_card';
+import GroupCard from '../src/common/group_card';
 import { Container } from 'semantic-ui-react';
+import { LoaderContext } from '../src/contexts/loader_context';
 
 // Mocking the API calls
 jest.mock('../src/server/get_api_client', () => ({
@@ -16,12 +17,16 @@ jest.mock('../src/server/get_api_client', () => ({
 jest.mock('../src/permissions/RequireUserAccess', () => (Component) => (props) => <Component {...props} />);
 
 function CommonNav() {
+  const mockSetLoader = jest.fn();
+
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{ user: { name: 'John Doe' } }}>
-        <Dashboard />
-      </UserContext.Provider>
-    </BrowserRouter>
+    <LoaderContext.Provider value={{ setLoader: mockSetLoader }}>
+      <BrowserRouter>
+        <UserContext.Provider value={{ user: { name: 'John Doe' } }}>
+          <Dashboard />
+        </UserContext.Provider>
+      </BrowserRouter>
+    </LoaderContext.Provider>
   )
 }
 
@@ -62,7 +67,7 @@ describe('Groups', () => {
     render(
       <CommonNav />
     );
-    expect(screen.getByText("My Groups")).toBeInTheDocument();
+    expect(screen.getByText("Groups")).toBeInTheDocument();
   });
 
   test('Assert that Notifications section is present', async () => {

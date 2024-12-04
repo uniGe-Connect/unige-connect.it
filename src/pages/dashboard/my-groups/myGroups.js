@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Icon, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
-import WrapperCard from './wrapperCard';
-import CreateGroupModal from './createGroupModal'; // Import the new modal component
+import CreateGroupModal from './createGroupModal';
 import RequireUserAccess from '../../../permissions/RequireUserAccess';
+import GroupCard from '../../../common/group_card';
+import { LoaderContext } from '../../../contexts/loader_context';
+import { NavLink } from 'react-router-dom';
 
 const GroupsPage = () => {
+  const { setLoader } = useContext(LoaderContext);
   const [groups, setGroups] = useState([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
@@ -15,38 +18,10 @@ const GroupsPage = () => {
   const [newGroupType, setNewGroupType] = useState('public_open');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const createGroup = async (group) => {
-    return getApiClient()
-      .createGroup({
-        name: group.name,
-        topic: group.topic,
-        description: group.description,
-        type: group.type,
-      })
-      .then((response) => {
-        if (response.data.id) {
-          group.id = response.data.id;
-        }
-        return group;
-      })
-      .catch(makeStandardApiErrorHandler((err) => console.log(err)));
-  };
-
-  const getOwnedGroups = () => {
-    return getApiClient()
-      .getOwnedGroups()
-      .then((response) => {
-        if (response && response.data && response.data.data && response.data.data.length > 0) {
-          setGroups((prevGroups) => [...prevGroups, ...response.data.data]); // Using the updater form of setState
-        }
-      })
-      .catch(makeStandardApiErrorHandler((err) => console.log(err)));
-  };
-
   const handleCreateGroup = async () => {
     if (!newGroupName || !newGroupTopic || !newGroupDescription) {
       setErrorMessage('All fields are required!');
-      return; // Prevent form submission
+      return;
     }
     setErrorMessage('');
 
@@ -57,17 +32,27 @@ const GroupsPage = () => {
       description: newGroupDescription,
       type: newGroupType,
     };
-    const updatedGroup = await createGroup(newGroup);
 
-    if (updatedGroup.id < 0) {
-      alert('Error while creating group');
-    } else {
-      setGroups((prevGroups) => [...prevGroups, updatedGroup]); // Using the updater form of setState
-    }
-
-    // Close the modal and reset the form
-    setIsCreateModalOpen(false);
-    resetForm();
+    setLoader(true);
+    getApiClient()
+      .createGroup({
+        name: newGroup.name,
+        topic: newGroup.topic,
+        description: newGroup.description,
+        type: newGroup.type,
+      })
+      .then((response) => {
+        if (response.data.id) {
+          newGroup.id = response.data.id;
+          setGroups((prevGroups) => [...prevGroups, newGroup]);
+        }
+      })
+      .catch(makeStandardApiErrorHandler((err) => alert(err)))
+      .finally(() => {
+        setLoader(false);
+        setIsCreateModalOpen(false);
+        resetForm();
+      });
   };
 
   const resetForm = () => {
@@ -83,14 +68,23 @@ const GroupsPage = () => {
   };
 
   useEffect(() => {
-    getOwnedGroups();
-  }, []);
+    setLoader(true);
+    getApiClient()
+      .getOwnedGroups()
+      .then((response) => {
+        if (response && response.data && response.data.data && response.data.data.length > 0) {
+          setGroups((prevGroups) => [...prevGroups, ...response.data.data]);
+        }
+      })
+      .catch(makeStandardApiErrorHandler((err) => console.log(err)))
+      .finally(() => setLoader(false));
+  }, [setLoader]);
 
   return (
     <Container>
     <GroupPage>
       {/* Button to open the Create Group Modal */}
-      <IconButton primary icon='add' onClick={() => setIsCreateModalOpen(true)} floated='right' aria-label="create-group-button">
+      <IconButton primary labelPosition='left' icon='add' onClick={() => setIsCreateModalOpen(true)} floated='right' aria-label="create-group-button">
         <Icon name='add' />
         Create Group
       </IconButton>
@@ -101,7 +95,12 @@ const GroupsPage = () => {
           <p>No groups available</p>
         ) : (
           groups.map((group) => (
-            <WrapperCard group={group} key={group.id} />
+            <CustomNavLink width='100%' key={group.id} to={'/group-overview/' + group.id}>
+              <GroupCard header={group.name}
+                text={group.description}
+                date={group.created_at}
+                type={group.type} />
+            </CustomNavLink>
           ))
         )}
       </GroupContainer>
@@ -130,20 +129,30 @@ const Container = styled.div`
 `;
 
 const GroupPage = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const GroupContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
   padding: 0px;
 `;
 
-const IconButton = styled(Button).attrs(props => ({
-  positive: props.positive,
-  icon: props.icon,
-  labelPosition: 'left',
-  content: props.content,
-}))`
-  margin: 20px !important;
+const IconButton = styled(Button)`
+  align-self: flex-end;
   background-color: var(--blue) !important;
+  margin: 1.3vw !important;
+  @media screen and (max-width: 583px) {
+    margin: 2vh 0px !important;
+  }
+`;
+
+const CustomNavLink = styled(NavLink)`
+  width: 100%;
 `;
 
 export default RequireUserAccess(GroupsPage);

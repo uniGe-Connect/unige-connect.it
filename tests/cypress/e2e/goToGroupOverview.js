@@ -18,7 +18,7 @@ describe('Create group and go to overview', () => {
   it('should create group and navigate to its overview', () => {
     // Visit the page where the modal is present
     doLogin();
-    cy.contains('My Groups').click();
+    cy.contains('Dashboard').click();
 
     cy.get('button').contains('Create Group').click();
 

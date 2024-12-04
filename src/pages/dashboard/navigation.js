@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-const NavigationBar = ({ links, onLinkClick, activeTab }) => {
+const NavigationBar = ({ activeTab = 'Groups' }) => {
+    const tabs = [
+        { name: 'Groups', path: '/dashboard/Groups' },
+        { name: 'Dashboard', path: '/dashboard/Dashboard' },
+        { name: 'Notifications', path: '/dashboard/Notifications' },
+    ];
+
     return (
         <NavBar>
-            {links.map((link) => (
-                <StyledLink key={link.path} to={link.path}
-                            onClick={() => onLinkClick(link.name)}
-                            className={activeTab === link.name ? 'active' : ''}>
-                    {link.name}
+            {tabs.map(({ name, path }) => (
+                <StyledLink key={name} to={path} className={activeTab === name ? 'active' : ''}>
+                    {name}
                 </StyledLink>
             ))}
         </NavBar>

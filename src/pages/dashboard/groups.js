@@ -2,19 +2,23 @@ import styled from 'styled-components';
 import Search from '../../svgs/searchicon.svg';
 import Filter from '../../svgs/filter.svg';
 import { Button } from 'semantic-ui-react';
-import GroupCard from './group_card';
+import GroupCard from '../../common/group_card';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { LoaderContext } from '../../contexts/loader_context';
 
-function DashTab() {
+function Groups() {
     const [data, setData] = useState();
+    const { setLoader } = useContext(LoaderContext);
     useEffect(() => {
+        setLoader(true);
         getApiClient().getGroups().then((response) => {
             setData(response.data.data);
         }
         )
-        .catch(makeStandardApiErrorHandler((error) => console.log(error)));
-    }, []);
+        .catch(makeStandardApiErrorHandler((error) => console.log(error)))
+        .finally(() => setLoader(false));
+    }, [setLoader]);
     return (
         <Container>
             <SearchBox>
@@ -127,4 +131,4 @@ const CustomButton = styled(Button)`
     }
 `;
 
-export default DashTab;
+export default Groups;

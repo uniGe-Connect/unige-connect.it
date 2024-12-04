@@ -32,7 +32,7 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); 
     gap: 5vw;
-    padding: 0px 5vw;
+    padding: 0px 15vw;
     align-content: center;
     width: 100vw;
     min-height: 90vh;
