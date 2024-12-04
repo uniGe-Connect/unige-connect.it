@@ -25,26 +25,17 @@ const GroupsPage = () => {
     }
     setErrorMessage('');
 
-    const newGroup = {
-      id: -1,
-      name: newGroupName,
-      topic: newGroupTopic,
-      description: newGroupDescription,
-      type: newGroupType,
-    };
-
     setLoader(true);
     getApiClient()
       .createGroup({
-        name: newGroup.name,
-        topic: newGroup.topic,
-        description: newGroup.description,
-        type: newGroup.type,
+        name: newGroupName,
+        topic: newGroupTopic,
+        description: newGroupDescription,
+        type: newGroupType,
       })
       .then((response) => {
         if (response.data.id) {
-          newGroup.id = response.data.id;
-          setGroups((prevGroups) => [...prevGroups, newGroup]);
+          setGroups((prevGroups) => [...prevGroups, response.data]);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => alert(err)))
@@ -73,7 +64,7 @@ const GroupsPage = () => {
       .getOwnedGroups()
       .then((response) => {
         if (response && response.data && response.data.data && response.data.data.length > 0) {
-          setGroups((prevGroups) => [...prevGroups, ...response.data.data]);
+          setGroups(() => [...response.data.data]);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)))
