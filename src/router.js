@@ -3,10 +3,10 @@ import Home from './pages/home/home';
 import Redirect from './pages/home/redirect';
 import PageNotFound from './pages/page-not-found/page_not_found';
 import Dashboard from './pages/dashboard/dashboard';
-import YourGroups from './pages/dashboard/your-groups/myGroups';
 import Notifications from './pages/dashboard/notifications_tab';
 import DashTab from './pages/dashboard/groups';
 import GroupOverview from './pages/group-overview/groupOverview';
+import GroupsPage from './pages/dashboard/my-groups/myGroups';
 
 export const router = createBrowserRouter(
   [
@@ -42,7 +42,7 @@ export const router = createBrowserRouter(
             },
             {
                 path: 'Dashboard',
-                element: <YourGroups />,
+                element: <GroupsPage />,
                 errorElement: <PageNotFound />,
             },
             {

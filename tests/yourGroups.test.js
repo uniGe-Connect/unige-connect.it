@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
-import GroupsPage from '../src/pages/dashboard/your-groups/myGroups';
+import GroupsPage from '../src/pages/dashboard/my-groups/myGroups';
 import { LoaderContext } from '../src/contexts/loader_context';
 
 // Mock the API calls

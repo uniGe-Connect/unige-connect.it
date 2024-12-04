@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Groups from './groups';
 import Notifications from './notifications_tab';
-import GroupsPage from './your-groups/myGroups';
+import GroupsPage from './my-groups/myGroups';
 import Footer from '../../common/footer';
 import RequireUserAccess from '../../permissions/RequireUserAccess';
 import { useParams } from 'react-router-dom';
