@@ -65,7 +65,7 @@ describe('GroupsPage', () => {
     fireEvent.click(createGroupButtonModal);
 
     await waitFor(() => {
-      expect(screen.getByText('/New Group')).toBeInTheDocument();
+      expect(screen.getByText('New Group')).toBeInTheDocument();
       expect(screen.getByText('A group for JS lovers')).toBeInTheDocument();
       expect(screen.getByText('1 Member')).toBeInTheDocument();
     });
