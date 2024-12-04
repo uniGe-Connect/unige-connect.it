@@ -99,7 +99,8 @@ const GroupsPage = () => {
               <GroupCard header={group.name}
                 text={group.description}
                 date={group.created_at}
-                type={group.type} />
+                type={group.type}
+                membersNumber={group.member_count} />
             </CustomNavLink>
           ))
         )}
