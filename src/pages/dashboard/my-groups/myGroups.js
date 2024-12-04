@@ -25,17 +25,29 @@ const GroupsPage = () => {
     }
     setErrorMessage('');
 
+    const newGroup = {
+      id: -1,
+      name: newGroupName,
+      topic: newGroupTopic,
+      description: newGroupDescription,
+      type: newGroupType,
+      created_at: '',
+      member_count: 1
+    };
+
     setLoader(true);
     getApiClient()
       .createGroup({
-        name: newGroupName,
-        topic: newGroupTopic,
-        description: newGroupDescription,
-        type: newGroupType,
+        name: newGroup.name,
+        topic: newGroup.topic,
+        description: newGroup.description,
+        type: newGroup.type,
       })
       .then((response) => {
         if (response.data.id) {
-          setGroups((prevGroups) => [...prevGroups, response.data]);
+          newGroup.id = response.data.id;
+          newGroup.created_at = response.data.created_at;
+          setGroups((prevGroups) => [...prevGroups, newGroup]);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => alert(err)))
