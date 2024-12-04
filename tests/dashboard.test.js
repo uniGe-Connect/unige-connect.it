@@ -67,7 +67,7 @@ describe('Groups', () => {
     render(
       <CommonNav />
     );
-    expect(screen.getByText("My Groups")).toBeInTheDocument();
+    expect(screen.getByText("Groups")).toBeInTheDocument();
   });
 
   test('Assert that Notifications section is present', async () => {

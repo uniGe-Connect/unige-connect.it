@@ -16,7 +16,7 @@ function fillFields() {
 
 function goToOverview() {
   doLogin();
-  cy.contains('My Groups').click();
+  cy.contains('Dashboard').click();
 
   cy.get('button').contains('Create Group').click();
 

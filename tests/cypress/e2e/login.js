@@ -2,8 +2,8 @@ describe('Login', () => {
   it('should click the SignIn button', () => {
     doLogin();
     cy.contains(/Search/).should('be.visible');
+    cy.contains(/Groups/).should('be.visible');
     cy.contains(/Dashboard/).should('be.visible');
-    cy.contains(/My Groups/).should('be.visible');
     cy.contains(/Notifications/).should('be.visible');
   })
 
@@ -13,8 +13,8 @@ describe('Login', () => {
     cy.contains('button', 'Login').click();
 
     cy.contains(/Search/).should('be.visible');
+    cy.contains(/Groups/).should('be.visible');
     cy.contains(/Dashboard/).should('be.visible');
-    cy.contains(/My Groups/).should('be.visible');
     cy.contains(/Notifications/).should('be.visible');
   })
 })
