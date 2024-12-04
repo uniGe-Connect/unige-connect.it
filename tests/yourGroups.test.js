@@ -67,7 +67,7 @@ describe('GroupsPage', () => {
     await waitFor(() => {
       expect(screen.getByText('New Group')).toBeInTheDocument();
       expect(screen.getByText('A group for JS lovers')).toBeInTheDocument();
-      expect(screen.getByText('1 Member')).toBeInTheDocument(); // that's because we are not waiting for backend, but solely testing the frontend
+      expect(screen.getByText('1 Member')).toBeInTheDocument();
     });
   });
 });
