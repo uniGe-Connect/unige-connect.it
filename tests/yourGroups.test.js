@@ -16,6 +16,8 @@ jest.mock('../src/server/get_api_client', () => ({
 
 jest.mock('../src/permissions/RequireUserAccess', () => (Component) => (props) => <Component {...props} />);
 
+jest.mock('../src/permissions/RequireUserAccess', () => (Component) => (props) => <Component {...props} />);
+
 describe('GroupsPage', () => {
   const mockSetLoader = jest.fn();
 
@@ -53,6 +55,10 @@ describe('GroupsPage', () => {
     renderWithLoaderContext(<GroupsPage />);
     const createGroupButton = screen.getByLabelText(/create-group-button/i);
     fireEvent.click(createGroupButton);
+    expect(screen.getByPlaceholderText(/group name/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/topic/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/description/i)).toBeInTheDocument();
+
     expect(screen.getByPlaceholderText(/group name/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/topic/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/description/i)).toBeInTheDocument();

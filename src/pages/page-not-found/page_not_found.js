@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const PageNotFound = () => {
   useEffect(() => {
     document.title = 'Page Not Found';
-    window.scrollTo(0, 0);
   }, []);
 
   return (
