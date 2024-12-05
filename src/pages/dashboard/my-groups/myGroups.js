@@ -34,25 +34,27 @@ const GroupsPage = () => {
     };
 
     setLoader(true);
-    getApiClient()
-      .createGroup({
-        name: newGroup.name,
-        topic: newGroup.topic,
-        description: newGroup.description,
-        type: newGroup.type,
-      })
-      .then((response) => {
-        if (response.data.id) {
-          newGroup.id = response.data.id;
-          setGroups((prevGroups) => [...prevGroups, newGroup]);
-        }
-      })
-      .catch(makeStandardApiErrorHandler((err) => alert(err)))
-      .finally(() => {
-        setLoader(false);
-        setIsCreateModalOpen(false);
-        resetForm();
-      });
+    // getApiClient()
+    //   .createGroup({
+    //     name: newGroup.name,
+    //     topic: newGroup.topic,
+    //     description: newGroup.description,
+    //     type: newGroup.type,
+    //   })
+    //   .then((response) => {
+    //     if (response.data.id) {
+    //       newGroup.id = response.data.id;
+    //       setGroups((prevGroups) => [...prevGroups, newGroup]);
+    //     }
+    //   })
+    //   .catch(makeStandardApiErrorHandler((err) => alert(err)))
+    //   .finally(() => {
+    //     setLoader(false);
+    //     setIsCreateModalOpen(false);
+    //     resetForm();
+    //   });
+    setGroups((prevGroups) => [...prevGroups, newGroup]);
+    setLoader(false);
   };
 
   const resetForm = () => {
@@ -95,7 +97,7 @@ const GroupsPage = () => {
           <p>No groups available</p>
         ) : (
           groups.map((group) => (
-            <CustomNavLink width='100%' key={group.id} to={'/group-overview/' + group.id}>
+            <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
               <GroupCard header={group.name}
                 text={group.description}
                 date={group.created_at}
@@ -140,6 +142,7 @@ const GroupContainer = styled.div`
   flex-direction: column;
   gap: 15px;
   padding: 0px;
+  width: 100%;
 `;
 
 const IconButton = styled(Button)`

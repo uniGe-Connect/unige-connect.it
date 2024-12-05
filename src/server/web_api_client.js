@@ -10,7 +10,6 @@ const _getHeaders = () => {
   };
 };
 
-// eslint-disable-next-line no-unused-vars
 const get = (endpoint, id) => {
   if (id) {
     return axios.get(`${REACT_APP_API_URL}${endpoint}/${id}`, {
@@ -20,14 +19,12 @@ const get = (endpoint, id) => {
   return axios.get(REACT_APP_API_URL + endpoint, { headers: _getHeaders() });
 };
 
-// eslint-disable-next-line no-unused-vars
 const post = (endpoint, data) => {
   return axios.post(`${REACT_APP_API_URL}${endpoint}`, data, {
     headers: _getHeaders(),
   });
 };
 
-// eslint-disable-next-line no-unused-vars
 const del = (endpoint, id) => {
   if (id) {
     return axios.delete(`${REACT_APP_API_URL}${endpoint}/${id}`, {
@@ -37,7 +34,6 @@ const del = (endpoint, id) => {
   return axios.delete(`${REACT_APP_API_URL}${endpoint}`, { headers: _getHeaders() });
 };
 
-// eslint-disable-next-line no-unused-vars
 const put = (endpoint, id, data) => {
   if (id) {
     return axios.put(`${REACT_APP_API_URL}${endpoint}/${id}`, data, {
