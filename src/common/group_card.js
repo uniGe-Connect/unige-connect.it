@@ -64,7 +64,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-
     background: #F4F4F4;
     padding: 1.5vh 1.3vw;
 

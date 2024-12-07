@@ -95,7 +95,7 @@ const GroupsPage = () => {
           <p>No groups available</p>
         ) : (
           groups.map((group) => (
-            <CustomNavLink width='100%' key={group.id} to={'/group-overview/' + group.id}>
+            <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
               <GroupCard header={group.name}
                 text={group.description}
                 date={group.created_at}
@@ -140,6 +140,7 @@ const GroupContainer = styled.div`
   flex-direction: column;
   gap: 15px;
   padding: 0px;
+  width: 100%;
 `;
 
 const IconButton = styled(Button)`
