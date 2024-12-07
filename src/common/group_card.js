@@ -2,28 +2,36 @@ import styled from 'styled-components';
 import UsersIcon from '../svgs/UsersIcon.svg';
 import DateIcon from '../svgs/DateIcon.svg';
 import LockIcon from '../svgs/lockIcon.svg';
+import CheckIcon from '../svgs/checkIcon.svg';
 import { Button } from 'semantic-ui-react';
 
 function GroupCard(props) {
     const button = (props) => {
-        switch (props.type) {
-            case 'public_closed':
-                return (
-                <StatusButton color='var(--black)'>
-                    Group At Capacity
-                </StatusButton>);
-            case 'public_open' :
-                return (
-                    <StatusButton color='var(--blue)'>
-                        Become A Member
+        if (props.is_member) {
+            return (
+                <AlreadyAMemberElement>
+                    <img src={CheckIcon} />Already a Member
+                </AlreadyAMemberElement>);
+        } else {
+            switch (props.type) {
+                case 'public_closed':
+                    return (
+                    <StatusButton color='var(--black)'>
+                        Group At Capacity
                     </StatusButton>);
-            case 'private' :
-                return (
-                    <InvitationOnlyElement>
-                    <img src={LockIcon} />Invitation Only
-                    </InvitationOnlyElement>);
-            default:
-                break;
+                case 'public_open' :
+                    return (
+                        <StatusButton color='var(--blue)'>
+                            Become A Member
+                        </StatusButton>);
+                case 'private' :
+                    return (
+                        <InvitationOnlyElement>
+                        <img src={LockIcon} />Invitation Only
+                        </InvitationOnlyElement>);
+                default:
+                    break;
+            }
         }
     };
 
@@ -151,6 +159,12 @@ const StatusButton = styled(Button)`
 `;
 
 const InvitationOnlyElement = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+`;
+
+const AlreadyAMemberElement = styled.div`
     display: flex;
     gap: 10px;
     align-items: center;
