@@ -40,7 +40,7 @@ function Groups() {
                         text={group.description}
                         date={group.created_at}
                         type={group.type}
-                        membersNumber={group.member_count} />
+                        member_count={group.member_count} />
                     );
                 })}
             </ContentContainer>

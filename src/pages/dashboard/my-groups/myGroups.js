@@ -26,12 +26,10 @@ const GroupsPage = () => {
     setErrorMessage('');
 
     const newGroup = {
-      id: -1,
       name: newGroupName,
       topic: newGroupTopic,
       description: newGroupDescription,
       type: newGroupType,
-      created_at: '',
       member_count: 1
     };
 
@@ -45,7 +43,6 @@ const GroupsPage = () => {
       })
       .then((response) => {
         if (response.data.id) {
-          newGroup.id = response.data.id;
           newGroup.created_at = response.data.created_at;
           setGroups((prevGroups) => [...prevGroups, newGroup]);
         }
@@ -103,7 +100,7 @@ const GroupsPage = () => {
                 text={group.description}
                 date={group.created_at}
                 type={group.type}
-                membersNumber={group.member_count} />
+                member_count={group.member_count} />
             </CustomNavLink>
           ))
         )}
