@@ -31,7 +31,6 @@ const GroupsPage = () => {
       topic: newGroupTopic,
       description: newGroupDescription,
       type: newGroupType,
-      created_at: '',
       member_count: 1
     };
 
@@ -103,7 +102,7 @@ const GroupsPage = () => {
                 text={group.description}
                 date={group.created_at}
                 type={group.type}
-                membersNumber={group.member_count} />
+                member_count={group.member_count} />
             </CustomNavLink>
           ))
         )}
