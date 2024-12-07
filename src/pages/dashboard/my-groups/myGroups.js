@@ -26,7 +26,6 @@ const GroupsPage = () => {
     setErrorMessage('');
 
     const newGroup = {
-      id: -1,
       name: newGroupName,
       topic: newGroupTopic,
       description: newGroupDescription,
@@ -44,7 +43,6 @@ const GroupsPage = () => {
       })
       .then((response) => {
         if (response.data.id) {
-          newGroup.id = response.data.id;
           newGroup.created_at = response.data.created_at;
           setGroups((prevGroups) => [...prevGroups, newGroup]);
         }
