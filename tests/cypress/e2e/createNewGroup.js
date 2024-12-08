@@ -18,7 +18,7 @@ describe('Create new group', () => {
   it('should fill the form and click create public open group', () => {
     // Visit the page where the modal is present
     doLogin();
-    cy.contains('Dashbaord').click();
+    cy.contains('Dashboard').click();
 
     cy.get('button').contains('Create Group').click();
 
@@ -34,7 +34,7 @@ describe('Create new group', () => {
   it('should fill the form and click create private group', () => {
     // Visit the page where the modal is present
     doLogin();
-    cy.contains('Dashbaord').click();
+    cy.contains('Dashboard').click();
 
     cy.get('button').contains('Create Group').click();
 
@@ -53,7 +53,7 @@ describe('Create new group', () => {
     //   .find('i.lock.icon')
     //   .should('exist');
 
-    cy.get('i.lock.icon').should('exist');
+    cy.contains('Invitation Only').should('exist');
 
   });
 });

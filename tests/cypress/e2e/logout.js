@@ -3,7 +3,7 @@ import { doLogin } from "./utils";
 describe('Logout', () => {
   it('should logout', () => {
     doLogin();
-    cy.get('img[src="/static/media/arrow.42e04fbf88b372fa7cb3b5f93a2cf356.svg"]').click();
+    cy.get('div[aria-label="nav-dropdown-menu"]').click();
 
     cy.contains("Logout").click();
 
