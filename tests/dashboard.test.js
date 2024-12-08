@@ -16,8 +16,6 @@ jest.mock('../src/server/get_api_client', () => ({
 
 jest.mock('../src/permissions/RequireUserAccess', () => (Component) => (props) => <Component {...props} />);
 
-jest.mock('../src/permissions/RequireUserAccess', () => (Component) => (props) => <Component {...props} />);
-
 describe('GroupsPage', () => {
   const mockSetLoader = jest.fn();
 
@@ -59,10 +57,6 @@ describe('GroupsPage', () => {
     expect(screen.getByPlaceholderText(/topic/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/description/i)).toBeInTheDocument();
 
-    expect(screen.getByPlaceholderText(/group name/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/topic/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/description/i)).toBeInTheDocument();
-
     fireEvent.change(screen.getByPlaceholderText(/group name/i), { target: { value: 'New Group' } });
     fireEvent.change(screen.getByPlaceholderText(/topic/i), { target: { value: 'JavaScript' } });
     fireEvent.change(screen.getByPlaceholderText(/description/i), { target: { value: 'A group for JS lovers' } });
@@ -73,6 +67,7 @@ describe('GroupsPage', () => {
     await waitFor(() => {
       expect(screen.getByText('New Group')).toBeInTheDocument();
       expect(screen.getByText('A group for JS lovers')).toBeInTheDocument();
+      expect(screen.getByText('1 Member')).toBeInTheDocument();
     });
   });
 });
