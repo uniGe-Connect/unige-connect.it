@@ -64,8 +64,8 @@ function GroupCard(props) {
             case 'public_open' :
                 return (
                     <>
-                        <StatusButton color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
-                        <Modal size='tiny' open={isOpen} onClose={() => setIsOpen(false)}>
+                        <StatusButton aria-label='become-a-member-button' color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
+                        <Modal aria-label='become-a-member-modal' size='tiny' open={isOpen} onClose={() => setIsOpen(false)}>
                             <ModalContent>
                                 <CustomModalDescription>
                                     <p> Are you sure joining to this group?</p>
