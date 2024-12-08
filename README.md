@@ -19,6 +19,11 @@ You may also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npx cypress run`
+
+To run E2E tests, before running the command you should be in tests folder.
+By default are run against localhost:3000, if your host is running on a different url just change the baseUrl parameter inside the cypress.config.js
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\

@@ -49,7 +49,7 @@ function Nav() {
           Signin
           </Section>
         </>
-        : <DropdownContainer>
+        : <DropdownContainer aria-label='nav-dropdown-menu'>
             <DropdownHeader onClick={toggleDropdown}>
                 <HeaderText>{(user && user.name) + ' ' + (user && user.last_name)}</HeaderText>
                 <Arrow src={ArrowIcon} isOpen={isOpen} />
