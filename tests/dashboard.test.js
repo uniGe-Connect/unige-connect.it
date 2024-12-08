@@ -44,7 +44,7 @@ describe('Groups', () => {
     render(
       <Container>
         <CommonNav />
-        <GroupCard type="public_open" header="TestTitle" text="TestText" date="2024-11-25T" />
+        <GroupCard type="public_open" header="TestTitle" text="TestText" date="2024-11-25T" member_count="2" />
       </Container>
     );
 
@@ -53,6 +53,7 @@ describe('Groups', () => {
       expect(screen.getByText("TestText")).toBeInTheDocument();
       expect(screen.getByText("2024-11-25")).toBeInTheDocument();
       expect(screen.getByText("Become A Member")).toBeInTheDocument();
+      expect(screen.getByText("2 Members")).toBeInTheDocument();
     });
   });
 

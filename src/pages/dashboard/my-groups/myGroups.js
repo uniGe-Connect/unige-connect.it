@@ -26,11 +26,11 @@ const GroupsPage = () => {
     setErrorMessage('');
 
     const newGroup = {
-      id: -1,
       name: newGroupName,
       topic: newGroupTopic,
       description: newGroupDescription,
       type: newGroupType,
+      member_count: 1
     };
 
     setLoader(true);
@@ -43,7 +43,7 @@ const GroupsPage = () => {
       })
       .then((response) => {
         if (response.data.id) {
-          newGroup.id = response.data.id;
+          newGroup.created_at = response.data.created_at;
           setGroups((prevGroups) => [...prevGroups, newGroup]);
         }
       })
@@ -73,7 +73,7 @@ const GroupsPage = () => {
       .getOwnedGroups()
       .then((response) => {
         if (response && response.data && response.data.data && response.data.data.length > 0) {
-          setGroups((prevGroups) => [...prevGroups, ...response.data.data]);
+          setGroups(() => [...response.data.data]);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)))
@@ -99,7 +99,8 @@ const GroupsPage = () => {
               <GroupCard header={group.name}
                 text={group.description}
                 date={group.created_at}
-                type={group.type} />
+                type={group.type}
+                member_count={group.member_count} />
             </CustomNavLink>
           ))
         )}

@@ -98,7 +98,7 @@ function GroupCard(props) {
 
             <RowContainer>
             <Flex>
-                <SubFlex><Icon src={UsersIcon} /><IconText>{`${props.membersNumber ? props.membersNumber : '10'} Members`}</IconText></SubFlex>
+                <SubFlex><Icon src={UsersIcon} /><IconText>{props.member_count === 1 ? '1 Member' : `${props.member_count} Members`}</IconText></SubFlex>
                 <SubFlex><Icon src={DateIcon} /><IconText>{props.date ? props.date.split('T')[0] : 'N/A'}</IconText></SubFlex>
             </Flex>
             </RowContainer>
