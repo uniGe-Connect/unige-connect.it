@@ -60,6 +60,10 @@ class WebApiClient {
     return del('/groups', groupId);
   }
 
+  joinGroup(groupId) {
+    return post(`/groups/${groupId}/members`);
+  }
+
   getOwnedGroups() {
     return get('/groups?owner=mine');
   }

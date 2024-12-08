@@ -2,9 +2,58 @@ import styled from 'styled-components';
 import UsersIcon from '../svgs/UsersIcon.svg';
 import DateIcon from '../svgs/DateIcon.svg';
 import LockIcon from '../svgs/lockIcon.svg';
-import { Button } from 'semantic-ui-react';
+import React, { useCallback, useState, useContext } from 'react';
+import {
+    ModalDescription,
+    ModalContent,
+    Button,
+    Modal,
+    Message
+  } from 'semantic-ui-react';
+import { getApiClient } from '../server/get_api_client';
+import { LoaderContext } from '../contexts/loader_context';
 
 function GroupCard(props) {
+    const [isOpen, setIsOpen] = useState(false);
+    const { setLoader } = useContext(LoaderContext);
+    const [feedback, setFeedback] = useState({ visible: false, message: '', type: '' });
+    const handleOnClick = useCallback(() => {
+        setIsOpen(true);
+      }, [setIsOpen]);
+    const handleClose = useCallback(() => {
+        setIsOpen(false);
+    }, [setIsOpen]);
+    const joinGroup = useCallback(async () => {
+        setIsOpen(false);
+        setLoader(true);
+        setFeedback({ visible: false, message: '', type: '' });
+
+        try {
+            await getApiClient().joinGroup(props.groupId);
+            setFeedback({
+                visible: true,
+                message: 'You have successfully joined the group!',
+                type: 'success',
+            });
+
+            setTimeout(() => {
+                setFeedback({ visible: false, message: '', type: '' });
+            }, 3000);
+        } catch (error) {
+            setFeedback({
+                visible: true,
+                message: error?.response?.data?.detail || 'An error occurred while joining the group.',
+                type: 'error',
+            });
+
+            setTimeout(() => {
+                setFeedback({ visible: false, message: '', type: '' });
+            }, 3000);
+        } finally {
+            setLoader(false);
+        }
+    }, [props.groupId, setLoader]);
+
     const button = (props) => {
         switch (props.type) {
             case 'public_closed':
@@ -14,9 +63,19 @@ function GroupCard(props) {
                 </StatusButton>);
             case 'public_open' :
                 return (
-                    <StatusButton color='var(--blue)'>
-                        Become A Member
-                    </StatusButton>);
+                    <>
+                        <StatusButton color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
+                        <Modal size='tiny' open={isOpen} onClose={() => setIsOpen(false)}>
+                            <ModalContent>
+                                <CustomModalDescription>
+                                    <p> Are you sure joining to this group?</p>
+                                    <Button color='black' onClick={handleClose}>No</Button>
+                                    <Button color='var(--blue)' onClick={joinGroup} positive>Become a Member</Button>
+                                </CustomModalDescription>
+                            </ModalContent>
+                        </Modal>
+                    </>
+                );
             case 'private' :
                 return (
                     <InvitationOnlyElement>
@@ -56,6 +115,9 @@ function GroupCard(props) {
             );
         })}
         </Flex>
+        {feedback.visible && (<Message success={feedback.type === 'success'}
+                    error={feedback.type === 'error'}
+                    content={feedback.message} />)}
     </Container>
   );
 }
@@ -72,6 +134,10 @@ const Container = styled.div`
         padding: 1.5vh 5vw;
     }
 
+`;
+
+const CustomModalDescription = styled(ModalDescription)`
+    text-align:center;
 `;
 
 const Header = styled.div`
