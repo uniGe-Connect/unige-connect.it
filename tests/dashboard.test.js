@@ -41,11 +41,15 @@ describe('Groups', () => {
   });
 
   test('Insert a mock card and expect it to be shown', async () => {
+    const mockSetLoader = jest.fn();
+
     render(
-      <Container>
-        <CommonNav />
-        <GroupCard type="public_open" header="TestTitle" text="TestText" date="2024-11-25T" member_count="2" />
-      </Container>
+      <LoaderContext.Provider value={{ setLoader: mockSetLoader }}>
+        <Container>
+          <CommonNav />
+          <GroupCard type="public_open" header="TestTitle" text="TestText" date="2024-11-25T" member_count="2" />
+        </Container>
+      </LoaderContext.Provider>
     );
 
     await waitFor(() => {

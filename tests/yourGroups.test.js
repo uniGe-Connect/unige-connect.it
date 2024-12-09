@@ -18,7 +18,6 @@ jest.mock('../src/permissions/RequireUserAccess', () => (Component) => (props) =
 
 describe('GroupsPage', () => {
   const mockSetLoader = jest.fn();
-
   const renderWithLoaderContext = (ui) => {
     return render(
       <LoaderContext.Provider value={{ setLoader: mockSetLoader }}>
