@@ -1,3 +1,5 @@
+import { doLogin } from "./utils";
+
 describe('Login', () => {
   it('should click the SignIn button', () => {
     doLogin();
@@ -8,10 +10,11 @@ describe('Login', () => {
   })
 
   it('should click the Connect Now button', () => {
-    cy.visit('https://alpha.unige-connect.it/');
+    cy.visit('/');
     cy.contains('button', 'CONNECT NOW').click();
-    cy.contains('button', 'Login').click();
-
+    cy.origin(Cypress.env('IDP_ORIGIN_URL'), () => { // This is needed to tell cypress that the following commands are runned on another domain
+      cy.contains('button', 'Login').click();
+    });
     cy.contains(/Search/).should('be.visible');
     cy.contains(/Groups/).should('be.visible');
     cy.contains(/Dashboard/).should('be.visible');

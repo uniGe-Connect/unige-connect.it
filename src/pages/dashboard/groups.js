@@ -39,7 +39,9 @@ function Groups() {
                         header={group.name}
                         text={group.description}
                         date={group.created_at}
-                        type={group.type} />
+                        type={group.type}
+                        is_member={group.is_member}
+                        member_count={group.member_count} />
                     );
                 })}
             </ContentContainer>
