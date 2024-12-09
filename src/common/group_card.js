@@ -71,13 +71,13 @@ function GroupCard(props) {
             case 'public_open' :
                 return (
                     <>
-                        <StatusButton color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
+                        <StatusButton aria-label='become-a-member-button' color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
                         <Modal size='tiny' open={isOpen} onClose={() => setIsOpen(false)}>
-                            <ModalContent>
+                            <ModalContent aria-label='become-a-member-modal'>
                                 <CustomModalDescription>
                                     <p> Are you sure joining to this group?</p>
-                                    <Button color='black' onClick={handleClose}>No</Button>
-                                    <Button color='var(--blue)' onClick={joinGroup} positive>Become a Member</Button>
+                                    <Button aria-label='cancel-modal-button' color='black' onClick={handleClose}>No</Button>
+                                    <Button style={{ background: 'var(--blue)' }} aria-label='become-a-member-modal-button' onClick={joinGroup} positive>Become a Member</Button>
                                 </CustomModalDescription>
                             </ModalContent>
                         </Modal>
@@ -123,7 +123,7 @@ function GroupCard(props) {
             );
         })}
         </Flex>
-        {feedback.visible && (<Message success={feedback.type === 'success'}
+        {feedback.visible && (<Message aria-label='message' success={feedback.type === 'success'}
                     error={feedback.type === 'error'}
                     content={feedback.message} />)}
     </Container>
