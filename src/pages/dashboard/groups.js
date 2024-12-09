@@ -32,10 +32,10 @@ function Groups() {
                     <Text> Search groups or create yours </Text>
                     <CustomButton> Create Group </CustomButton>
                 </ActionContainer>}
-
             {data && data.map((group) => {
                     return (
                         <GroupCard key={group.id}
+                        groupId={group.id}
                         header={group.name}
                         text={group.description}
                         date={group.created_at}
@@ -45,7 +45,6 @@ function Groups() {
                     );
                 })}
             </ContentContainer>
-
         </Container>
   );
 }
