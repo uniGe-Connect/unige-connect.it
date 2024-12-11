@@ -53,7 +53,7 @@ describe('Create new group', () => {
     //   .find('i.lock.icon')
     //   .should('exist');
 
-    cy.contains('Invitation Only').should('exist');
+    cy.get('[aria-label="invitation-only"]').should('exist');
 
   });
 });

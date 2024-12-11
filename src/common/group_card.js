@@ -9,7 +9,7 @@ import {
     Button,
     Modal,
     Message
-  } from 'semantic-ui-react';
+} from 'semantic-ui-react';
 import { getApiClient } from '../server/get_api_client';
 import { LoaderContext } from '../contexts/loader_context';
 import CheckIcon from '../svgs/checkIcon.svg';
@@ -20,7 +20,7 @@ function GroupCard(props) {
     const [feedback, setFeedback] = useState({ visible: false, message: '', type: '' });
     const handleOnClick = useCallback(() => {
         setIsOpen(true);
-      }, [setIsOpen]);
+    }, [setIsOpen]);
     const handleClose = useCallback(() => {
         setIsOpen(false);
     }, [setIsOpen]);
@@ -56,78 +56,78 @@ function GroupCard(props) {
     }, [props.groupId, setLoader]);
 
     const button = (props) => {
-            if (props.is_member) {
+        if (props.is_member) {
             return (
-                <AlreadyAMemberElement>
+                <AlreadyAMemberElement aria-label='already-a-member'>
                     <img src={CheckIcon} />Already a Member
                 </AlreadyAMemberElement>);
         } else {
-        switch (props.type) {
-            case 'public_closed':
-                return (
-                <StatusButton color='var(--black)'>
-                    Group At Capacity
-                </StatusButton>);
-            case 'public_open' :
-                return (
-                    <>
-                        <StatusButton aria-label='become-a-member-button' color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
-                        <Modal size='tiny' open={isOpen} onClose={() => setIsOpen(false)}>
-                            <ModalContent aria-label='become-a-member-modal'>
-                                <CustomModalDescription>
-                                    <p> Are you sure joining to this group?</p>
-                                    <Button aria-label='cancel-modal-button' color='black' onClick={handleClose}>No</Button>
-                                    <Button style={{ background: 'var(--blue)' }} aria-label='become-a-member-modal-button' onClick={joinGroup} positive>Become a Member</Button>
-                                </CustomModalDescription>
-                            </ModalContent>
-                        </Modal>
-                    </>
-                );
-            case 'private' :
-                return (
-                    <InvitationOnlyElement>
-                    <img src={LockIcon} />Invitation Only
-                    </InvitationOnlyElement>);
-            default:
-                break;
-          }
+            switch (props.type) {
+                case 'public_closed':
+                    return (
+                        <StatusButton color='var(--black)'>
+                            Group At Capacity
+                        </StatusButton>);
+                case 'public_open':
+                    return (
+                        <>
+                            <StatusButton aria-label='become-a-member-button' color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
+                            <Modal size='tiny' open={isOpen} onClose={() => setIsOpen(false)}>
+                                <ModalContent aria-label='become-a-member-modal'>
+                                    <CustomModalDescription>
+                                        <p> Are you sure joining to this group?</p>
+                                        <Button aria-label='cancel-modal-button' color='black' onClick={handleClose}>No</Button>
+                                        <Button style={{ background: 'var(--blue)' }} aria-label='become-a-member-modal-button' onClick={joinGroup} positive>Become a Member</Button>
+                                    </CustomModalDescription>
+                                </ModalContent>
+                            </Modal>
+                        </>
+                    );
+                case 'private':
+                    return (
+                        <InvitationOnlyElement aria-label='invitation-only'>
+                            <img src={LockIcon} />Invitation Only
+                        </InvitationOnlyElement>);
+                default:
+                    break;
+            }
         }
     };
 
-  return (
-    <Container>
-        <TopSection>
-            <RowContainer>
-                <Header type={props.type}>
-                    {props.header}
-                </Header>
-                {button(props)}
-            </RowContainer>
+    return (
+        <Container>
+            <TopSection>
+                <RowContainer>
+                    <Header type={props.type}>
+                        {props.header}
+                    </Header>
+                    {button(props)}
+                </RowContainer>
 
-            <RowContainer>
+                <RowContainer>
+                    <Flex>
+                        <SubFlex><Icon src={UsersIcon} /><IconText>{props.member_count === 1 ? '1 Member' : `${props.member_count} Members`}</IconText></SubFlex>
+                        <SubFlex><Icon src={DateIcon} /><IconText>{props.date ? props.date.split('T')[0] : 'N/A'}</IconText></SubFlex>
+                    </Flex>
+                </RowContainer>
+            </TopSection>
+            <Text>
+                {props.text}
+            </Text>
             <Flex>
-                <SubFlex><Icon src={UsersIcon} /><IconText>{props.member_count === 1 ? '1 Member' : `${props.member_count} Members`}</IconText></SubFlex>
-                <SubFlex><Icon src={DateIcon} /><IconText>{props.date ? props.date.split('T')[0] : 'N/A'}</IconText></SubFlex>
+                {props.tags > 0 && props.tags.map((tag) => {
+                    return (
+                        <Tag key={tag}>
+                            {`#${tag}`}
+                        </Tag>
+                    );
+                })}
             </Flex>
-            </RowContainer>
-        </TopSection>
-        <Text>
-            {props.text}
-        </Text>
-        <Flex>
-        {props.tags > 0 && props.tags.map((tag) => {
-           return (
-            <Tag key={tag}>
-            {`#${tag}`}
-            </Tag>
-            );
-        })}
-        </Flex>
-        {feedback.visible && (<Message aria-label='message' success={feedback.type === 'success'}
-                    error={feedback.type === 'error'}
-                    content={feedback.message} />)}
-    </Container>
-  );
+            {feedback.visible && (<Message aria-label='message' success={feedback.type === 'success'}
+                error={feedback.type === 'error'}
+                content={feedback.message} />)}
+        </Container>
+    );
 }
 
 const Container = styled.div`
