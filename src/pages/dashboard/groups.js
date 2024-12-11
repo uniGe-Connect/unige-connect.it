@@ -40,7 +40,6 @@ function Groups() {
                         text={group.description}
                         date={group.created_at}
                         type={group.type}
-                        is_member={group.is_member}
                         member_count={group.member_count} />
                     );
                 })}

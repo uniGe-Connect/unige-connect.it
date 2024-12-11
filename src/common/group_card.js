@@ -12,7 +12,6 @@ import {
   } from 'semantic-ui-react';
 import { getApiClient } from '../server/get_api_client';
 import { LoaderContext } from '../contexts/loader_context';
-import CheckIcon from '../svgs/checkIcon.svg';
 
 function GroupCard(props) {
     const [isOpen, setIsOpen] = useState(false);
@@ -56,12 +55,6 @@ function GroupCard(props) {
     }, [props.groupId, setLoader]);
 
     const button = (props) => {
-            if (props.is_member) {
-            return (
-                <AlreadyAMemberElement>
-                    <img src={CheckIcon} />Already a Member
-                </AlreadyAMemberElement>);
-        } else {
         switch (props.type) {
             case 'public_closed':
                 return (
@@ -90,7 +83,6 @@ function GroupCard(props) {
                     </InvitationOnlyElement>);
             default:
                 break;
-          }
         }
     };
 
@@ -225,12 +217,6 @@ const StatusButton = styled(Button)`
 `;
 
 const InvitationOnlyElement = styled.div`
-    display: flex;
-    gap: 10px;
-    align-items: center;
-`;
-
-const AlreadyAMemberElement = styled.div`
     display: flex;
     gap: 10px;
     align-items: center;

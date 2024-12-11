@@ -7,16 +7,20 @@ import RequireUserAccess from '../../../permissions/RequireUserAccess';
 import GroupCard from '../../../common/group_card';
 import { LoaderContext } from '../../../contexts/loader_context';
 import { NavLink } from 'react-router-dom';
+import CheckBox from '../../../common/checkBox';
 
 const GroupsPage = () => {
   const { setLoader } = useContext(LoaderContext);
-  const [groups, setGroups] = useState([]);
+  const [ownedGroups, setOwnedGroups] = useState([]);
+  const [joinedGroups, setJoinedGroups] = useState([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
   const [newGroupTopic, setNewGroupTopic] = useState('');
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [newGroupType, setNewGroupType] = useState('public_open');
   const [errorMessage, setErrorMessage] = useState('');
+  const [filterOwnedGroups, setFilterOwnedGroups] = useState(false);
+  const [filterJoinedGroups, setFilterJoinedGroups] = useState(false);
 
   const handleCreateGroup = async () => {
     if (!newGroupName || !newGroupTopic || !newGroupDescription) {
@@ -44,7 +48,7 @@ const GroupsPage = () => {
       .then((response) => {
         if (response.data.id) {
           newGroup.created_at = response.data.created_at;
-          setGroups((prevGroups) => [...prevGroups, newGroup]);
+          setOwnedGroups((prevGroups) => [...prevGroups, newGroup]);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => alert(err)))
@@ -70,56 +74,126 @@ const GroupsPage = () => {
   useEffect(() => {
     setLoader(true);
     getApiClient()
-      .getOwnedGroups()
+      .getMyGroups()
       .then((response) => {
-        if (response && response.data && response.data.data && response.data.data.length > 0) {
-          setGroups(() => [...response.data.data]);
+        if (response && response.data) {
+          setOwnedGroups(() => [...response.data.owned_groups]);
+          setJoinedGroups(() => [...response.data.joined_groups]);
+          console.log(response.data);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)))
       .finally(() => setLoader(false));
   }, [setLoader]);
 
+  // useEffect(() => {
+  //   const fetchGroups = async () => {
+  //     setLoader(true);
+  //     try {
+  //       if (filterOwnedGroups || filterJoinedGroups) {
+  //         const response = await getApiClient().getMyGroups();
+  //         if (response && response.data) {
+  //           const { ownedGroups, joinedGroups } = response.data;
+  //           let filteredGroups = [];
+  //           if (filterOwnedGroups) {
+  //             filteredGroups = [...filteredGroups, ...ownedGroups];
+  //           }
+  //           if (filterJoinedGroups) {
+  //             filteredGroups = [...filteredGroups, ...joinedGroups];
+  //           }
+  //           setGroups(filteredGroups);
+  //         }
+  //       } else {
+  //         const response = await getApiClient().getGroups();
+  //         if (response && response.data && response.data.length > 0) {
+  //           setGroups(response.data);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       makeStandardApiErrorHandler((err) => console.log(err))(error);
+  //     } finally {
+  //       setLoader(false);
+  //     }
+  //   };
+  //   fetchGroups();
+  // }, [filterOwnedGroups, filterJoinedGroups, setLoader]);
+
   return (
     <Container>
-    <GroupPage>
-      {/* Button to open the Create Group Modal */}
-      <IconButton primary labelPosition='left' icon='add' onClick={() => setIsCreateModalOpen(true)} floated='right' aria-label="create-group-button">
-        <Icon name='add' />
-        Create Group
-      </IconButton>
+      <GroupPage>
+        <FilterContainer>
+          Filter Groups:
+          <CheckBox text='Owned Groups' value={filterOwnedGroups} setValue={setFilterOwnedGroups} />
+          <CheckBox text='Joined Groups' value={filterJoinedGroups} setValue={setFilterJoinedGroups} />
+        </FilterContainer>
+        {/* Button to open the Create Group Modal */}
+        <IconButton primary labelPosition='left' icon='add' onClick={() => setIsCreateModalOpen(true)} floated='right' aria-label="create-group-button">
+          <Icon name='add' />
+          Create Group
+        </IconButton>
 
-      {/* Display groups */}
-      <GroupContainer>
-        {groups.length === 0 ? (
-          <p>No groups available</p>
-        ) : (
-          groups.map((group) => (
-            <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
-              <GroupCard header={group.name}
-                text={group.description}
-                date={group.created_at}
-                type={group.type}
-                member_count={group.member_count} />
-            </CustomNavLink>
-          ))
-        )}
-      </GroupContainer>
+        {/* Display groups */}
+        <GroupContainer>
+          {ownedGroups.length === 0 && joinedGroups === 0 ? (
+            <p>No groups available</p>
+          ) : (
+            (filterOwnedGroups && filterJoinedGroups) || (!filterOwnedGroups && !filterJoinedGroups)
+              ? <>
+                {ownedGroups.map((group) => (
+                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                    <GroupCard header={group.name}
+                      text={group.description}
+                      date={group.created_at}
+                      type={group.type}
+                      member_count={group.member_count} />
+                  </CustomNavLink>
+                ))}
+                {joinedGroups.map((group) => (
+                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                    <GroupCard header={group.name}
+                      text={group.description}
+                      date={group.created_at}
+                      type={group.type}
+                      member_count={group.member_count} />
+                  </CustomNavLink>
+                ))}
+                {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+              </> : filterJoinedGroups
+                ? joinedGroups.map((group) => (
+                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                    <GroupCard header={group.name}
+                      text={group.description}
+                      date={group.created_at}
+                      type={group.type}
+                      member_count={group.member_count} />
+                  </CustomNavLink>
+                ))
+                : ownedGroups.map((group) => (
+                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                    <GroupCard header={group.name}
+                      text={group.description}
+                      date={group.created_at}
+                      type={group.type}
+                      member_count={group.member_count} />
+                  </CustomNavLink>
+                ))
+          )}
+        </GroupContainer>
 
-      {/* Create Group Modal */}
-      <CreateGroupModal isOpen={isCreateModalOpen}
-        onClose={handleModalCancel}
-        newGroupName={newGroupName}
-        setNewGroupName={setNewGroupName}
-        newGroupTopic={newGroupTopic}
-        setNewGroupTopic={setNewGroupTopic}
-        newGroupDescription={newGroupDescription}
-        setNewGroupDescription={setNewGroupDescription}
-        newGroupType={newGroupType}
-        setNewGroupType={setNewGroupType}
-        errorMessage={errorMessage}
-        onCreate={handleCreateGroup} />
-    </GroupPage>
+        {/* Create Group Modal */}
+        <CreateGroupModal isOpen={isCreateModalOpen}
+          onClose={handleModalCancel}
+          newGroupName={newGroupName}
+          setNewGroupName={setNewGroupName}
+          newGroupTopic={newGroupTopic}
+          setNewGroupTopic={setNewGroupTopic}
+          newGroupDescription={newGroupDescription}
+          setNewGroupDescription={setNewGroupDescription}
+          newGroupType={newGroupType}
+          setNewGroupType={setNewGroupType}
+          errorMessage={errorMessage}
+          onCreate={handleCreateGroup} />
+      </GroupPage>
     </Container>
   );
 };
@@ -155,6 +229,16 @@ const IconButton = styled(Button)`
 
 const CustomNavLink = styled(NavLink)`
   width: 100%;
+`;
+
+const FilterContainer = styled.div`
+  width: 100%;
+  color: #002677;
+  font-family: "Fira Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
 `;
 
 export default RequireUserAccess(GroupsPage);
