@@ -86,38 +86,6 @@ const GroupsPage = () => {
       .finally(() => setLoader(false));
   }, [setLoader]);
 
-  // useEffect(() => {
-  //   const fetchGroups = async () => {
-  //     setLoader(true);
-  //     try {
-  //       if (filterOwnedGroups || filterJoinedGroups) {
-  //         const response = await getApiClient().getMyGroups();
-  //         if (response && response.data) {
-  //           const { ownedGroups, joinedGroups } = response.data;
-  //           let filteredGroups = [];
-  //           if (filterOwnedGroups) {
-  //             filteredGroups = [...filteredGroups, ...ownedGroups];
-  //           }
-  //           if (filterJoinedGroups) {
-  //             filteredGroups = [...filteredGroups, ...joinedGroups];
-  //           }
-  //           setGroups(filteredGroups);
-  //         }
-  //       } else {
-  //         const response = await getApiClient().getGroups();
-  //         if (response && response.data && response.data.length > 0) {
-  //           setGroups(response.data);
-  //         }
-  //       }
-  //     } catch (error) {
-  //       makeStandardApiErrorHandler((err) => console.log(err))(error);
-  //     } finally {
-  //       setLoader(false);
-  //     }
-  //   };
-  //   fetchGroups();
-  // }, [filterOwnedGroups, filterJoinedGroups, setLoader]);
-
   return (
     <Container>
       <GroupPage>
