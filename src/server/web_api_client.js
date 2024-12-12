@@ -64,6 +64,10 @@ class WebApiClient {
     return get('/groups?owner=mine');
   }
 
+  getMyGroups() {
+    return get('/groups?member=me');
+  }
+
   getGroupCount() {
     return get('/groups/count');
   };
