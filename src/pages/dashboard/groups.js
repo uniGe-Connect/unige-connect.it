@@ -16,8 +16,8 @@ function Groups() {
             setData(response.data.data);
         }
         )
-        .catch(makeStandardApiErrorHandler((error) => console.log(error)))
-        .finally(() => setLoader(false));
+            .catch(makeStandardApiErrorHandler((error) => console.log(error)))
+            .finally(() => setLoader(false));
     }, [setLoader]);
     return (
         <Container>
@@ -27,25 +27,26 @@ function Groups() {
                 <FilterIcon src={Filter} />
             </SearchBox>
             <ContentContainer>
-            {!data &&
-                <ActionContainer>
-                    <Text> Search groups or create yours </Text>
-                    <CustomButton> Create Group </CustomButton>
-                </ActionContainer>}
-            {data && data.map((group) => {
+                {!data &&
+                    <ActionContainer>
+                        <Text> Search groups or create yours </Text>
+                        <CustomButton> Create Group </CustomButton>
+                    </ActionContainer>}
+                {data && data.map((group) => {
                     return (
                         <GroupCard key={group.id}
-                        groupId={group.id}
-                        header={group.name}
-                        text={group.description}
-                        date={group.created_at}
-                        type={group.type}
-                        member_count={group.member_count} />
+                            is_member={group.is_member}
+                            groupId={group.id}
+                            header={group.name}
+                            text={group.description}
+                            date={group.created_at}
+                            type={group.type}
+                            member_count={group.member_count} />
                     );
                 })}
             </ContentContainer>
         </Container>
-  );
+    );
 }
 
 const Container = styled.div`

@@ -110,6 +110,7 @@ const GroupsPage = () => {
                 {ownedGroups.map((group) => (
                   <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
                     <GroupCard header={group.name}
+                      is_member={group.is_member}
                       text={group.description}
                       date={group.created_at}
                       type={group.type}
@@ -120,6 +121,7 @@ const GroupsPage = () => {
                   <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
                     <GroupCard header={group.name}
                       text={group.description}
+                      is_member={group.is_member}
                       date={group.created_at}
                       type={group.type}
                       member_count={group.member_count} />
@@ -131,6 +133,7 @@ const GroupsPage = () => {
                   <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
                     <GroupCard header={group.name}
                       text={group.description}
+                      is_member={group.is_member}
                       date={group.created_at}
                       type={group.type}
                       member_count={group.member_count} />
@@ -139,6 +142,7 @@ const GroupsPage = () => {
                 : ownedGroups.map((group) => (
                   <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
                     <GroupCard header={group.name}
+                      is_member={group.is_member}
                       text={group.description}
                       date={group.created_at}
                       type={group.type}
