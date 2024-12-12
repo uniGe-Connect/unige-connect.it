@@ -12,7 +12,7 @@ import {
 } from 'semantic-ui-react';
 import { getApiClient } from '../server/get_api_client';
 import { LoaderContext } from '../contexts/loader_context';
-import CheckIcon from '../svgs/checkIcon.svg';
+import CheckIcon from '../svgs/CheckMarkBlack.svg';
 
 function GroupCard(props) {
     const [isOpen, setIsOpen] = useState(false);
