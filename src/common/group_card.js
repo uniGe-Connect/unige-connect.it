@@ -16,6 +16,7 @@ import CheckIcon from '../svgs/CheckMarkBlack.svg';
 
 function GroupCard(props) {
     const [isOpen, setIsOpen] = useState(false);
+    const [buttonProps, SetButtonProps] = useState({ is_member: props.is_member, type: props.type });
     const { setLoader } = useContext(LoaderContext);
     const [feedback, setFeedback] = useState({ visible: false, message: '', type: '' });
     const handleOnClick = useCallback(() => {
@@ -36,7 +37,9 @@ function GroupCard(props) {
                 message: 'You have successfully joined the group!',
                 type: 'success',
             });
-
+            SetButtonProps({
+                is_member: true
+            });
             setTimeout(() => {
                 setFeedback({ visible: false, message: '', type: '' });
             }, 3000);
@@ -58,7 +61,7 @@ function GroupCard(props) {
     const button = (props) => {
         if (props.is_member) {
             return (
-                <AlreadyAMemberElement>
+                <AlreadyAMemberElement aria-label='already-a-member'>
                     <img src={CheckIcon} />Already a Member
                 </AlreadyAMemberElement>);
         } else {
@@ -85,7 +88,7 @@ function GroupCard(props) {
                     );
                 case 'private':
                     return (
-                        <InvitationOnlyElement>
+                        <InvitationOnlyElement aria-label='invitation-only'>
                             <img src={LockIcon} />Invitation Only
                         </InvitationOnlyElement>);
                 default:
@@ -95,13 +98,13 @@ function GroupCard(props) {
     };
 
     return (
-        <Container>
+        <Container aria-label={props.key}>
             <TopSection>
                 <RowContainer>
                     <Header type={props.type}>
                         {props.header}
                     </Header>
-                    {button(props)}
+                    {button(buttonProps)}
                 </RowContainer>
 
                 <RowContainer>
