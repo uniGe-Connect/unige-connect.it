@@ -85,6 +85,10 @@ const Container = styled.div`
   height: 10vh;
   gap: 5vw;
   background-color: var(--blue);
+
+  @media screen and (max-width: 720px) {
+      padding: 0px 5vw;
+  }
 `;
 
 const NavContainer = styled.div`

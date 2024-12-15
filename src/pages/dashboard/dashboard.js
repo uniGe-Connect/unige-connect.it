@@ -26,7 +26,6 @@ function Dashboard() {
 
     return (
         <>
-
             <Nav />
             <Container>
                 <NavigationBar activeTab={tab} />
@@ -42,7 +41,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding: 50px 0px;
+    padding: 50px 15vw;
+
+    @media screen and (max-width: 720px) {
+        padding: 50px 5vw;
+    }
 `;
 
 const Content = styled.div`

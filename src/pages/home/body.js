@@ -30,21 +30,19 @@ function Body() {
 
 const Container = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 5vw;
-    padding: 0px 15vw;
+    padding: 10vw 15vw;
     align-content: center;
     width: 100vw;
     min-height: 90vh;
 
-    @media screen and (max-width: 566px){
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    @media screen and (max-width: 600px){
+      padding: 10vw 5vw;
     }
-    @media screen and (max-width: 480px){
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    }
-    @media screen and (max-width: 375px){
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    @media screen and (max-width: 400px){
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      padding: 10vw 5vw;
     }
 
 `;
@@ -53,10 +51,6 @@ const LeftSection = styled.div`
     justify-content: center;
     flex-direction: column;
     gap: 20px;
-
-  @media screen and (max-width: 1178px){
-    padding: 10vh 10vw;
-  }
 `;
 
 const RightSection = styled.img`
@@ -64,13 +58,6 @@ const RightSection = styled.img`
   height: auto;
   object-fit: cover;
   transition: transform 0.3s ease;
-
-  @media screen and (max-width: 1178px){
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
 
   &:hover {
     transform: scale(1.05);

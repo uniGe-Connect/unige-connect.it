@@ -48,6 +48,10 @@ const Container = styled.div`
     gap: 20px;
     width: 70vw;
     overflow: auto;
+
+    @media screen and (max-width: 720px) {
+        width: 90vw;
+    }
 `;
 
 const TopSection = styled.div`

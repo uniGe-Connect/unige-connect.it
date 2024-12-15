@@ -78,6 +78,10 @@ const Container = styled.div`
     flex-direction: column;
     min-height: 90vh;
     gap: 20px;
+
+    @media screen and (max-width: 720px) {
+        width: 90vw;
+    }
 `;
 
 const MainButton = styled(Button).attrs(props => ({
