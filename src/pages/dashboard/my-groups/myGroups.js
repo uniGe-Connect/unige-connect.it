@@ -48,6 +48,8 @@ const GroupsPage = () => {
       .then((response) => {
         if (response.data.id) {
           newGroup.created_at = response.data.created_at;
+          newGroup.is_member = response.data.is_member;
+          newGroup.member_count = response.data.member_count;
           setOwnedGroups((prevGroups) => [...prevGroups, newGroup]);
         }
       })
