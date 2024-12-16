@@ -64,12 +64,11 @@ function Nav() {
             )}
           </DropdownContainer>}
       </NavContainer>
-      {user &&
       <BurgerContainer onClick={handleClick}>
         <Meat />
         <Meat />
         <Meat />
-      </BurgerContainer>}
+      </BurgerContainer>
     </Container>)
   ;
 }
