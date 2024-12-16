@@ -55,6 +55,10 @@ const Container = styled.div`
     flex-direction: column;
     padding: 5vh 15vw;
     gap: 20px;
+
+    @media screen and (max-width: 720px) {
+        padding: 5vh 5vw;
+    }
 `;
 
 const SubContainer = styled.div`
@@ -63,6 +67,10 @@ const SubContainer = styled.div`
     width: 70vw;
     min-height: 90vh;
     overflow: hidden;
+
+    @media screen and (max-width: 720px) {
+        width: 90vw;
+    }
 `;
 
 const Description = styled.div`
