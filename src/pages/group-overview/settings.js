@@ -5,6 +5,7 @@ import { Modal, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 import { LoaderContext } from '../../contexts/loader_context';
+import UpdateGroupModal from './updateGroupModal';
 
 function Settings(props) {
   const navigation = useNavigate();
@@ -12,6 +13,11 @@ function Settings(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [newGroupName, setNewGroupName] = useState('');
+  const [newGroupTopic, setNewGroupTopic] = useState('');
+  const [newGroupDescription, setNewGroupDescription] = useState('');
+  const [newGroupType, setNewGroupType] = useState('');
 
   const handleOnClick = useCallback(() => {
     setIsOpen(true);
@@ -38,11 +44,32 @@ function Settings(props) {
       setError(true);
     }
   }, [input, props.groupId, navigation, setLoader]);
+const handleUpdateClick = useCallback(() => {
+  setIsUpdateModalOpen(true);
+}, [setIsUpdateModalOpen]);
+
+const handleUpdateModalClose = useCallback(() => {
+    setIsUpdateModalOpen(false);
+}, [setIsUpdateModalOpen]);
+
+const handleUpdateGroup = useCallback(() => {
+    setLoader(true);
+    getApiClient().updateGroup(props.groupId, {
+      name: newGroupName,
+      topic: newGroupTopic,
+      description: newGroupDescription,
+      type: newGroupType
+    }).then(() => {
+      setIsUpdateModalOpen(false);
+    }).catch(makeStandardApiErrorHandler(error => console.log(error)))
+        .finally(() => setLoader(false));
+  }, [newGroupName, newGroupTopic, newGroupDescription, newGroupType, props.groupId, setLoader]);
 
   return (
     <>
     <Container leftAmount={props.width}>
       <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
+      <CustomButton onClick={handleUpdateClick} label='Update Group' backgroundColor='var(--blue)' name='Update' />
     </Container>
     <Modal open={isOpen}
       onClose={() => setIsOpen(false)}
@@ -65,6 +92,19 @@ function Settings(props) {
         </DangerButton>
       </Modal.Actions>
     </Modal>
+    <UpdateGroupModal isOpen={isUpdateModalOpen}
+        onClose={handleUpdateModalClose}
+        groupId={props.groupId}
+        newGroupName={newGroupName}
+        setNewGroupName={setNewGroupName}
+        newGroupTopic={newGroupTopic}
+        setNewGroupTopic={setNewGroupTopic}
+        newGroupDescription={newGroupDescription}
+        setNewGroupDescription={setNewGroupDescription}
+        newGroupType={newGroupType}
+        setNewGroupType={setNewGroupType}
+        errorMessage={error ? 'Error updating group' : ''}
+        onCreate={handleUpdateGroup} />
     </>
   );
 }
