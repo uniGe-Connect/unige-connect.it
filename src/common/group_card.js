@@ -16,7 +16,8 @@ import CheckIcon from '../svgs/CheckMarkBlack.svg';
 
 function GroupCard(props) {
     const [isOpen, setIsOpen] = useState(false);
-    const [buttonProps, SetButtonProps] = useState({ is_member: props.is_member, type: props.type });
+    const [buttonProps, setButtonProps] = useState({ is_member: props.is_member, type: props.type });
+    const [memberCount, setMemberCount] = useState(props.member_count);
     const { setLoader } = useContext(LoaderContext);
     const [feedback, setFeedback] = useState({ visible: false, message: '', type: '' });
     const handleOnClick = useCallback(() => {
@@ -37,9 +38,10 @@ function GroupCard(props) {
                 message: 'You have successfully joined the group!',
                 type: 'success',
             });
-            SetButtonProps({
-                is_member: true
+            setButtonProps({
+                is_member: true,
             });
+            setMemberCount(memberCount + 1);
             setTimeout(() => {
                 setFeedback({ visible: false, message: '', type: '' });
             }, 3000);
@@ -56,7 +58,7 @@ function GroupCard(props) {
         } finally {
             setLoader(false);
         }
-    }, [props.groupId, setLoader]);
+    }, [props.groupId, memberCount, setMemberCount, setLoader]);
 
     const button = (props) => {
         if (props.is_member) {
@@ -109,7 +111,7 @@ function GroupCard(props) {
 
                 <RowContainer>
                     <Flex>
-                        <SubFlex><Icon src={UsersIcon} /><IconText>{props.member_count === 1 ? '1 Member' : `${props.member_count} Members`}</IconText></SubFlex>
+                        <SubFlex><Icon src={UsersIcon} /><IconText>{memberCount === 1 ? '1 Member' : `${memberCount} Members`}</IconText></SubFlex>
                         <SubFlex><Icon src={DateIcon} /><IconText>{props.date ? props.date.split('T')[0] : 'N/A'}</IconText></SubFlex>
                     </Flex>
                 </RowContainer>
