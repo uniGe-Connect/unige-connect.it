@@ -137,7 +137,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    background: #F4F4F4;
+    background: var(--light-gray);
     padding: 1.5vh 1.3vw;
 
     @media screen and (max-width: 583px) {

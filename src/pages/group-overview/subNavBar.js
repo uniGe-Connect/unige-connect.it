@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-function SubNavBar({ setStep, step }) {
+function SubNavBar({ setStep, step, membersCount }) {
     const [sliderPosition, setSliderPosition] = useState(0);
     const [sliderWidth, setSliderWidth] = useState(0);
     const elementRef = useRef(null);
@@ -36,7 +36,7 @@ function SubNavBar({ setStep, step }) {
 
     const handleCheckPosition = (event) => {
         const CurrentTag = event.currentTarget.innerHTML;
-        setStep(CurrentTag === 'Message Board' ? 0 : CurrentTag === 'Members' ? 1 : 2);
+        setStep(CurrentTag === 'Message Board' ? 0 : CurrentTag === 'Settings' ? 2 : 1);
 
         if (CurrentTag === 'Message Board') {
             updateSliderPosition(firstElementRef.current);
@@ -51,7 +51,9 @@ function SubNavBar({ setStep, step }) {
         <Container>
             <ElementContainer ref={elementRef}>
                 <Element ref={firstElementRef} onClick={handleCheckPosition}>Message Board</Element>
-                <Element ref={secondElementRef} onClick={handleCheckPosition}>Members</Element>
+                <Element ref={secondElementRef} onClick={handleCheckPosition}>Members
+                    <Circle>{membersCount}</Circle>
+                </Element>
                 <Element ref={thirdElementRef} onClick={handleCheckPosition}>Settings</Element>
             </ElementContainer>
             <SliderContainer>
@@ -80,6 +82,9 @@ const ElementContainer = styled.div`
 `;
 
 const Element = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
     cursor: pointer;
     color: var(--blue);
     text-align: center;
@@ -96,6 +101,24 @@ const SliderContainer = styled.div`
     background-color: var(--light-gray);
     height: 4px;
     width: 100%;
+`;
+
+const Circle = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-gray);
+    border-radius: 50px;
+
+    color: var(--blue);
+    text-align: center;
+    font-family: "Fira Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+
+    width: 20px;
+    height: 20px;
 `;
 
 export default SubNavBar;
