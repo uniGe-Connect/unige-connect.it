@@ -51,7 +51,7 @@ function SubNavBar({ setStep, step, membersCount }) {
         <Container>
             <ElementContainer ref={elementRef}>
                 <Element ref={firstElementRef} onClick={handleCheckPosition}>Message Board</Element>
-                <Element ref={secondElementRef} onClick={handleCheckPosition}>Members
+                <Element aria-label='members-tab' ref={secondElementRef} onClick={handleCheckPosition}>Members
                     <Circle>{membersCount}</Circle>
                 </Element>
                 <Element ref={thirdElementRef} onClick={handleCheckPosition}>Settings</Element>

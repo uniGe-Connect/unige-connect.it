@@ -1,24 +1,25 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import Crown from '../../svgs/Crown.svg';
-// import { LoaderContext } from '../../contexts/loader_context';
-// import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
+import { LoaderContext } from '../../contexts/loader_context';
+import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 
 function Members(props) {
-  // const { setLoader } = useContext(LoaderContext);
-  // useEffect(() => {
-  //   // setLoader(true);
-  //   // getApiClient.getMembers().then(res => {
-  //   //   props.setData(res.data);
-  //   // }).catch(makeStandardApiErrorHandler(error => console.log(error)))
-  //   // .finally(() => setLoader(false));
-  // }, [props, setLoader]);
+  const { setLoader } = useContext(LoaderContext);
+  useEffect(() => {
+    setLoader(true);
+    getApiClient().getMembers(props.groupId).then(res => {
+      props.setData(res.data);
+    }).catch(makeStandardApiErrorHandler(error => console.log(error)))
+    .finally(() => setLoader(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Container leftAmount={props.width}>
-    {props.data && props.data.sort((a, b) => b.owner - a.owner).map(data => {
+    {props.data.data && props.data.data.sort((a, b) => b.owner - a.owner).map(data => {
       return (
-        <Card key={data.name}>
-          {data.name} {data.owner && <img src={Crown} alt='Crown Picture' />}
+        <Card aria-label='member-card' key={data.name}>
+          {data.name + ' ' + data.last_name} {data.role === 'owner' && <img src={Crown} alt='Crown Picture' />}
         </Card>
       );
     })}

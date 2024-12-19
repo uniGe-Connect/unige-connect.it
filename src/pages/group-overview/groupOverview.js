@@ -38,7 +38,7 @@ function GroupOverview() {
         <Description>
             {data && data.description}
         </Description>
-        <SubNavBar membersCount={membersData.length} step={step} setStep={setStep} />
+        <SubNavBar membersCount={membersData.count} step={step} setStep={setStep} />
         <SubContainer ref={widthRef}>
             <MessageBoard data={data} setData={setData}
             groupId={groupId} width={step === 0 ? 0 : step === 1 ? -width : 2 * -width} />
