@@ -29,25 +29,26 @@ function GroupOverview() {
         return () => window.removeEventListener('resize', handleWidth);
     }, []);
 
-  return (
-    <>
-    <Nav />
-    <Container>
-        <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
-        <Description>
-            {data && data.description}
-        </Description>
-        <SubNavBar step={step} setStep={setStep} />
-        <SubContainer ref={widthRef}>
-            <MessageBoard data={data} setData={setData}
-            groupId={groupId} width={step === 0 ? 0 : step === 1 ? -width : 2 * -width} />
-            <Members width={step === 0 ? width : step === 1 ? 0 : -width} />
-            <Settings groupId={groupId} width={step === 0 ? 2 * width : step === 1 ? width : 0} />
-        </SubContainer>
-    </Container>
-    <Footer />
-    </>
-  );
+    return (
+        <>
+            <Nav />
+            <Container>
+                <CurrentPage text={`Dashboard > ${data ? data.name : ''}`} />
+                <Description>
+                    {data && data.description}
+                </Description>
+                <SubNavBar step={step} setStep={setStep} />
+                <SubContainer ref={widthRef}>
+                    <MessageBoard data={data} setData={setData}
+                        groupId={groupId} width={step === 0 ? 0 : step === 1 ? -width : 2 * -width} />
+                    <Members width={step === 0 ? width : step === 1 ? 0 : -width} />
+                    <Settings groupId={groupId} ownerId={data && data.owner_id}
+                        width={step === 0 ? 2 * width : step === 1 ? width : 0} />
+                </SubContainer>
+            </Container>
+            <Footer />
+        </>
+    );
 }
 
 const Container = styled.div`

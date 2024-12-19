@@ -33,38 +33,47 @@ function Settings(props) {
       getApiClient().deleteGroup(props.groupId).then(res => {
         navigation('/dashboard');
       }).catch(makeStandardApiErrorHandler(error => console.log(error)))
-      .finally(() => setLoader(false));
+        .finally(() => setLoader(false));
     } else {
       setError(true);
     }
   }, [input, props.groupId, navigation, setLoader]);
 
+  const leaveGroup = useCallback(() => {
+    setLoader(true);
+    getApiClient().leaveGroup(props.groupId).then(res => {
+      navigation('/dashboard');
+    }).catch(makeStandardApiErrorHandler(error => console.log(error)))
+      .finally(() => setLoader(false));
+  }, [props.groupId, navigation, setLoader]);
+
   return (
     <>
-    <Container leftAmount={props.width}>
-      <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
-    </Container>
-    <Modal open={isOpen}
-      onClose={() => setIsOpen(false)}
-      size='small'>
-      <Modal.Header>Delete your Group</Modal.Header>
-      <Modal.Content>
-       <Flex>
+      <Container leftAmount={props.width}>
+        <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
+        <CustomButton onClick={leaveGroup} label='Leave Group:' backgroundColor='var(--blue)' name='Leave' />
+      </Container>
+      <Modal open={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='small'>
+        <Modal.Header>Delete your Group</Modal.Header>
+        <Modal.Content>
+          <Flex>
             <Label>To be able to delete the group you have to write &quot;Delete&quot;:</Label>
             <Input error={error} value={input} onChange={handleChange} />
-       </Flex>
-      </Modal.Content>
-      <Modal.Actions>
-        <MainButton positive
-          onClick={deleteGroup}>
-          Delete Group
-        </MainButton>
-        <DangerButton negative
-          onClick={handleClose}>
-          Cancel
-        </DangerButton>
-      </Modal.Actions>
-    </Modal>
+          </Flex>
+        </Modal.Content>
+        <Modal.Actions>
+          <MainButton positive
+            onClick={deleteGroup}>
+            Delete Group
+          </MainButton>
+          <DangerButton negative
+            onClick={handleClose}>
+            Cancel
+          </DangerButton>
+        </Modal.Actions>
+      </Modal>
     </>
   );
 }
