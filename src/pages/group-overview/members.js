@@ -16,7 +16,7 @@ function Members(props) {
   }, []);
   return (
     <Container leftAmount={props.width}>
-    {props.data.data && props.data.data.sort((a, b) => b.owner - a.owner).map(data => {
+    {props.data && props.data.sort((a, b) => b.role.localeCompare(a.role)).map(data => {
       return (
         <Card aria-label='member-card' key={data.name}>
           {data.name + ' ' + data.last_name} {data.role === 'owner' && <img src={Crown} alt='Crown Picture' />}
