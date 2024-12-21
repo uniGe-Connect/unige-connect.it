@@ -95,6 +95,10 @@ class WebApiClient {
   logout() {
     return get('/auth/logout');
   }
+
+  getMembers(groupId) {
+    return get(`/groups/${groupId}/members`);
+  }
 }
 
 export default WebApiClient;
