@@ -5,6 +5,7 @@ import { Modal, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 import { LoaderContext } from '../../contexts/loader_context';
+import { toast, Toaster } from 'react-hot-toast';
 
 function Settings(props) {
   const navigation = useNavigate();
@@ -41,15 +42,31 @@ function Settings(props) {
 
   const leaveGroup = useCallback(() => {
     setLoader(true);
-    getApiClient().leaveGroup(props.groupId).then(res => {
-      navigation('/dashboard');
-    }).catch(makeStandardApiErrorHandler(error => console.log(error)))
+    getApiClient().leaveGroup(props.groupId)
+      .then(res => {
+        toast.success('Successfully left the group!');
+        setTimeout(() => {
+          navigation('/dashboard');
+        }, 3000);
+      })
+      .catch(error => {
+        const errorMessage =
+          error?.response?.detail ||
+          'An error occurred while leaving the group.';
+
+        makeStandardApiErrorHandler(() => {
+          toast.error(errorMessage);
+        })(error);
+
+        console.error('API Error:', error);
+      })
       .finally(() => setLoader(false));
   }, [props.groupId, navigation, setLoader]);
 
   return (
     <>
       <Container leftAmount={props.width}>
+        <Toaster position="top-center" reverseOrder={true} />
         <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
         <CustomButton onClick={leaveGroup} label='Leave Group:' backgroundColor='var(--blue)' name='Leave' />
       </Container>
