@@ -14,6 +14,7 @@ export function handleApiError(error, displayErrorFn, kickUserOut = null) {
     if (error.response.status === 400) {
       displayErrorFn('Bad Request (400): ' + error.response.data.error);
     } else if (error.response.status === 401) {
+      localStorage.removeItem('unige-connect_token');
       displayErrorFn('Error (401): ' + error.response.data.error);
     } else if (error.response.status === 403) {
       displayErrorFn('Forbidden (403): ' + error.response.data.error);
