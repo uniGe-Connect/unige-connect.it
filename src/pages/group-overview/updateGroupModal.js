@@ -101,7 +101,7 @@ const UpdateGroupModal = ({
         <DangerButton negative onClick={onClose} aria-label='cancel-group-button-modal'>
           Cancel
         </DangerButton>
-        <MainButton positive floated='right' primary onClick={onCreate} aria-label='create-group-button-modal'>
+        <MainButton positive floated='right' primary onClick={onCreate} aria-label='update-group-button-modal'>
           Update Group
         </MainButton>
       </Modal.Actions>

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 import { LoaderContext } from '../../contexts/loader_context';
 import UpdateGroupModal from './updateGroupModal';
+import { toast, Toaster } from 'react-hot-toast';
 
 function Settings(props) {
   const navigation = useNavigate();
@@ -60,14 +61,26 @@ const handleUpdateGroup = useCallback(() => {
       description: newGroupDescription,
       type: newGroupType
     }).then(() => {
-      navigation('/dashboard/Dashboard');
-    }).catch(makeStandardApiErrorHandler(error => console.log(error)))
+        toast.success('Group updated successfully');
+        handleUpdateModalClose();
+        window.location.reload();
+    }).catch((error) => {
+      if (error.response.status === 403) {
+        toast.error('You are not authorized to update this group');
+    } else if (error.response.status === 400) {
+        toast.error('You can only update the group every 10 minutes');
+      } else {
+        console.log(error);
+      }
+  })
         .finally(() => setLoader(false));
-  }, [setLoader, props.groupId, newGroupName, newGroupTopic, newGroupDescription, newGroupType, navigation]);
+  // eslint-disable-next-line max-len
+  }, [setLoader, props.groupId, newGroupName, newGroupTopic, newGroupDescription, newGroupType, handleUpdateModalClose]);
 
   return (
     <>
     <Container leftAmount={props.width}>
+      <Toaster position='top-center' reverseOrder={true} />
       <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
       <CustomButton onClick={handleUpdateClick} label='Update Group' backgroundColor='var(--blue)' name='Update' />
     </Container>
