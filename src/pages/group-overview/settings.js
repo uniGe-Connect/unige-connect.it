@@ -60,10 +60,10 @@ const handleUpdateGroup = useCallback(() => {
       description: newGroupDescription,
       type: newGroupType
     }).then(() => {
-      setIsUpdateModalOpen(false);
+      navigation('/dashboard/Dashboard');
     }).catch(makeStandardApiErrorHandler(error => console.log(error)))
         .finally(() => setLoader(false));
-  }, [newGroupName, newGroupTopic, newGroupDescription, newGroupType, props.groupId, setLoader]);
+  }, [setLoader, props.groupId, newGroupName, newGroupTopic, newGroupDescription, newGroupType, navigation]);
 
   return (
     <>
