@@ -5,7 +5,6 @@ import { getApiClient } from './server/get_api_client';
 import { UserContext } from './contexts/user_context';
 import { LoaderContext } from './contexts/loader_context';
 import { Dimmer, Loader } from 'semantic-ui-react';
-import { Toaster } from 'react-hot-toast';
 import styled from 'styled-components';
 
 const reducer = (state, action) => {
@@ -48,7 +47,6 @@ const App = () => {
     <LoaderContext.Provider value={{ loader, setLoader }}>
       <UserContext.Provider value={{ user, setUser }}>
         <CustomDimmer active={loader} inverted>
-          <Toaster position="top-center" reverseOrder={true} />
           <Loader size='large'>Loading</Loader>
         </CustomDimmer>
         <RouterProvider future={{ v7_startTransition: true }} router={router} />

@@ -47,17 +47,14 @@ function Settings(props) {
         toast.success('Successfully left the group!');
         setTimeout(() => {
           navigation('/dashboard');
-        }, 3000);
+        }, 2000);
       })
       .catch(error => {
-        const errorMessage =
-          error?.response?.detail ||
-          'An error occurred while leaving the group.';
-
-        makeStandardApiErrorHandler(() => {
-          toast.error(errorMessage);
-        })(error);
-
+        let errorMessage = 'An error occurred while leaving the group.';
+        if (error?.response?.data?.detail) {
+          errorMessage = error.response.data.detail;
+        }
+        toast.error(errorMessage);
         console.error('API Error:', error);
       })
       .finally(() => setLoader(false));
