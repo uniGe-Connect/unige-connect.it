@@ -46,7 +46,7 @@ function Settings(props) {
       .then(res => {
         toast.success('Successfully left the group!');
         setTimeout(() => {
-          navigation('/dashboard');
+          navigation('/dashboard/Dashboard');
         }, 2000);
       })
       .catch(error => {
