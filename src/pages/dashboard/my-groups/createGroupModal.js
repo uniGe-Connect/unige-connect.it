@@ -1,5 +1,6 @@
-import React from 'react';
-import { Button, Modal, Form, Input, TextArea, Checkbox } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Form, Input, TextArea, Checkbox, Dropdown } from 'semantic-ui-react';
+import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
 import styled from 'styled-components';
 
 const CreateGroupModal = ({
@@ -7,8 +8,8 @@ const CreateGroupModal = ({
   onClose,
   newGroupName,
   setNewGroupName,
-  newGroupTopic,
-  setNewGroupTopic,
+  newGroupCourse,
+  setNewGroupCourse,
   newGroupDescription,
   setNewGroupDescription,
   newGroupType,
@@ -16,6 +17,21 @@ const CreateGroupModal = ({
   errorMessage,
   onCreate
 }) => {
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
+   useEffect(() => {
+    setLoading(true);
+    getApiClient().getCourses().then((response) => {
+      const result = [];
+      response.data.data.forEach((element) => result.push(
+        { key: element.id, value: element.id, text: element.name }
+      ));
+      setOptions(result);
+    }).catch(makeStandardApiErrorHandler((err) => alert(err)))
+    .finally(() => setLoading(false));
+   }
+   , []);
+
   return (
     <Modal open={isOpen}
       onClose={onClose}
@@ -32,10 +48,13 @@ const CreateGroupModal = ({
           </Form.Field>
 
           <Form.Field>
-            <FormLabel>Group Topic</FormLabel>
-            <Input placeholder='Enter group topic'
-              value={newGroupTopic}
-              onChange={(e) => setNewGroupTopic(e.target.value)}
+            <FormLabel>Group Course</FormLabel>
+            <Dropdown placeholder='Enter group course'
+              search
+              selection
+              loading={loading}
+              onChange={(e, data) => setNewGroupCourse(data.value)}
+              options={options}
               required />
           </Form.Field>
 

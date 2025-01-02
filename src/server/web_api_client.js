@@ -80,6 +80,10 @@ class WebApiClient {
     return get('/groups', id);
   }
 
+  getCourses() {
+    return get('/courses');
+  }
+
   login() {
     return get('/auth/login');
   }
