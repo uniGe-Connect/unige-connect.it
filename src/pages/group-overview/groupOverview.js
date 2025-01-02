@@ -14,6 +14,7 @@ function GroupOverview() {
     const [width, setWidth] = useState();
     const [step, setStep] = useState(0);
     const [data, setData] = useState();
+    const [membersData, setMembersData] = useState([]);
     const { groupId } = useParams();
     const widthRef = useRef(null);
 
@@ -37,11 +38,13 @@ function GroupOverview() {
         <Description>
             {data && data.description}
         </Description>
-        <SubNavBar step={step} setStep={setStep} />
+        <SubNavBar membersCount={membersData.count} step={step} setStep={setStep} />
         <SubContainer ref={widthRef}>
             <MessageBoard data={data} setData={setData}
             groupId={groupId} width={step === 0 ? 0 : step === 1 ? -width : 2 * -width} />
-            <Members width={step === 0 ? width : step === 1 ? 0 : -width} />
+            <Members groupId={groupId}
+            data={membersData.data} setData={setMembersData}
+            width={step === 0 ? width : step === 1 ? 0 : -width} />
             <Settings groupId={groupId} width={step === 0 ? 2 * width : step === 1 ? width : 0} />
         </SubContainer>
     </Container>
@@ -55,6 +58,10 @@ const Container = styled.div`
     flex-direction: column;
     padding: 5vh 15vw;
     gap: 20px;
+
+    @media screen and (max-width: 720px) {
+        padding: 5vh 5vw;
+    }
 `;
 
 const SubContainer = styled.div`
@@ -63,6 +70,10 @@ const SubContainer = styled.div`
     width: 70vw;
     min-height: 90vh;
     overflow: hidden;
+
+    @media screen and (max-width: 720px) {
+        width: 90vw;
+    }
 `;
 
 const Description = styled.div`

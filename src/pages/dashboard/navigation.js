@@ -25,7 +25,7 @@ const NavBar = styled.div`
     align-items: center;
     gap: 60px;
     height: 50px;
-    width: 70%;
+    width: 100%;
     margin: auto;
     font-family: 'Fira Sans';
     border-bottom: 1px solid var(--gray);
@@ -33,7 +33,6 @@ const NavBar = styled.div`
     @media (max-width: 575px) {
         gap: 20px;
         height: auto;
-        width: 80%;
         align-items: flex-end;
     }
 `;

@@ -174,7 +174,6 @@ const GroupsPage = () => {
 
 const Container = styled.div`
   min-height: 90vh;
-  padding: 0px 15vw;
 `;
 
 const GroupPage = styled.div`
