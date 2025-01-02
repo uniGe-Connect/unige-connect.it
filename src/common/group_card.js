@@ -13,10 +13,12 @@ import {
 import { getApiClient } from '../server/get_api_client';
 import { LoaderContext } from '../contexts/loader_context';
 import CheckIcon from '../svgs/CheckMarkBlack.svg';
+import deleteIcon from '../svgs/deleteIcon.png';
 
 function GroupCard(props) {
     const [isOpen, setIsOpen] = useState(false);
-    const [buttonProps, setButtonProps] = useState({ is_member: props.is_member, type: props.type });
+    const [buttonProps, setButtonProps] =
+    useState({ is_member: props.is_member, type: props.type, deleted_at: props.deleted_at });
     const [memberCount, setMemberCount] = useState(props.member_count);
     const { setLoader } = useContext(LoaderContext);
     const [feedback, setFeedback] = useState({ visible: false, message: '', type: '' });
@@ -61,11 +63,16 @@ function GroupCard(props) {
     }, [props.groupId, memberCount, setMemberCount, setLoader]);
 
     const button = (props) => {
-        if (props.is_member) {
+        if (props.deleted_at) {
             return (
-                <AlreadyAMemberElement aria-label='already-a-member'>
+                <Label aria-label='deleted-group'>
+                    <img width={30} src={deleteIcon} />Group is deleted
+                </Label>);
+        } else if (props.is_member) {
+            return (
+                <Label aria-label='already-a-member'>
                     <img src={CheckIcon} />Already a Member
-                </AlreadyAMemberElement>);
+                </Label>);
         } else {
             switch (props.type) {
                 case 'public_closed':
@@ -103,7 +110,7 @@ function GroupCard(props) {
         <Container aria-label={props.key}>
             <TopSection>
                 <RowContainer>
-                    <Header type={props.type}>
+                    <Header deleted={props.deleted_at} type={props.type}>
                         {props.header}
                     </Header>
                     {button(buttonProps)}
@@ -154,7 +161,7 @@ const CustomModalDescription = styled(ModalDescription)`
 
 const Header = styled.div`
     color: var(--blue);
-    opacity: ${props => props.type === 'private' ? 0.5 : 1};
+    opacity: ${props => props.type === 'private' || props.deleted ? 0.5 : 1};
     font-family: "Roboto Slab";
     font-size: 32px;
     font-style: normal;
@@ -235,9 +242,10 @@ const InvitationOnlyElement = styled.div`
     align-items: center;
 `;
 
-const AlreadyAMemberElement = styled.div`
+const Label = styled.div`
     display: flex;
     gap: 10px;
+    font-size: 16px;
     align-items: center;
 `;
 
