@@ -46,6 +46,8 @@ describe('Create group, go to overview and delete group', () => {
     cy.contains('button', 'Delete Group').click();
 
     cy.url().should('include', '/dashboard');
+
+    cy.get('[aria-label="deleted-group"]').should('exist');
   });
 
   it('should show an error if input is not "Delete"', () => {

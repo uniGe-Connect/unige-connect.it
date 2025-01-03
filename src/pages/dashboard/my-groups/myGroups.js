@@ -34,7 +34,8 @@ const GroupsPage = () => {
       topic: newGroupTopic,
       description: newGroupDescription,
       type: newGroupType,
-      member_count: 1
+      member_count: 1,
+      id: null
     };
 
     setLoader(true);
@@ -47,6 +48,7 @@ const GroupsPage = () => {
       })
       .then((response) => {
         if (response.data.id) {
+          newGroup.id = response.data.id;
           newGroup.created_at = response.data.created_at;
           newGroup.is_member = response.data.is_member;
           newGroup.member_count = response.data.member_count;
