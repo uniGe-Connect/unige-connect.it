@@ -60,6 +60,10 @@ class WebApiClient {
     return post(`/groups/${groupId}/members`);
   }
 
+  leaveGroup(groupId) {
+    return put(`/groups/${groupId}/members`);
+  }
+
   getOwnedGroups() {
     return get('/groups?owner=mine');
   }

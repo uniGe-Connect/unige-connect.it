@@ -29,7 +29,7 @@ const App = () => {
     if (localStorage.getItem('unige-connect_token')) {
       getApiClient()
         .me()
-          .then((response) =>
+        .then((response) =>
           dispatch({ type: 'set-user', me: response.data })
         );
     }
@@ -46,10 +46,10 @@ const App = () => {
   return (
     <LoaderContext.Provider value={{ loader, setLoader }}>
       <UserContext.Provider value={{ user, setUser }}>
-          <CustomDimmer active={loader} inverted>
-            <Loader size='large'>Loading</Loader>
-          </CustomDimmer>
-        <RouterProvider future={{ v7_startTransition: true }}router={router} />
+        <CustomDimmer active={loader} inverted>
+          <Loader size='large'>Loading</Loader>
+        </CustomDimmer>
+        <RouterProvider future={{ v7_startTransition: true }} router={router} />
       </UserContext.Provider>
     </LoaderContext.Provider>
   );
