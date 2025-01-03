@@ -5,7 +5,7 @@ import { Modal, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 import { LoaderContext } from '../../contexts/loader_context';
-import UpdateGroupModal from './updateGroupModal'; 
+import UpdateGroupModal from './updateGroupModal';
 import { toast, Toaster } from 'react-hot-toast';
 
 function Settings(props) {
@@ -14,11 +14,11 @@ function Settings(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); 
-  const [newGroupName, setNewGroupName] = useState(''); 
-  const [newGroupTopic, setNewGroupTopic] = useState(''); 
-  const [newGroupDescription, setNewGroupDescription] = useState(''); 
-  const [newGroupType, setNewGroupType] = useState(''); 
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [newGroupName, setNewGroupName] = useState('');
+  const [newGroupTopic, setNewGroupTopic] = useState('');
+  const [newGroupDescription, setNewGroupDescription] = useState('');
+  const [newGroupType, setNewGroupType] = useState('');
 
   const handleOnClick = useCallback(() => {
     setIsOpen(true);
@@ -46,15 +46,15 @@ function Settings(props) {
     }
   }, [input, props.groupId, navigation, setLoader]);
 
-  const handleUpdateClick = useCallback(() => { 
+  const handleUpdateClick = useCallback(() => {
     setIsUpdateModalOpen(true);
   }, [setIsUpdateModalOpen]);
 
-  const handleUpdateModalClose = useCallback(() => { 
+  const handleUpdateModalClose = useCallback(() => {
     setIsUpdateModalOpen(false);
   }, [setIsUpdateModalOpen]);
 
-  const handleUpdateGroup = useCallback(() => { 
+  const handleUpdateGroup = useCallback(() => {
     setLoader(true);
     getApiClient().updateGroup(props.groupId, {
       name: newGroupName,
@@ -75,7 +75,8 @@ function Settings(props) {
       }
     })
         .finally(() => setLoader(false));
-  }, [setLoader, props.groupId, newGroupName, newGroupTopic, newGroupDescription, newGroupType, handleUpdateModalClose]);
+  }, [setLoader,
+    props.groupId, newGroupName, newGroupTopic, newGroupDescription, newGroupType, handleUpdateModalClose]);
 
   const leaveGroup = useCallback(() => {
     setLoader(true);
@@ -126,7 +127,7 @@ function Settings(props) {
             </DangerButton>
           </Modal.Actions>
         </Modal>
-        <UpdateGroupModal isOpen={isUpdateModalOpen} 
+        <UpdateGroupModal isOpen={isUpdateModalOpen}
                           onClose={handleUpdateModalClose}
                           groupId={props.groupId}
                           newGroupName={newGroupName}
