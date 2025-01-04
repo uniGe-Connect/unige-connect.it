@@ -2,12 +2,11 @@
 export function doLogin() {
     cy.visit('/');
     cy.contains('Signin').click();
-
-    cy.origin(Cypress.env('IDP_ORIGIN_URL'), () => { // This is needed to tell cypress that the following commands are runned on another domain
-      cy.get("input[id=username]").type("s123456@studenti.unige.it");
-      cy.get("input[id=password]").type("password");
-      cy.contains('button', 'Login').click();
-      });
+    cy.origin(Cypress.env('IDP_ORIGIN_URL'), () => {// This is needed to tell cypress that the following commands are runned on another domain
+        cy.get('input[name="username"]').type(Cypress.env('email'));
+        cy.get('input[name="password"]').type(Cypress.env('password'));
+        cy.contains('button', 'Login').click();
+     });
 }
 
 export function fillGroupModalFields(groupName = 'Test Group') {

@@ -7,7 +7,9 @@ module.exports = defineConfig({
         pageLoadTimeout: 5000,
         baseUrl: 'http://localhost:3000/',
         env: {
-            IDP_ORIGIN_URL: 'https://auth.unige-connect.it/'
+            IDP_ORIGIN_URL: 'https://auth.unige-connect.it/',
+            email: 's123456@studenti.unige.it',
+            password: 'password'
         }
     },
 })
