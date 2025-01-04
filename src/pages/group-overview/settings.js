@@ -5,6 +5,7 @@ import { Modal, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 import { LoaderContext } from '../../contexts/loader_context';
+import UpdateGroupModal from './updateGroupModal';
 import { toast, Toaster } from 'react-hot-toast';
 
 function Settings(props) {
@@ -13,6 +14,11 @@ function Settings(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [newGroupName, setNewGroupName] = useState('');
+  const [newGroupTopic, setNewGroupTopic] = useState('');
+  const [newGroupDescription, setNewGroupDescription] = useState('');
+  const [newGroupType, setNewGroupType] = useState('');
 
   const handleOnClick = useCallback(() => {
     setIsOpen(true);
@@ -34,77 +40,123 @@ function Settings(props) {
       getApiClient().deleteGroup(props.groupId).then(res => {
         navigation('/dashboard');
       }).catch(makeStandardApiErrorHandler(error => console.log(error)))
-        .finally(() => setLoader(false));
+          .finally(() => setLoader(false));
     } else {
       setError(true);
     }
   }, [input, props.groupId, navigation, setLoader]);
 
+  const handleUpdateClick = useCallback(() => {
+    setIsUpdateModalOpen(true);
+  }, [setIsUpdateModalOpen]);
+
+  const handleUpdateModalClose = useCallback(() => {
+    setIsUpdateModalOpen(false);
+  }, [setIsUpdateModalOpen]);
+
+  const handleUpdateGroup = useCallback(() => {
+    setLoader(true);
+    getApiClient().updateGroup(props.groupId, {
+      name: newGroupName,
+      topic: newGroupTopic,
+      description: newGroupDescription,
+      type: newGroupType
+    }).then(() => {
+      toast.success('Group updated successfully');
+      handleUpdateModalClose();
+      window.location.reload();
+    }).catch((error) => {
+      if (error.response.status === 403) {
+        toast.error('You are not authorized to update this group');
+      } else if (error.response.status === 400) {
+        toast.error('You can only update the group every 10 minutes');
+      } else {
+        console.log(error);
+      }
+    })
+        .finally(() => setLoader(false));
+  }, [setLoader,
+    props.groupId, newGroupName, newGroupTopic, newGroupDescription, newGroupType, handleUpdateModalClose]);
+
   const leaveGroup = useCallback(() => {
     setLoader(true);
     getApiClient().leaveGroup(props.groupId)
-      .then(res => {
-        toast.success('Successfully left the group!');
-        setTimeout(() => {
-          navigation('/dashboard/Dashboard');
-        }, 2000);
-      })
-      .catch(error => {
-        let errorMessage = 'An error occurred while leaving the group.';
-        if (error?.response?.data?.detail) {
-          errorMessage = error.response.data.detail;
-        }
-        toast.error(errorMessage);
-        console.error('API Error:', error);
-      })
-      .finally(() => setLoader(false));
+        .then(res => {
+          toast.success('Successfully left the group!');
+          setTimeout(() => {
+            navigation('/dashboard/Dashboard');
+          }, 2000);
+        })
+        .catch(error => {
+          let errorMessage = 'An error occurred while leaving the group.';
+          if (error?.response?.data?.detail) {
+            errorMessage = error.response.data.detail;
+          }
+          toast.error(errorMessage);
+          console.error('API Error:', error);
+        })
+        .finally(() => setLoader(false));
   }, [props.groupId, navigation, setLoader]);
 
   return (
-    <>
-      <Container leftAmount={props.width}>
-        <Toaster position="top-center" reverseOrder={true} />
-        <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
-        <CustomButton onClick={leaveGroup} label='Leave Group:' backgroundColor='var(--blue)' name='Leave' />
-      </Container>
-      <Modal open={isOpen}
-        onClose={() => setIsOpen(false)}
-        size='small'>
-        <Modal.Header>Delete your Group</Modal.Header>
-        <Modal.Content>
-          <Flex>
-            <Label>To be able to delete the group you have to write &quot;Delete&quot;:</Label>
-            <Input error={error} value={input} onChange={handleChange} />
-          </Flex>
-        </Modal.Content>
-        <Modal.Actions>
-          <MainButton positive
-            onClick={deleteGroup}>
-            Delete Group
-          </MainButton>
-          <DangerButton negative
-            onClick={handleClose}>
-            Cancel
-          </DangerButton>
-        </Modal.Actions>
-      </Modal>
-    </>
+      <>
+        <Container leftAmount={props.width}>
+          <Toaster position='top-center' reverseOrder={true} />
+          <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
+          <CustomButton onClick={handleUpdateClick} label='Update Group' backgroundColor='var(--blue)' name='Update' />
+          <CustomButton onClick={leaveGroup} label='Leave Group:' backgroundColor='var(--blue)' name='Leave' />
+        </Container>
+        <Modal open={isOpen}
+               onClose={() => setIsOpen(false)}
+               size='small'>
+          <Modal.Header>Delete your Group</Modal.Header>
+          <Modal.Content>
+            <Flex>
+              <Label>To be able to delete the group you have to write &quot;Delete&quot;:</Label>
+              <Input error={error} value={input} onChange={handleChange} />
+            </Flex>
+          </Modal.Content>
+          <Modal.Actions>
+            <MainButton positive
+                        onClick={deleteGroup}>
+              Delete Group
+            </MainButton>
+            <DangerButton negative
+                          onClick={handleClose}>
+              Cancel
+            </DangerButton>
+          </Modal.Actions>
+        </Modal>
+        <UpdateGroupModal isOpen={isUpdateModalOpen}
+                          onClose={handleUpdateModalClose}
+                          groupId={props.groupId}
+                          newGroupName={newGroupName}
+                          setNewGroupName={setNewGroupName}
+                          newGroupTopic={newGroupTopic}
+                          setNewGroupTopic={setNewGroupTopic}
+                          newGroupDescription={newGroupDescription}
+                          setNewGroupDescription={setNewGroupDescription}
+                          newGroupType={newGroupType}
+                          setNewGroupType={setNewGroupType}
+                          errorMessage={error ? 'Error updating group' : ''}
+                          onCreate={handleUpdateGroup} />
+      </>
   );
 }
 
 const Container = styled.div`
-    display: flex;
-    position: absolute;
-    left: ${props => props.leftAmount}px;
-    transition: left 0.5s ease;
-    width: 70vw;
-    flex-direction: column;
-    min-height: 90vh;
-    gap: 20px;
+  display: flex;
+  position: absolute;
+  left: ${props => props.leftAmount}px;
+  transition: left 0.5s ease;
+  width: 70vw;
+  flex-direction: column;
+  min-height: 90vh;
+  gap: 20px;
 
-    @media screen and (max-width: 720px) {
-        width: 90vw;
-    }
+  @media screen and (max-width: 720px) {
+    width: 90vw;
+  }
 `;
 
 const MainButton = styled(Button).attrs(props => ({
