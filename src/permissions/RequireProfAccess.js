@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/user_context';
 import { USER_TYPE } from '../Enum/userType';
 
-const RequireUserAccess = (Component) => {
+const RequireProfAccess = (Component) => {
   const RequireUserAccessComponent = (props) => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ const RequireUserAccess = (Component) => {
     }, [token, navigate]);
 
     if (user) {
-      if (user.type !== USER_TYPE.STUDENT) {
+      if (user.type !== USER_TYPE.PROFESSOR) {
         navigate('/');
       } else {
         return <Component {...props} />;
@@ -32,4 +32,4 @@ const RequireUserAccess = (Component) => {
   return RequireUserAccessComponent;
 };
 
-export default RequireUserAccess;
+export default RequireProfAccess;

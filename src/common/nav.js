@@ -5,6 +5,7 @@ import ArrowIcon from '../svgs/arrow.svg';
 import { NavLink } from 'react-router-dom';
 import { UserContext } from '../contexts/user_context';
 import { getApiClient, makeStandardApiErrorHandler } from '../server/get_api_client';
+import { USER_TYPE } from '../Enum/userType';
 
 function Nav() {
   const { user } = useContext(UserContext);
@@ -56,7 +57,7 @@ function Nav() {
             </DropdownHeader>
             {isOpen && (
                 <DropdownMenu>
-                    <MenuItem to='/dashboard/Groups'>Dashboard</MenuItem>
+                    <MenuItem to={user.type === USER_TYPE.STUDENT ? '/dashboard/Groups' : '/professor/dashboard'}>Dashboard</MenuItem>
                     <MenuItem>Profile</MenuItem>
                     <MenuItem>Support</MenuItem>
                     <MenuItem onClick={handleSignOut}>Logout</MenuItem>
