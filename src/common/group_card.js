@@ -14,6 +14,8 @@ import { getApiClient } from '../server/get_api_client';
 import { LoaderContext } from '../contexts/loader_context';
 import CheckIcon from '../svgs/CheckMarkBlack.svg';
 import deleteIcon from '../svgs/deleteIcon.png';
+import { UserContext } from '../contexts/user_context';
+import { USER_TYPE } from '../Enum/userType';
 
 function GroupCard(props) {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +23,7 @@ function GroupCard(props) {
     useState({ is_member: props.is_member, type: props.type, deleted_at: props.deleted_at });
     const [memberCount, setMemberCount] = useState(props.member_count);
     const { setLoader } = useContext(LoaderContext);
+    const { user } = useContext(UserContext);
     const [feedback, setFeedback] = useState({ visible: false, message: '', type: '' });
     const handleOnClick = useCallback(() => {
         setIsOpen(true);
@@ -83,7 +86,8 @@ function GroupCard(props) {
                 case 'public_open':
                     return (
                         <>
-                            <StatusButton aria-label='become-a-member-button' color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>
+                            {user && user.type === USER_TYPE.STUDENT &&
+                            <StatusButton aria-label='become-a-member-button' color='var(--blue)' onClick={handleOnClick}>Become A Member</StatusButton>}
                             <Modal size='tiny' open={isOpen} onClose={() => setIsOpen(false)}>
                                 <ModalContent aria-label='become-a-member-modal'>
                                     <CustomModalDescription>

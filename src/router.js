@@ -7,6 +7,7 @@ import Notifications from './pages/dashboard/notifications_tab';
 import DashTab from './pages/dashboard/groups';
 import GroupOverview from './pages/group-overview/groupOverview';
 import GroupsPage from './pages/dashboard/my-groups/myGroups';
+import ProfessorDashboard from './pages/professor/dashboard/professorDashboard';
 
 export const router = createBrowserRouter(
   [
@@ -31,8 +32,35 @@ export const router = createBrowserRouter(
       errorElement: <PageNotFound />,
     },
     {
+      path: '/professor/dashboard',
+      element: <ProfessorDashboard />,
+      errorElement: <PageNotFound />,
+    },
+    {
         path: '/dashboard/:tab',
         element: <Dashboard />,
+        errorElement: <PageNotFound />,
+        children: [
+            {
+                path: 'Groups',
+                element: <DashTab />,
+                errorElement: <PageNotFound />,
+            },
+            {
+                path: 'Dashboard',
+                element: <GroupsPage />,
+                errorElement: <PageNotFound />,
+            },
+            {
+                path: 'Notifications',
+                element: <Notifications />,
+                errorElement: <PageNotFound />,
+            },
+        ]
+    },
+    {
+        path: '/professor/dashboard/:tab',
+        element: <ProfessorDashboard />,
         errorElement: <PageNotFound />,
         children: [
             {

@@ -29,8 +29,10 @@ const App = () => {
     if (localStorage.getItem('unige-connect_token')) {
       getApiClient()
         .me()
-        .then((response) =>
-          dispatch({ type: 'set-user', me: response.data })
+        .then((response) => {
+          console.log(response);
+          dispatch({ type: 'set-user', me: response.data });
+        }
         );
     }
   }, []);
