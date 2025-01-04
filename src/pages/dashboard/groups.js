@@ -14,6 +14,7 @@ function Groups() {
         setLoader(true);
         getApiClient().getGroups().then((response) => {
             setData(response.data.data);
+            console.log(response.data.data);
         }
         )
             .catch(makeStandardApiErrorHandler((error) => console.log(error)))
@@ -41,6 +42,7 @@ function Groups() {
                             text={group.description}
                             date={group.created_at}
                             type={group.type}
+                            deleted_at={group.deleted_at}
                             member_count={group.member_count}
                             course={group.course_name} />
                     );

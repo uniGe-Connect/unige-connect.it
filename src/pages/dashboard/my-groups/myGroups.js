@@ -34,7 +34,8 @@ const GroupsPage = () => {
       course: newGroupCourse,
       description: newGroupDescription,
       type: newGroupType,
-      member_count: 1
+      member_count: 1,
+      id: null
     };
 
     setLoader(true);
@@ -47,6 +48,7 @@ const GroupsPage = () => {
       })
       .then((response) => {
         if (response.data.id) {
+          newGroup.id = response.data.id;
           newGroup.created_at = response.data.created_at;
           newGroup.is_member = response.data.is_member;
           newGroup.member_count = response.data.member_count;
@@ -79,6 +81,7 @@ const GroupsPage = () => {
       .getMyGroups()
       .then((response) => {
         if (response && response.data) {
+          console.log(response.data.owned_groups);
           setOwnedGroups(() => [...response.data.owned_groups]);
           setJoinedGroups(() => [...response.data.joined_groups]);
           console.log(response.data);
@@ -110,42 +113,46 @@ const GroupsPage = () => {
             (filterOwnedGroups && filterJoinedGroups) || (!filterOwnedGroups && !filterJoinedGroups)
               ? <>
                 {ownedGroups.map((group) => (
-                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                  <CustomNavLink key={group.id} to={group.deleted_at ? '/dashboard/Dashboard' : '/group-overview/' + group.id}>
                     <GroupCard header={group.name}
                       is_member={group.is_member}
                       text={group.description}
                       date={group.created_at}
                       type={group.type}
+                      deleted_at={group.deleted_at}
                       member_count={group.member_count}
                       course={group.course_name} />
                   </CustomNavLink>
                 ))}
                 {joinedGroups.map((group) => (
-                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                  <CustomNavLink key={group.id} to={group.deleted_at ? '/dashboard/Dashboard' : '/group-overview/' + group.id}>
                     <GroupCard header={group.name}
                       text={group.description}
                       is_member={group.is_member}
                       date={group.created_at}
                       type={group.type}
+                      deleted_at={group.deleted_at}
                       member_count={group.member_count} />
                   </CustomNavLink>
                 ))}
                 {/* eslint-disable-next-line react/jsx-closing-tag-location */}
               </> : filterJoinedGroups
                 ? joinedGroups.map((group) => (
-                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                  <CustomNavLink key={group.id} to={group.deleted_at ? '/dashboard/Dashboard' : '/group-overview/' + group.id}>
                     <GroupCard header={group.name}
                       text={group.description}
                       is_member={group.is_member}
+                      deleted_at={group.deleted_at}
                       date={group.created_at}
                       type={group.type}
                       member_count={group.member_count} />
                   </CustomNavLink>
                 ))
                 : ownedGroups.map((group) => (
-                  <CustomNavLink key={group.id} to={'/group-overview/' + group.id}>
+                  <CustomNavLink key={group.id} to={group.deleted_at ? '/dashboard/Dashboard' : '/group-overview/' + group.id}>
                     <GroupCard header={group.name}
                       is_member={group.is_member}
+                      deleted_at={group.deleted_at}
                       text={group.description}
                       date={group.created_at}
                       type={group.type}
