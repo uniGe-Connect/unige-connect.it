@@ -132,7 +132,8 @@ const GroupsPage = () => {
                       date={group.created_at}
                       type={group.type}
                       deleted_at={group.deleted_at}
-                      member_count={group.member_count} />
+                      member_count={group.member_count}
+                      course={group.course_name} />
                   </CustomNavLink>
                 ))}
                 {/* eslint-disable-next-line react/jsx-closing-tag-location */}
@@ -145,7 +146,8 @@ const GroupsPage = () => {
                       deleted_at={group.deleted_at}
                       date={group.created_at}
                       type={group.type}
-                      member_count={group.member_count} />
+                      member_count={group.member_count}
+                      course={group.course_name} />
                   </CustomNavLink>
                 ))
                 : ownedGroups.map((group) => (
@@ -156,7 +158,8 @@ const GroupsPage = () => {
                       text={group.description}
                       date={group.created_at}
                       type={group.type}
-                      member_count={group.member_count} />
+                      member_count={group.member_count}
+                      course={group.course_name} />
                   </CustomNavLink>
                 ))
           )}
