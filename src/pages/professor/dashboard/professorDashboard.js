@@ -1,26 +1,23 @@
 import Nav from '../../../common/nav';
-import NavigationBar from '../../dashboard/navigation';
+import ProfessorNavigationBar from './professorNavigation';
 import React from 'react';
 import styled from 'styled-components';
-import Groups from '../../dashboard/groups';
-import Notifications from '../../dashboard/notifications_tab';
-import GroupsPage from '../../dashboard/my-groups/myGroups';
 import Footer from '../../../common/footer';
 import RequireProfAccess from '../../../permissions/RequireProfAccess';
 import { useParams } from 'react-router-dom';
+import ProfessorGroups from './professorGroups';
+import ProfessorMyGroups from './professorMyGroups';
 
 function ProfessorDashboard() {
     const { tab } = useParams('Groups');
     const renderContent = () => {
         switch (tab) {
             case 'Groups':
-                return <Groups />;
+                return <ProfessorGroups />;
             case 'Dashboard':
-                return <GroupsPage />;
-            case 'Notifications':
-                return <Notifications />;
+                return <ProfessorMyGroups />;
             default:
-                return <Groups />;
+                return <ProfessorGroups />;
         }
     };
 
@@ -28,7 +25,7 @@ function ProfessorDashboard() {
         <>
             <Nav />
             <Container>
-                <NavigationBar activeTab={tab} />
+                <ProfessorNavigationBar activeTab={tab} />
                 <Content>
                     {renderContent()}
                 </Content>

@@ -5,9 +5,11 @@ import PageNotFound from './pages/page-not-found/page_not_found';
 import Dashboard from './pages/dashboard/dashboard';
 import Notifications from './pages/dashboard/notifications_tab';
 import DashTab from './pages/dashboard/groups';
+import ProfessorGroups from './pages/professor/dashboard/professorGroups';
 import GroupOverview from './pages/group-overview/groupOverview';
 import GroupsPage from './pages/dashboard/my-groups/myGroups';
 import ProfessorDashboard from './pages/professor/dashboard/professorDashboard';
+import ProfessorMyGroups from './pages/professor/dashboard/professorMyGroups';
 
 export const router = createBrowserRouter(
   [
@@ -65,19 +67,14 @@ export const router = createBrowserRouter(
         children: [
             {
                 path: 'Groups',
-                element: <DashTab />,
+                element: <ProfessorGroups />,
                 errorElement: <PageNotFound />,
             },
             {
                 path: 'Dashboard',
-                element: <GroupsPage />,
+                element: <ProfessorMyGroups />,
                 errorElement: <PageNotFound />,
-            },
-            {
-                path: 'Notifications',
-                element: <Notifications />,
-                errorElement: <PageNotFound />,
-            },
+            }
         ]
     },
   ],
