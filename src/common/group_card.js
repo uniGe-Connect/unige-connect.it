@@ -111,23 +111,23 @@ function GroupCard(props) {
 
                 <RowContainer>
                     <Flex>
+                        {props.course && (
+                            <Tag key={props.course}>
+                                {`${props.course}`}
+                            </Tag>)}
+                    </Flex>
+                </RowContainer>
+                <RowContainer>
+                    <Flex>
                         <SubFlex><Icon src={UsersIcon} /><IconText>{memberCount === 1 ? '1 Member' : `${memberCount} Members`}</IconText></SubFlex>
                         <SubFlex><Icon src={DateIcon} /><IconText>{props.date ? props.date.split('T')[0] : 'N/A'}</IconText></SubFlex>
                     </Flex>
                 </RowContainer>
+
             </TopSection>
             <Text>
                 {props.text}
             </Text>
-            <Flex>
-                {props.tags > 0 && props.tags.map((tag) => {
-                    return (
-                        <Tag key={tag}>
-                            {`#${tag}`}
-                        </Tag>
-                    );
-                })}
-            </Flex>
             {feedback.visible && (<Message aria-label='message' success={feedback.type === 'success'}
                 error={feedback.type === 'error'}
                 content={feedback.message} />)}
@@ -203,6 +203,7 @@ const IconText = styled.div`
 `;
 
 const Tag = styled.div`
+    color: black;
 `;
 
 const RowContainer = styled.div`
@@ -239,6 +240,7 @@ const AlreadyAMemberElement = styled.div`
     display: flex;
     gap: 10px;
     align-items: center;
+    color: black;
 `;
 
 export default GroupCard;

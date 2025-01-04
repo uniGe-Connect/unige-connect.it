@@ -1,18 +1,4 @@
-import { doLogin } from "./utils";
-
-function fillFields() {
-  cy.get('input[placeholder="Enter group name"]')
-    .type('Test Group')
-    .should('have.value', 'Test Group');
-
-  cy.get('input[placeholder="Enter group topic"]')
-    .type('Test Topic')
-    .should('have.value', 'Test Topic');
-
-  cy.get('textarea[placeholder="Enter group description"]')
-    .type('This is a description for the test group.')
-    .should('have.value', 'This is a description for the test group.');
-}
+import { doLogin, fillGroupModalFields } from "./utils";
 
 function goToOverview() {
   doLogin();
@@ -20,7 +6,7 @@ function goToOverview() {
 
   cy.get('button').contains('Create Group').click();
 
-  fillFields();
+  fillGroupModalFields();
 
   cy.contains('Public Open').click();
 

@@ -6,5 +6,18 @@ export function doLogin() {
         cy.get('input[name="username"]').type(Cypress.env('email'));
         cy.get('input[name="password"]').type(Cypress.env('password'));
         cy.contains('button', 'Login').click();
-      });
+     });
+}
+
+export function fillGroupModalFields(groupName = 'Test Group') {
+  cy.get('input[placeholder="Enter group name"]')
+    .type(groupName)
+    .should('have.value', groupName);
+
+  cy.get('div[id="course-dropdown"]').click();
+  cy.get('div[role="option"]').first().click();
+
+  cy.get('textarea[placeholder="Enter group description"]')
+    .type('This is a description for the test group.')
+    .should('have.value', 'This is a description for the test group.');
 }

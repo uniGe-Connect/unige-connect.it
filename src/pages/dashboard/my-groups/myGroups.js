@@ -15,7 +15,7 @@ const GroupsPage = () => {
   const [joinedGroups, setJoinedGroups] = useState([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
-  const [newGroupTopic, setNewGroupTopic] = useState('');
+  const [newGroupCourse, setNewGroupCourse] = useState('');
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [newGroupType, setNewGroupType] = useState('public_open');
   const [errorMessage, setErrorMessage] = useState('');
@@ -23,7 +23,7 @@ const GroupsPage = () => {
   const [filterJoinedGroups, setFilterJoinedGroups] = useState(false);
 
   const handleCreateGroup = async () => {
-    if (!newGroupName || !newGroupTopic || !newGroupDescription) {
+    if (!newGroupName || !newGroupCourse || !newGroupDescription) {
       setErrorMessage('All fields are required!');
       return;
     }
@@ -31,7 +31,7 @@ const GroupsPage = () => {
 
     const newGroup = {
       name: newGroupName,
-      topic: newGroupTopic,
+      course: newGroupCourse,
       description: newGroupDescription,
       type: newGroupType,
       member_count: 1
@@ -41,7 +41,7 @@ const GroupsPage = () => {
     getApiClient()
       .createGroup({
         name: newGroup.name,
-        topic: newGroup.topic,
+        course_id: newGroup.course,
         description: newGroup.description,
         type: newGroup.type,
       })
@@ -63,7 +63,7 @@ const GroupsPage = () => {
 
   const resetForm = () => {
     setNewGroupName('');
-    setNewGroupTopic('');
+    setNewGroupCourse('');
     setNewGroupDescription('');
     setNewGroupType('public_open');
   };
@@ -116,7 +116,8 @@ const GroupsPage = () => {
                       text={group.description}
                       date={group.created_at}
                       type={group.type}
-                      member_count={group.member_count} />
+                      member_count={group.member_count}
+                      course={group.course_name} />
                   </CustomNavLink>
                 ))}
                 {joinedGroups.map((group) => (
@@ -159,8 +160,8 @@ const GroupsPage = () => {
           onClose={handleModalCancel}
           newGroupName={newGroupName}
           setNewGroupName={setNewGroupName}
-          newGroupTopic={newGroupTopic}
-          setNewGroupTopic={setNewGroupTopic}
+          newGroupCourse={newGroupCourse}
+          setNewGroupCourse={setNewGroupCourse}
           newGroupDescription={newGroupDescription}
           setNewGroupDescription={setNewGroupDescription}
           newGroupType={newGroupType}
