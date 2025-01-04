@@ -30,7 +30,6 @@ const App = () => {
       getApiClient()
         .me()
         .then((response) => {
-          console.log(response);
           dispatch({ type: 'set-user', me: response.data });
         }
         );

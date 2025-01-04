@@ -81,10 +81,8 @@ const GroupsPage = () => {
       .getMyGroups()
       .then((response) => {
         if (response && response.data) {
-          console.log(response.data.owned_groups);
           setOwnedGroups(() => [...response.data.owned_groups]);
           setJoinedGroups(() => [...response.data.joined_groups]);
-          console.log(response.data);
         }
       })
       .catch(makeStandardApiErrorHandler((err) => console.log(err)))

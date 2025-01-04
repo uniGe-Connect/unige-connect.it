@@ -8,7 +8,6 @@ const RequireProfAccess = (Component) => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const token = localStorage.getItem('unige-connect_token');
-    console.log(user);
     useEffect(() => {
       if (!token) {
         navigate('/');
