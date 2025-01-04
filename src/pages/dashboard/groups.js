@@ -43,7 +43,8 @@ function Groups() {
                             date={group.created_at}
                             type={group.type}
                             deleted_at={group.deleted_at}
-                            member_count={group.member_count} />
+                            member_count={group.member_count}
+                            course={group.course_name} />
                     );
                 })}
             </ContentContainer>

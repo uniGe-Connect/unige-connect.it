@@ -1,18 +1,4 @@
-import { doLogin } from "./utils";
-
-function fillFields() {
-  cy.get('input[placeholder="Enter group name"]')
-    .type('Test Group')
-    .should('have.value', 'Test Group');
-
-  cy.get('input[placeholder="Enter group topic"]')
-    .type('Test Topic')
-    .should('have.value', 'Test Topic');
-
-  cy.get('textarea[placeholder="Enter group description"]')
-    .type('This is a description for the test group.')
-    .should('have.value', 'This is a description for the test group.');
-}
+import { doLogin, fillGroupModalFields } from "./utils";
 
 describe('Create new group', () => {
   it('should fill the form and click create public open group', () => {
@@ -22,7 +8,7 @@ describe('Create new group', () => {
 
     cy.get('button').contains('Create Group').click();
 
-    fillFields();
+    fillGroupModalFields();
 
     cy.contains('Public Open').click();
 
@@ -37,14 +23,14 @@ describe('Create new group', () => {
     cy.contains('Dashboard').click();
 
     cy.get('button').contains('Create Group').click();
-
-    fillFields();
+    const rand = Math.random();
+    const groupName = `TestGroup${rand}`;
+    fillGroupModalFields(groupName);
 
     cy.contains('Private').click();
 
     cy.get('button[aria-label="create-group-button-modal"]').click();
-
-    cy.contains('Test Group').should('be.visible');
+    cy.contains(groupName).should('be.visible');
 
     // May not work with multiple "Test Group"
     // cy.contains('Test Group')
@@ -53,7 +39,6 @@ describe('Create new group', () => {
     //   .find('i.lock.icon')
     //   .should('exist');
 
-    cy.get('[aria-label="invitation-only"]').should('exist');
-
+    cy.contains(groupName).parent().find('[aria-label="already-a-member"]').should('exist');
   });
 });

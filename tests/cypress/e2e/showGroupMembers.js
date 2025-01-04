@@ -1,25 +1,11 @@
-import { doLogin } from "./utils";
-
-function fillFields() {
-    cy.get('input[placeholder="Enter group name"]')
-      .type('Test Member Group')
-      .should('have.value', 'Test Member Group');
-  
-    cy.get('input[placeholder="Enter group topic"]')
-      .type('Test Topic')
-      .should('have.value', 'Test Topic');
-  
-    cy.get('textarea[placeholder="Enter group description"]')
-      .type('This is a description for the test group.')
-      .should('have.value', 'This is a description for the test group.');
-  }
+import { doLogin, fillGroupModalFields } from "./utils";
 
 describe('show group members list', () => {
     it('should show all group members', () => {
         doLogin();
         cy.contains('Dashboard').click();
         cy.get('button').contains('Create Group').click();
-        fillFields();
+        fillGroupModalFields('Test Member Group');
         cy.contains('Public Open').click();
         cy.get('button[aria-label="create-group-button-modal"]').click();
         cy.contains('Test Member Group').should('be.visible');
