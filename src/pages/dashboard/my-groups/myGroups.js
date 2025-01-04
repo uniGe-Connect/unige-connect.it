@@ -116,7 +116,8 @@ const GroupsPage = () => {
                       text={group.description}
                       date={group.created_at}
                       type={group.type}
-                      member_count={group.member_count} />
+                      member_count={group.member_count}
+                      course={group.course_name} />
                   </CustomNavLink>
                 ))}
                 {joinedGroups.map((group) => (
