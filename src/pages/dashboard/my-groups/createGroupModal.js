@@ -49,7 +49,8 @@ const CreateGroupModal = ({
 
           <Form.Field>
             <FormLabel>Group Course</FormLabel>
-            <Dropdown placeholder='Enter group course'
+            <Dropdown id='course-dropdown'
+              placeholder='Enter group course'
               search
               selection
               loading={loading}
