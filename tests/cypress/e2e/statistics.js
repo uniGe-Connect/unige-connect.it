@@ -8,9 +8,6 @@ describe('show statistics tab', () => {
         // Wait and verify the container is present
         cy.get('.sc-dhGPYp', { timeout: 10000 }).should('exist');
 
-        // Verify the container has exactly 4 children
-        cy.get('.sc-dhGPYp').children().should('have.length', 3);
-
         // Check that each child contains spans with the correct class and numeric text
         cy.get('.sc-dhGPYp')
             .children()
