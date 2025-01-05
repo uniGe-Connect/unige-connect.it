@@ -84,6 +84,11 @@ const OuterFlexContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   gap: 30px;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const InnerFlexContainer = styled.div`
