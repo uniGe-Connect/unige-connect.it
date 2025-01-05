@@ -10,6 +10,7 @@ import GroupOverview from './pages/group-overview/groupOverview';
 import GroupsPage from './pages/dashboard/my-groups/myGroups';
 import ProfessorDashboard from './pages/professor/dashboard/professorDashboard';
 import ProfessorMyGroups from './pages/professor/dashboard/professorMyGroups';
+import ProfessorStatistics from './pages/professor/dashboard/professorStatistics';
 
 export const router = createBrowserRouter(
   [
@@ -73,6 +74,11 @@ export const router = createBrowserRouter(
             {
                 path: 'Dashboard',
                 element: <ProfessorMyGroups />,
+                errorElement: <PageNotFound />,
+            },
+            {
+                path: 'Statistics',
+                element: <ProfessorStatistics />,
                 errorElement: <PageNotFound />,
             }
         ]

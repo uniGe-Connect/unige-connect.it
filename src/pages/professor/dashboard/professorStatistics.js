@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import GroupCard from '../../../common/group_card';
 import { getApiClient, makeStandardApiErrorHandler } from '../../../server/get_api_client';
 import { useContext, useState, useEffect } from 'react';
 import { LoaderContext } from '../../../contexts/loader_context';
 import RequireProfAccess from '../../../permissions/RequireProfAccess';
+import StatisticCard from './statisticCard';
 
-function ProfessorMyGroups() {
+function ProfessorStatistics() {
     const [data, setData] = useState();
     const { setLoader } = useContext(LoaderContext);
     useEffect(() => {
         setLoader(true);
-        getApiClient().getProfessorGroups().then((response) => {
-            setData(response.data.data);
+        getApiClient().getProfStatistics().then((response) => {
+            setData(response.data);
         }
         )
             .catch(makeStandardApiErrorHandler((error) => console.log(error)))
@@ -24,18 +24,9 @@ function ProfessorMyGroups() {
                     <ActionContainer>
                         <Text> There are no groups associated to your courses </Text>
                     </ActionContainer>}
-                {data && data.map((group) => {
+                {data && data.map((data) => {
                     return (
-                        <GroupCard key={group.id}
-                            is_member={group.is_member}
-                            groupId={group.id}
-                            header={group.name}
-                            text={group.description}
-                            date={group.created_at}
-                            type={group.type}
-                            deleted_at={group.deleted_at}
-                            member_count={group.member_count}
-                            course={group.course_name} />
+                        <StatisticCard key={data.course_id} data={data} />
                     );
                 })}
             </ContentContainer>
@@ -80,4 +71,4 @@ const Text = styled.div`
     }
 `;
 
-export default RequireProfAccess(ProfessorMyGroups);
+export default RequireProfAccess(ProfessorStatistics);
