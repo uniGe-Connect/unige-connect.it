@@ -4,6 +4,7 @@ import Body from './body';
 import BottomPart from './bottomPart';
 import Nav from '../../common/nav';
 import Footer from '../../common/footer';
+import RequireAccess from '../../permissions/RequireAccess';
 
 function Home() {
   return (
@@ -18,4 +19,4 @@ function Home() {
 const Container = styled.div`
 `;
 
-export default Home;
+export default RequireAccess(Home);
