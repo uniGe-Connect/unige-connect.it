@@ -16,7 +16,7 @@ function Settings(props) {
   const [error, setError] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
-  const [newGroupTopic, setNewGroupTopic] = useState('');
+  const [newGroupCourse, setNewGroupCourse] = useState('');
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [newGroupType, setNewGroupType] = useState('');
 
@@ -58,7 +58,7 @@ function Settings(props) {
     setLoader(true);
     getApiClient().updateGroup(props.groupId, {
       name: newGroupName,
-      topic: newGroupTopic,
+      topic: newGroupCourse,
       description: newGroupDescription,
       type: newGroupType
     }).then(() => {
@@ -76,7 +76,7 @@ function Settings(props) {
     })
         .finally(() => setLoader(false));
   }, [setLoader,
-    props.groupId, newGroupName, newGroupTopic, newGroupDescription, newGroupType, handleUpdateModalClose]);
+    props.groupId, newGroupName, newGroupCourse, newGroupDescription, newGroupType, handleUpdateModalClose]);
 
   const leaveGroup = useCallback(() => {
     setLoader(true);
@@ -132,8 +132,8 @@ function Settings(props) {
                           groupId={props.groupId}
                           newGroupName={newGroupName}
                           setNewGroupName={setNewGroupName}
-                          newGroupTopic={newGroupTopic}
-                          setNewGroupTopic={setNewGroupTopic}
+                          newGroupCourse={newGroupCourse}
+                          setNewGroupCourse={setNewGroupCourse}
                           newGroupDescription={newGroupDescription}
                           setNewGroupDescription={setNewGroupDescription}
                           newGroupType={newGroupType}

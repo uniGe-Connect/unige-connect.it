@@ -9,14 +9,14 @@ const RequireProfAccess = (Component) => {
     const navigate = useNavigate();
     const token = localStorage.getItem('unige-connect_token');
     useEffect(() => {
-      if (!token) {
+      if (!token || (user && user.type !== USER_TYPE.PROFESSOR)) {
         navigate('/');
       }
-    }, [token, navigate]);
+    }, [token, navigate, user]);
 
     if (user) {
       if (user.type !== USER_TYPE.PROFESSOR) {
-        navigate('/');
+        return null;
       } else {
         return <Component {...props} />;
       }

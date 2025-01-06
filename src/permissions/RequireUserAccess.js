@@ -9,19 +9,18 @@ const RequireUserAccess = (Component) => {
     const navigate = useNavigate();
     const token = localStorage.getItem('unige-connect_token');
     useEffect(() => {
-      if (!token) {
+      if (!token || (user && user.type !== USER_TYPE.STUDENT)) {
         navigate('/');
       }
-    }, [token, navigate]);
+    }, [token, navigate, user]);
 
     if (user) {
       if (user.type !== USER_TYPE.STUDENT) {
-        navigate('/');
+        return null;
       } else {
         return <Component {...props} />;
       }
     }
-
     if (!token) {
       return null;
     } else {
