@@ -109,10 +109,9 @@ function GroupCard(props) {
             }
         }
     };
-
     return (
-        <Container aria-label={props.key}>
-            <TopSection>
+        <Container aria-label='group-card'>
+            <TopSection aria-label='group-top-section'>
                 <RowContainer>
                     <Header deleted={props.deleted_at} type={props.type}>
                         {props.header}
@@ -136,7 +135,7 @@ function GroupCard(props) {
                 </RowContainer>
 
             </TopSection>
-            <Text>
+            <Text aria-label='group-description'>
                 {props.text}
             </Text>
             {feedback.visible && (<Message aria-label='message' success={feedback.type === 'success'}
