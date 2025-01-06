@@ -34,6 +34,9 @@ describe('show groups tab', () => {
         // Wait and verify the container is present
         cy.get('div[aria-label="group-card"]', { timeout: 10000 }).should('exist');
 
+        // Verify that there are no join buttons because we're professors
+        cy.get('[aria-label="become-a-member-button]"').should('not.exist');
+
         cy.wait(1000);
         cy.get('div[aria-label="group-card"]')
             .each((card) => {
