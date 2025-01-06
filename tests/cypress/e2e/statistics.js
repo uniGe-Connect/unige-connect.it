@@ -1,25 +1,25 @@
-import { fillGroupModalFields, doProfLogin } from "./utils";
+import { doProfLogin } from "./utils";
 
 describe('show statistics tab', () => {
-    it('should show 4 courses with digits', () => {
+    it('should show courses statistics with values', () => {
         doProfLogin();
         cy.contains('Statistics').click();
 
         // Wait and verify the container is present
-        cy.get('.sc-dhGPYp', { timeout: 10000 }).should('exist');
+        cy.get('div[aria-label="professor-statistics"]', { timeout: 10000 }).should('exist');
 
-        // Check that each child contains spans with the correct class and numeric text
-        cy.get('.sc-dhGPYp')
+        cy.wait(1000);
+        cy.get('div[aria-label="professor-statistics"]')
             .children()
             .each((child) => {
                 cy.wrap(child)
                     .find('span')
                     .each((span) => {
                         cy.wrap(span).then(($span) => {
-                            if ($span.hasClass('sc-eePZqt')) {
+                            if ($span.hasClass('statCard')) {
                                 const text = $span.text().trim();
                                 const numericValue = Number(text);
-                                expect(numericValue).to.be.at.least(0);
+                                expect(numericValue).to.be.at.least(0); // Ensure it's a number >= 0
                             }
                         });
                     });

@@ -4,25 +4,25 @@ import CountUp from 'react-countup';
 
 function StatisticCard(props) {
   return (
-    <Container>
+    <Container aria-label="professor-statistics-card">
       <Title>
         {props.data.course_name}
       </Title>
       <OuterFlexContainer>
         <InnerFlexContainer>
-          <CustomCountUp end={props.data.total_groups} duration={3} />
+          <CustomCountUp className='statCard' end={props.data.total_groups} duration={3} />
           <Text>
             Total Groups
           </Text>
         </InnerFlexContainer>
         <InnerFlexContainer>
-          <CustomCountUp end={props.data.total_members} duration={3} />
+          <CustomCountUp className='statCard' end={props.data.total_members} duration={3} />
           <Text>
             Total Number Students
           </Text>
         </InnerFlexContainer>
         <InnerFlexContainer>
-          <CustomCountUp end={props.data.avg_members} duration={3} />
+          <CustomCountUp className='statCard' end={props.data.avg_members} duration={3} />
           <Text>
             Avg Students <br />
           <Span>
@@ -31,7 +31,7 @@ function StatisticCard(props) {
           </Text>
         </InnerFlexContainer>
         <InnerFlexContainer>
-          <CustomCountUp end={props.data.min_members} duration={3} />
+          <CustomCountUp className='statCard' end={props.data.min_members} duration={3} />
           <Text>
             Number of Students <br />
             <Span>
@@ -40,7 +40,7 @@ function StatisticCard(props) {
           </Text>
         </InnerFlexContainer>
         <InnerFlexContainer>
-          <CustomCountUp end={props.data.max_members} duration={3} />
+          <CustomCountUp className='statCard' end={props.data.max_members} duration={3} />
           <Text>
             Number of Students <br />
             <Span>

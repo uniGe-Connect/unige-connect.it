@@ -19,7 +19,7 @@ function ProfessorStatistics() {
     }, [setLoader]);
     return (
         <Container>
-            <ContentContainer>
+            <ContentContainer aria-label="professor-statistics">
             {(!data || data.length === 0) &&
                     <ActionContainer>
                         <Text> There are no groups associated to your courses </Text>
