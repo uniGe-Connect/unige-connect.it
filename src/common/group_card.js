@@ -71,7 +71,7 @@ function GroupCard(props) {
                 <Label aria-label='deleted-group'>
                     <img width={30} src={deleteIcon} />Group is deleted
                 </Label>);
-        } else if (props.is_member) {
+        } else if (props.is_member && props.deleted_at === null) {
             return (
                 <Label aria-label='already-a-member'>
                     <img src={CheckIcon} />Already a Member
