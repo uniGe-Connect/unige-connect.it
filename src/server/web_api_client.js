@@ -107,6 +107,10 @@ class WebApiClient {
   getMembers(groupId) {
     return get(`/groups/${groupId}/members`);
   }
+
+  getProfStatistics() {
+    return get('/professor/statistics');
+  }
 }
 
 export default WebApiClient;
