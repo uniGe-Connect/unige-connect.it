@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom';
 const ProfessorNavigationBar = ({ activeTab = 'Groups' }) => {
     const tabs = [
         { name: 'Groups', path: '/professor/dashboard/Groups' },
-        { name: 'Dashboard', path: '/professor/dashboard/Dashboard' }
+        { name: 'Dashboard', path: '/professor/dashboard/Dashboard' },
+        { name: 'Statistics', path: '/professor/dashboard/Statistics' }
     ];
 
     return (

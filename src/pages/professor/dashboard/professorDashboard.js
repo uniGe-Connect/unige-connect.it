@@ -7,6 +7,7 @@ import RequireProfAccess from '../../../permissions/RequireProfAccess';
 import { useParams } from 'react-router-dom';
 import ProfessorGroups from './professorGroups';
 import ProfessorMyGroups from './professorMyGroups';
+import ProfessorStatistics from './professorStatistics';
 
 function ProfessorDashboard() {
     const { tab } = useParams('Groups');
@@ -16,6 +17,8 @@ function ProfessorDashboard() {
                 return <ProfessorGroups />;
             case 'Dashboard':
                 return <ProfessorMyGroups />;
+            case 'Statistics':
+                return <ProfessorStatistics />;
             default:
                 return <ProfessorGroups />;
         }

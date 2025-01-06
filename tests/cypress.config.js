@@ -9,6 +9,7 @@ module.exports = defineConfig({
         env: {
             IDP_ORIGIN_URL: 'https://auth.unige-connect.it/',
             email: 's123456@studenti.unige.it',
+            profEmail: 'professor@unige.it',
             password: 'password'
         }
     },
