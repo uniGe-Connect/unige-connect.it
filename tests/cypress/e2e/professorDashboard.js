@@ -27,7 +27,7 @@ describe('show dashboard tab', () => {
 });
 
 describe('show groups tab', () => {
-    it('should show group associated with professor courses', () => {
+    it('should show all groups', () => {
         doProfLogin();
         cy.contains('Groups').click();
 
