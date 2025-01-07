@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Button, Modal, Form, Input, TextArea, Checkbox } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal, Form, Input, TextArea, Checkbox, Dropdown } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { getApiClient } from '../../server/get_api_client';
+import { getApiClient, makeStandardApiErrorHandler } from '../../server/get_api_client';
 
 const UpdateGroupModal = ({
   isOpen,
@@ -9,15 +9,17 @@ const UpdateGroupModal = ({
   groupId,
   newGroupName,
   setNewGroupName,
-  newGroupTopic,
+  newGroupCourse,
   setNewGroupTopic,
   newGroupDescription = '',
   setNewGroupDescription,
   newGroupType,
   setNewGroupType,
   errorMessage,
-  onCreate
+  onCreate,
 }) => {
+    const [loading, setLoading] = useState(false);
+    const [options, setOptions] = useState([]);
   useEffect(() => {
     if (groupId) {
       getApiClient().getGroupInfo(groupId).then(response => {
@@ -29,9 +31,19 @@ const UpdateGroupModal = ({
       }).catch(error => {
         console.error('Error fetching group data:', error);
       });
-    }
-  }, [groupId, setNewGroupName, setNewGroupTopic, setNewGroupDescription, setNewGroupType]);
 
+      setLoading(true);
+      getApiClient().getCourses().then((response) => {
+        const result = [];
+        response.data.data.forEach((element) => result.push(
+          { key: element.id, value: element.id, text: element.name }
+        ));
+        setOptions(result);
+      }).catch(makeStandardApiErrorHandler((err) => alert(err)))
+      .finally(() => setLoading(false));
+     }
+    }
+    , [groupId, setNewGroupName, setNewGroupTopic, setNewGroupDescription, setNewGroupType]);
   return (
     <Modal open={isOpen} onClose={onClose} size='small'>
       <Modal.Header>Update Group</Modal.Header>
@@ -46,11 +58,14 @@ const UpdateGroupModal = ({
           </Form.Field>
 
           <Form.Field>
-            <FormLabel>Group Topic</FormLabel>
-            <Input placeholder='Enter group topic'
-                   value={newGroupTopic}
-                   onChange={(e) => setNewGroupTopic(e.target.value)}
-                   required />
+            <Dropdown id='course-dropdown'
+                placeholder='Enter group course'
+                search
+                selection
+                loading={loading}
+                onChange={(e, data) => newGroupCourse(data.value)}
+                options={options}
+                required />
           </Form.Field>
 
           <Form.Field>
