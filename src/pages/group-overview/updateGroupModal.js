@@ -10,7 +10,7 @@ const UpdateGroupModal = ({
   newGroupName,
   setNewGroupName,
   newGroupCourse,
-  setNewGroupTopic,
+  setNewGroupCourse,
   newGroupDescription = '',
   setNewGroupDescription,
   newGroupType,
@@ -25,7 +25,7 @@ const UpdateGroupModal = ({
       getApiClient().getGroupInfo(groupId).then(response => {
         const group = response.data;
         setNewGroupName(group.name);
-        setNewGroupTopic(group.topic);
+        setNewGroupCourse(group.course_id);
         setNewGroupDescription(group.description);
         setNewGroupType(group.type);
       }).catch(error => {
@@ -43,7 +43,7 @@ const UpdateGroupModal = ({
       .finally(() => setLoading(false));
      }
     }
-    , [groupId, setNewGroupName, setNewGroupTopic, setNewGroupDescription, setNewGroupType]);
+    , [groupId, setNewGroupName, setNewGroupCourse, setNewGroupDescription, setNewGroupType]);
   return (
     <Modal open={isOpen} onClose={onClose} size='small'>
       <Modal.Header>Update Group</Modal.Header>
@@ -63,8 +63,9 @@ const UpdateGroupModal = ({
                 search
                 selection
                 loading={loading}
-                onChange={(e, data) => newGroupCourse(data.value)}
+                onChange={(e, data) => setNewGroupCourse(data.value)}
                 options={options}
+                value={newGroupCourse}
                 required />
           </Form.Field>
 
