@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const NavigationBar = ({ activeTab = 'Groups' }) => {
     const tabs = [
         { name: 'Groups', path: '/dashboard/Groups' },
-        { name: 'Dashboard', path: '/dashboard/Dashboard' },
+        { name: 'YourGroups', path: '/dashboard/YourGroups' },
         { name: 'Notifications', path: '/dashboard/Notifications' },
     ];
 

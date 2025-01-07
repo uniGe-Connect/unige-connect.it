@@ -15,7 +15,7 @@ function Dashboard() {
         switch (tab) {
             case 'Groups':
                 return <Groups />;
-            case 'Dashboard':
+            case 'YourGroups':
                 return <GroupsPage />;
             case 'Notifications':
                 return <Notifications />;

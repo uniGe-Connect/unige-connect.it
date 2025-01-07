@@ -15,7 +15,7 @@ function ProfessorDashboard() {
         switch (tab) {
             case 'Groups':
                 return <ProfessorGroups />;
-            case 'Dashboard':
+            case 'YourGroups':
                 return <ProfessorMyGroups />;
             case 'Statistics':
                 return <ProfessorStatistics />;

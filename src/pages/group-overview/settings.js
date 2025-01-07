@@ -58,7 +58,7 @@ function Settings(props) {
     setLoader(true);
     getApiClient().updateGroup(props.groupId, {
       name: newGroupName,
-      topic: newGroupCourse,
+      course_id: newGroupCourse,
       description: newGroupDescription,
       type: newGroupType
     }).then(() => {
