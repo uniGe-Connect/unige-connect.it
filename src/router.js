@@ -50,7 +50,7 @@ export const router = createBrowserRouter(
                 errorElement: <PageNotFound />,
             },
             {
-                path: 'YourGroups',
+                path: 'Dashboard',
                 element: <GroupsPage />,
                 errorElement: <PageNotFound />,
             },
@@ -72,7 +72,7 @@ export const router = createBrowserRouter(
                 errorElement: <PageNotFound />,
             },
             {
-                path: 'YourGroups',
+                path: 'Dashboard',
                 element: <ProfessorMyGroups />,
                 errorElement: <PageNotFound />,
             },
