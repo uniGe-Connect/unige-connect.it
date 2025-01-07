@@ -57,7 +57,7 @@ function Nav() {
             </DropdownHeader>
             {isOpen && (
                 <DropdownMenu>
-                    <MenuItem to={user.type === USER_TYPE.STUDENT ? '/dashboard/Groups' : '/professor/dashboard'}>Dashboard</MenuItem>
+                    <MenuItem to={user.type === USER_TYPE.STUDENT ? '/dashboard/Groups/Dashboard' : '/professor/dashboard/Dashboard'}>Dashboard</MenuItem>
                     <MenuItem>Profile</MenuItem>
                     <MenuItem>Support</MenuItem>
                     <MenuItem onClick={handleSignOut}>Logout</MenuItem>

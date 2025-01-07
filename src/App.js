@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
-import { getApiClient } from './server/get_api_client';
+import { getApiClient, makeStandardApiErrorHandler } from './server/get_api_client';
 import { UserContext } from './contexts/user_context';
 import { LoaderContext } from './contexts/loader_context';
 import { Dimmer, Loader } from 'semantic-ui-react';
@@ -31,8 +31,10 @@ const App = () => {
         .me()
         .then((response) => {
           dispatch({ type: 'set-user', me: response.data });
-        }
-        );
+        }).catch(makeStandardApiErrorHandler((err) => {
+          console.error(err);
+          localStorage.removeItem('unige-connect_token');
+        }));
     }
   }, []);
 

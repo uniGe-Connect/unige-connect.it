@@ -58,7 +58,7 @@ function Settings(props) {
     setLoader(true);
     getApiClient().updateGroup(props.groupId, {
       name: newGroupName,
-      topic: newGroupCourse,
+      course_id: newGroupCourse,
       description: newGroupDescription,
       type: newGroupType
     }).then(() => {
@@ -103,7 +103,7 @@ function Settings(props) {
         <Container leftAmount={props.width}>
           <Toaster position='top-center' reverseOrder={true} />
           <CustomButton onClick={handleOnClick} label='Delete Group:' backgroundColor='var(--red)' name='Delete' />
-          <CustomButton onClick={handleUpdateClick} label='Update Group' backgroundColor='var(--blue)' name='Update' />
+          <CustomButton onClick={handleUpdateClick} label='Update Group:' backgroundColor='var(--blue)' name='Update' />
           <CustomButton onClick={leaveGroup} label='Leave Group:' backgroundColor='var(--blue)' name='Leave' />
         </Container>
         <Modal open={isOpen}
