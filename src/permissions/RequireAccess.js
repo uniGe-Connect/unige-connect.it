@@ -12,17 +12,16 @@ const RequireAccess = (Component) => {
       if (user) {
         if (user.type === USER_TYPE.PROFESSOR) {
           navigate('/professor/dashboard');
-        } else if (user.type === USER_TYPE.STUDENT) {
-          navigate('/dashboard');
         }
+        // else if (user.type === USER_TYPE.STUDENT) {
+        //   navigate('/');
+        // }
       } else if (!token) {
         navigate('/');
       }
     }, [token, navigate, user]);
 
-    if (!token) {
-      return <Component {...props} />;
-    }
+    return <Component {...props} />;
   };
 
   return RequireUserAccessComponent;
