@@ -26,7 +26,7 @@ const UpdateGroupModal = ({
         const group = response.data;
         console.log(group);
         setNewGroupName(group.name);
-        setNewGroupCourse(group.course_name);
+        setNewGroupCourse(group.course_id);
         setNewGroupDescription(group.description);
         setNewGroupType(group.type);
       }).catch(error => {
