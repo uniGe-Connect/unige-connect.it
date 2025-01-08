@@ -12,7 +12,7 @@ function Redirect() {
     console.log(user);
     if (token) {
       localStorage.setItem('unige-connect_token', token);
-      navigate('/');
+      navigate('/dashboard');
     } else {
       localStorage.removeItem('unige-connect_token');
       navigate('/');
