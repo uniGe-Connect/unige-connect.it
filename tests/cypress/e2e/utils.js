@@ -21,6 +21,7 @@ export function doProfLogin() {
 
 export function fillGroupModalFields(groupName = 'Test Group') {
   cy.get('input[placeholder="Enter group name"]')
+    .clear()
     .type(groupName)
     .should('have.value', groupName);
 
@@ -28,6 +29,7 @@ export function fillGroupModalFields(groupName = 'Test Group') {
   cy.get('div[role="option"]').first().click();
 
   cy.get('textarea[placeholder="Enter group description"]')
+    .clear()
     .type('This is a description for the test group.')
     .should('have.value', 'This is a description for the test group.');
 }

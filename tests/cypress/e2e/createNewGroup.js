@@ -26,8 +26,7 @@ describe('Create new group', () => {
     const rand = Math.random();
     const groupName = `TestGroup${rand}`;
     fillGroupModalFields(groupName);
-
-    cy.contains('Private').click();
+    cy.get('div[id="private"]').click();
 
     cy.get('button[aria-label="create-group-button-modal"]').click();
     cy.contains(groupName).should('be.visible');

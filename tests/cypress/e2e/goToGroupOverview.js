@@ -7,18 +7,18 @@ describe('Create group and go to overview', () => {
     cy.contains('Dashboard').click();
 
     cy.get('button').contains('Create Group').click();
-
-    fillGroupModalFields();
+    const groupName = 'Test Group'+new Date().toLocaleString();
+    fillGroupModalFields(groupName);
 
     cy.contains('Public Open').click();
 
     cy.get('button[aria-label="create-group-button-modal"]').click();
 
-    cy.contains('Test Group').should('be.visible');
+    cy.contains(groupName).should('be.visible');
 
     // Group overview
-    cy.contains('Test Group').click();
-    cy.contains('Test Group').should('be.visible');
+    cy.contains(groupName).click();
+    cy.contains(groupName).should('be.visible');
     cy.contains('Message Board').should('be.visible');
     cy.contains('Members').should('be.visible');
     cy.contains('Settings').should('be.visible');
