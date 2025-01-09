@@ -1,20 +1,18 @@
-import { doLogin } from "./utils";
+import { doLogin, fillGroupModalFields } from "./utils";
+const groupName = 'Test Group'+new Date().toLocaleString();
+const updatedGroupName = `${groupName} Updated`;
 
-function fillFields(groupName, groupTopic, groupDescription) {
-  cy.get('input[placeholder="Enter group name"]')
-      .clear()
-      .type(groupName)
-      .should('have.value', groupName);
-
-  cy.get('input[placeholder="Enter group topic"]')
-      .clear()
-      .type(groupTopic)
-      .should('have.value', groupTopic);
-
-  cy.get('textarea[placeholder="Enter group description"]')
-      .clear()
-      .type(groupDescription)
-      .should('have.value', groupDescription);
+function createGoToOverview() {
+  doLogin();
+  cy.contains('Dashboard').click();
+  cy.get('button').contains('Create Group').click();
+  fillGroupModalFields(groupName);
+  cy.contains('Public Open').click();
+  cy.get('button[aria-label="create-group-button-modal"]').click();
+  cy.contains(groupName).should('be.visible');
+  // Group overview
+  cy.contains(groupName).click();
+  cy.contains('Settings').should('be.visible').click();
 }
 
 describe('Group Management Tests', () => {
@@ -24,28 +22,12 @@ describe('Group Management Tests', () => {
   });
 
   it('should create and update a group', () => {
-    const groupName = 'Test Group 10';
-    const updatedGroupName = `${groupName} Updated`;
-
-    // Login and navigate to the dashboard
-    doLogin();
-    cy.contains('Dashboard').click();
-
-    // Create a group
-    cy.get('button').contains('Create Group').click();
-    fillFields(groupName, 'Test Topic', 'This is a description for the test group.');
-    cy.contains('Public Open').click();
-    cy.get('button[aria-label="create-group-button-modal"]').click();
-
-    // Verify the group is created
-    cy.contains(groupName).should('be.visible');
-    cy.contains(groupName).click();
-    cy.contains('Settings').click();
+   
+    createGoToOverview();
 
     // Update the group
     cy.get('button').contains('Update').click();
-    fillFields(updatedGroupName, 'Updated Topic', 'Updated description for the test group.');
-    cy.contains('Public Open').click();
+    fillGroupModalFields(updatedGroupName);
     cy.get('button[aria-label="update-group-button-modal"]').click();
 
     // Verify the group is updated
@@ -53,45 +35,19 @@ describe('Group Management Tests', () => {
   });
 
   it('should not update the group due to time restriction', () => {
-    const groupName = `Test Group ${Date.now()}`;
-    const updatedGroupName = `${groupName} Updated`;
-
     // Login and navigate to the dashboard
     doLogin();
     cy.contains('Dashboard').click();
-
-    // Create a group
-    cy.get('button').contains('Create Group').click();
-    fillFields(groupName, 'Test Topic', 'This is a description for the test group.');
-    cy.contains('Public Open').click();
-    cy.get('button[aria-label="create-group-button-modal"]').click();
-
+    cy.contains(updatedGroupName).should('be.visible').click();
+  
     // Attempt to update the group
-    cy.contains(groupName).should('be.visible');
-    cy.contains(groupName).click();
-
-    // Because of the bug that we have when we create a group for the first time and click on it and it goes to groups page we have to do that
-    cy.contains('Dashboard').click();
-    cy.contains(groupName).should('be.visible');
-    cy.contains(groupName).click();
-
-    cy.contains('Settings').click();
+    cy.contains('Settings').should('be.visible').click();
     cy.get('button').contains('Update').click();
-    fillFields(updatedGroupName, 'Updated Topic', 'Updated description for the test group.');
-    cy.contains('Public Open').click();
-    cy.get('button[aria-label="update-group-button-modal"]').click();
-
-    //Attempt to update the group again
-    cy.contains(updatedGroupName).should('be.visible');
-    cy.contains(updatedGroupName).click();
-    cy.contains('Settings').click();
-    cy.get('button').contains('Update').click();
-    fillFields(updatedGroupName, 'Updated Topic Again', 'Updated description for the test group.');
-    cy.contains('Public Open').click();
+    fillGroupModalFields(updatedGroupName);
     cy.get('button[aria-label="update-group-button-modal"]').click();
 
     // Verify that the update is restricted
-    cy.get('button[aria-label="update-group-button-modal"]').should('be.visible');
+    cy.contains('You can only update the group every 10 minutes').should('be.visible');
 
   });
 
@@ -109,16 +65,15 @@ describe('Group Management Tests', () => {
 
     // Attempt to update the group
     cy.contains('Dashboard').click();
-    cy.scrollTo('top');
-    cy.contains('Joined Groups').click();
+    cy.contains('div', 'Joined Groups').children().eq(0).click();
     cy.contains('Already a Member').click();
     cy.contains('Settings').click();
     cy.get('button').contains('Update').click();
-    fillFields(`${groupName} Updated`, 'Updated Topic', 'Updated description for the test group.');
-    cy.contains('Public Open').click();
+    fillGroupModalFields(groupName);
     cy.get('button[aria-label="update-group-button-modal"]').click();
 
     // Verify that the update is restricted
     cy.get('button[aria-label="update-group-button-modal"]').should('be.visible');
+    cy.contains('You are not authorized to update this group').should('be.visible');
   });
 });

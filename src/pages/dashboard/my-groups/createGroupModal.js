@@ -93,7 +93,7 @@ const CreateGroupModal = ({
               checked={newGroupType === 'public_closed'}
               onChange={(e, data) => setNewGroupType(data.value)} />
           </Form.Field>
-          <Form.Field>
+          <Form.Field id='private'>
             <Checkbox radio
               label='Private'
               name='checkboxRadioGroup'
